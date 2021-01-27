@@ -1,0 +1,12 @@
+asm_dir: /scratch/rx32940/all_lepto_dated/assemblies
+prokka_dir: 
+pirate_input: /scratch/rx32940/all_lepto_dated/assemblies
+output_dir: /scratch/rx32940/all_lepto_dated/
+subworkflow: rules/
+threads_num: 24
+kingdom: Bacteria
+genus: Leptospira
+reference: /home/rx32940/snakemake_assembly_workdir/GCF_000092565.1_ASM9256v1_genomic.fna
+within_species: yes
+samples:
+  SAMN16925409: SRR13255634

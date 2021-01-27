@@ -1,0 +1,38 @@
+import os
+configfile: "config/config.yaml"
+
+THREADS = config["threads_num"]
+asm_dir = config["asm_dir"]
+out_dir = config["output_dir"]
+
+
+subworkflowdir = config["subworkflow"]
+
+
+if config["prokka_dir"]: # if gff files already available
+    prokka_dir = config["prokka_dir"]
+    get_sample_dir = config["prokka_dir"] # get sample name from prokka files
+else: # if not, start from prokka, get sample names from assemblies
+    prokka_dir = out_dir + "prokka/"
+    get_sample_dir = asm_dir
+
+
+SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir)]
+
+# pirate dir
+pirate_dir = out_dir + "pirate/"
+
+
+# include rules in the workflow
+include: subworkflowdir + "sample_names.smk"
+include: subworkflowdir + "prokka.smk"
+include: subworkflowdir + "pangenome.smk"
+
+# expected output files triggers each rule
+rule all:
+    input: 
+        out_dir + "all_samples_id.txt",
+        # annotate asm for gff files
+        expand([prokka_dir + "{sample}/{sample}.gff"], sample=SAMPLES),
+        # pirate output cnvert to roary format
+        pirate_dir + "pirate_roary_pres_abs.csv"

@@ -1,0 +1,4 @@
+channel:
+  - bioconda
+dependencies:
+  - prokka >= 1.14
