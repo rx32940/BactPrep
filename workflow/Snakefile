@@ -56,6 +56,6 @@ rule all:
         iqtree_dir + project_prefix +".treefile",
         # snippy_dir + "clean.full.noref.aln",
         gubbins_dir + "iqtree/" + project_prefix + ".recombFreeSnpsAtcg.treefile",
-        fastGear_dir + "roary_recomb_detect.mat"
+        fastGear_dir + "fastgear_iqtree/" + project_prefix + "_core_mask_snp.treefile"
         
         

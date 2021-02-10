@@ -1,0 +1,8 @@
+channel:
+  - bioconda
+  - conda-forge
+  - defaults
+  - r
+dependencies:
+  - bedtools
+  - snp-sites
