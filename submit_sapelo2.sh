@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --partition=batch
-#SBATCH --job-name=snakemake_pangenome
+#SBATCH --job-name=snakemake_intLineage4
 #SBATCH --ntasks=1                    	
 #SBATCH --cpus-per-task=10             
 #SBATCH --time=150:00:00
 #SBATCH --mem=100G
-#SBATCH --output=/scratch/rx32940/snakemake_interrogansfastGear.%j.out       
-#SBATCH --error=/scratch/rx32940/snakemake_interrogansfastGear.%j.out        
+#SBATCH --output=/scratch/rx32940/snakemake_intLineage4.%j.out       
+#SBATCH --error=/scratch/rx32940/snakemake_intLineage4.%j.out        
 #SBATCH --mail-user=rx32940@uga.edu
 #SBATCH --mail-type=ALL
 
