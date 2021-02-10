@@ -16,6 +16,6 @@ cd /home/rx32940/github/Bacterial_Genome_Analysis_Toolbox/
 source activate /home/rx32940/miniconda3/envs/Bacterial_Genome_Analysis_Toolbox 
 
 snakemake --cores 10 --use-conda
-snakemake --rulegraph| dot -Tpdf > dag.pdf
+snakemake --rulegraph| dot -Tpdf > dag.svg
 
 conda deactivate
