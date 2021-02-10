@@ -13,14 +13,11 @@ mcr_path = config["mcr_path"]
 
 subworkflowdir = config["subworkflow"]
 
-get_sample_dir = asm_dir
+
 if config["prokka_dir"]: # if gff files already available
     prokka_dir = config["prokka_dir"]
 else: # if not, start from prokka, get sample names from assemblies
     prokka_dir = out_dir + "prokka/"
-
-
-SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir)]
 
 
 # pirate dir
@@ -31,6 +28,9 @@ snippy_dir = out_dir + "snippy/"
 gubbins_dir = out_dir + "gubbins/"
 gff_dir = out_dir + "gff/"
 fastGear_dir = out_dir + "fastgear/"
+
+get_sample_dir = gff_dir
+SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir)]
 
 
 # include rules in the workflow
