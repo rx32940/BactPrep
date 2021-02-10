@@ -1,38 +1,61 @@
 import os
 configfile: "config/config.yaml"
 
+reference = config["reference"]
+phage=config["phage_region"]
+project_prefix = config["project_name"]
 THREADS = config["threads_num"]
 asm_dir = config["asm_dir"]
 out_dir = config["output_dir"]
-
+matlab_path = config["LD_LIBRARY_PATH"]
+fastGear_exe = config["fastGear_exe_path"]
+mcr_path = config["mcr_path"]
 
 subworkflowdir = config["subworkflow"]
 
-
+get_sample_dir = asm_dir
 if config["prokka_dir"]: # if gff files already available
     prokka_dir = config["prokka_dir"]
-    get_sample_dir = config["prokka_dir"] # get sample name from prokka files
 else: # if not, start from prokka, get sample names from assemblies
     prokka_dir = out_dir + "prokka/"
-    get_sample_dir = asm_dir
 
 
 SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir)]
 
+
 # pirate dir
 pirate_dir = out_dir + "pirate/"
+roary_dir = out_dir + "roary/"
+iqtree_dir = out_dir + "iqtree/"
+snippy_dir = out_dir + "snippy/"
+gubbins_dir = out_dir + "gubbins/"
+gff_dir = out_dir + "gff/"
+fastGear_dir = out_dir + "fastgear/"
 
 
 # include rules in the workflow
 include: subworkflowdir + "sample_names.smk"
 include: subworkflowdir + "prokka.smk"
 include: subworkflowdir + "pangenome.smk"
+include: subworkflowdir + "roary.smk"
+include: subworkflowdir + "snippy.smk"
+include: subworkflowdir + "gubbins.smk"
+include: subworkflowdir + "ml.smk"
+include: subworkflowdir + "fastGear.smk"
+
+
+
 
 # expected output files triggers each rule
 rule all:
     input: 
         out_dir + "all_samples_id.txt",
         # annotate asm for gff files
-        expand([prokka_dir + "{sample}/{sample}.gff"], sample=SAMPLES),
-        # pirate output cnvert to roary format
-        pirate_dir + "pirate_roary_pres_abs.csv"
+        gff_dir,
+        # roary_dir + "core_gene_alignment.aln" if config["within_species"] else pirate_dir + "pirate_roary_pres_abs.csv",
+        iqtree_dir + project_prefix +".treefile",
+        # snippy_dir + "clean.full.noref.aln",
+        gubbins_dir + "iqtree/" + project_prefix + ".recombFreeSnpsAtcg.treefile",
+        fastGear_dir + "roary_recomb_detect.mat"
+        
+        

@@ -1,6 +1,7 @@
 channel:
-  - bioconda
   - conda-forge
+  - bioconda
   - defaults
 dependencies:
-  - prokka 
+  - snippy
+  - seqkit
