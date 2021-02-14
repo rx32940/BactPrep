@@ -1,8 +1,8 @@
-project_name: int_lineage_4
+project_name: int_lineage_5_fastbaps
 asm_dir: /scratch/rx32940/all_interrogans_dated/assemblies
 prokka_dir: 
 pirate_input: /scratch/rx32940/all_interrogans_dated/assemblies
-output_dir: /scratch/rx32940/int_lineage_4/
+output_dir: /scratch/rx32940/int_lineage_5_fastbaps/
 LD_LIBRARY_PATH: /home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64
 fastGear_exe_path: /home/rx32940/fastGEARpackageLinux64bit/
 mcr_path: /home/rx32940/matlab/v901/
