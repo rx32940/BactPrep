@@ -28,6 +28,7 @@ else:
             -outdir {output} \
             -prefix {wildcards.sample} \
             {input} --force -cpu {threads}
+            
             """
     rule get_gff:
         output:

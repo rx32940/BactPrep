@@ -36,7 +36,6 @@ rule clean_snippy_core:
         """
         snippy-clean_full_aln {input} > {snippy_dir}clean.full.aln
         
-        cat {snippy_dir}clean.full.aln | seqkit grep -v -p Reference > {output} 
         """
 
 
