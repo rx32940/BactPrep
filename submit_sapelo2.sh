@@ -5,8 +5,8 @@
 #SBATCH --cpus-per-task=10             
 #SBATCH --time=150:00:00
 #SBATCH --mem=100G
-#SBATCH --output=/scratch/rx32940/snakemake_asiaIntRef.%j.out       
-#SBATCH --error=/scratch/rx32940/snakemake_asiaIntRef.%j.out        
+#SBATCH --output=/scratch/rx32940/snakemake_asiaIntSubset.%j.out       
+#SBATCH --error=/scratch/rx32940/snakemake_asiaIntSubset.%j.out        
 #SBATCH --mail-user=rx32940@uga.edu
 #SBATCH --mail-type=ALL
 
