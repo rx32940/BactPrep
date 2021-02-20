@@ -11,7 +11,7 @@ matlab_path = config["LD_LIBRARY_PATH"]
 fastGear_exe = config["fastGear_exe_path"]
 mcr_path = config["mcr_path"]
 
-subworkflowdir = config["subworkflow"]
+subworkflowdir = "rules/"
 
 
 if config["prokka_dir"]: # if gff files already available

@@ -12,9 +12,9 @@ rule roary:
         out_dir = roary_dir
     shell:
         """
-            roary -e -p {threads} -f {params.out_dir} {input}/*.gff -v
+            roary -e -n -p {threads} -f {params.out_dir} {input}/*.gff -v
 
-            cp {roary_dir}/*/* {roary_dir}
+            cp -r {roary_dir}*/* {roary_dir}
         """
 
     

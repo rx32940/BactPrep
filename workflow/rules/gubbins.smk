@@ -23,7 +23,8 @@ rule clean_snps:
         "../env/gubbins.yaml"
     shell:
         """
-        snp-sites -c {input} > {output}
+        cat {input} | seqkit grep -v -p Reference > {gubbins_dir}{project_prefix}_noref.filtered_polymorphic_sites.fasta
+        snp-sites -c {gubbins_dir}{project_prefix}_noref.filtered_polymorphic_sites.fasta > {output}
         """
 
 rule SNPS_tree:
