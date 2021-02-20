@@ -11,6 +11,7 @@ rule gubbins:
         out_prefix = gubbins_dir + project_prefix
     shell:
         """
+        cd {gubbins_dir}
         run_gubbins.py --threads {threads} -v -p {params.out_prefix} {input}
         """
 

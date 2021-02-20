@@ -29,7 +29,7 @@ rule clean_snippy_core:
     input:
         snippy_dir + "core.full.aln"
     output:
-        snippy_dir + "clean.full.noref.aln"
+        snippy_dir + "clean.full.aln"
     conda:
         "../env/snippy.yaml"
     shell:
