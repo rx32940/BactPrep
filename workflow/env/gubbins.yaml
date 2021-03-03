@@ -6,3 +6,4 @@ channel:
 dependencies:
   - gubbins
   - snp-sites
+  - seqkit

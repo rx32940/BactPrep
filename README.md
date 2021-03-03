@@ -47,7 +47,8 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     
     + Mandatory:
         1. **project_name** 
-        2. **asm_dir** (not mandatory if prokka annotation is already available)
+        2. **output_dir** (absolute path)
+        3. **asm_dir** (not mandatory if prokka annotation is already available)
             + option 1:
                 1) specify absolute path to the **prokka_dir** in the ```config/config.yaml``` file
             + option 2:
@@ -57,7 +58,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
                     mkdir gff
                     ```
                 2) copy ```.gff``` files you wish to analyze into the folder above
-        3. **output_dir** (absolute path)
+        
         4. **within_species** (TRUE/FALSE)
         5. **kingdom** and **genus**
     
