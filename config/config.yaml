@@ -1,8 +1,8 @@
-project_name: asia_int_100Core
+project_name: asia_intV2_malay
 asm_dir: /scratch/rx32940/asia_int_noOutlier/assemblies
 prokka_dir: 
 pirate_input: /scratch/rx32940/asia_int_100Core/assemblies
-output_dir: /scratch/rx32940/asia_int_100Core/
+output_dir: /scratch/rx32940/asia_intV2_malaysia/
 LD_LIBRARY_PATH: /home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64
 fastGear_exe_path: /home/rx32940/fastGEARpackageLinux64bit/
 mcr_path: /home/rx32940/matlab/v901/
@@ -12,4 +12,4 @@ genus: Leptospira
 reference: /scratch/rx32940/pathogenic_sero/GCF_000092565.1_ASM9256v1_genomic.fna
 phage_region: /scratch/rx32940/pathogenic_sero/snippy/phage_region.bed
 within_species: TRUE
-define_core: 100
+define_core: 99
