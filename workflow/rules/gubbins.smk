@@ -46,12 +46,13 @@ rule SNPS_tree:
     
 rule annotate_alignment:
     input:
-        metadata_include
-        rules.clean_snps.output
-    output:
+	rules.clean_snps.output
+output:
         gubbins_dir + "snp-sites/" + project_prefix + "_meta.fasta"
     conda:
         "../env/biopython.yaml"
+	params:
+	metadata = metadata_include
     script:
         "../scripts/change_fasta_header.py"
 

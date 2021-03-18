@@ -2,7 +2,7 @@ from Bio import SeqIO
 import pandas as pd
 
 
-metadata = pd.read_csv(snakemake.input[0])
+metadata = pd.read_csv(snakemake.params[0])
 
 dict_list=[]
 for item in metadata_include:
@@ -12,7 +12,7 @@ for item in metadata_include:
 with open(output_file, "w") as w:
     print("start a new file, overwrriten the old file if exist")
 
-with open(snakemake.input[1]) as f, open(snakemake.output[0], "w") as w:
+with open(snakemake.input[0]) as f, open(snakemake.output[0], "w") as w:
     records = SeqIO.parse(f,"fasta")
     for r in records:
         old_id = r.id
