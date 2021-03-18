@@ -1,22 +1,21 @@
 #!/bin/bash
 #SBATCH --partition=batch
-#SBATCH --job-name=snakemake_asiaInt
+#SBATCH --job-name=sub.sh
 #SBATCH --ntasks=1                    	
 #SBATCH --cpus-per-task=10             
 #SBATCH --time=150:00:00
 #SBATCH --mem=100G
-#SBATCH --output=/scratch/rx32940/snakemake_asiaIntNoOutlier.%j.out       
-#SBATCH --error=/scratch/rx32940/snakemake_asiaIntNoOutlier.%j.out        
+#SBATCH --output=../%x.%j.out       
+#SBATCH --error=../%x.%j.out        
 #SBATCH --mail-user=rx32940@uga.edu
 #SBATCH --mail-type=ALL
 
-# working dir
-cd /home/rx32940/github/Bacterial_Genome_Analysis_Toolbox/
 
-# activate conda env
-source activate /home/rx32940/miniconda3/envs/Bacterial_Genome_Analysis_Toolbox 
+
+cd $SLURM_SUBMIT_DIR
+
+ml snakemake/5.7.1-foss-2019b-Python-3.7.4
+>>>>>>> 79c4a25a2ac90d80e107b90c0acb4bc4e9013152
 
 snakemake --cores 10 --use-conda
 snakemake --rulegraph| dot -Tpdf > dag.pdf
-
-conda deactivate
