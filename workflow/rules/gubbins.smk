@@ -44,6 +44,17 @@ rule SNPS_tree:
         iqtree -nt AUTO -m MFP+ASC -pre {params.prefix} -s {input}
         """
     
+rule annotate_alignment:
+    input:
+        metadata_include
+        rules.clean_snps.output
+    output:
+        gubbins_dir + "snp-sites/" + project_prefix + "_meta.fasta"
+    conda:
+        "../env/biopython.yaml"
+    script:
+        "../scripts/change_fasta_header.py"
+
 
 
         

@@ -10,9 +10,10 @@
 #SBATCH --mail-user=rx32940@uga.edu
 #SBATCH --mail-type=ALL
 
-
+# working dir
 cd /home/rx32940/github/Bacterial_Genome_Analysis_Toolbox/
 
+# activate conda env
 source activate /home/rx32940/miniconda3/envs/Bacterial_Genome_Analysis_Toolbox 
 
 snakemake --cores 10 --use-conda

@@ -12,6 +12,7 @@ matlab_path = config["LD_LIBRARY_PATH"]
 fastGear_exe = config["fastGear_exe_path"]
 mcr_path = config["mcr_path"]
 core_percentage = config["define_core"]
+metadata_include = config["metadata_include"]
 
 subworkflowdir = "rules/"
 
