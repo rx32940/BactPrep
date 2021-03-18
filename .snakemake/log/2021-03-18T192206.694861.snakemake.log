@@ -1,0 +1,3 @@
+SyntaxError in line 49 of /scratch/rx32940/asia_intV2_malaysia/Bacterial_Genome_Analysis_Toolbox/workflow/rules/gubbins.smk:
+Unexpected keyword rules in rule definition (gubbins.smk, line 49)
+  File "/scratch/rx32940/asia_intV2_malaysia/Bacterial_Genome_Analysis_Toolbox/workflow/Snakefile", line 45, in <module>
