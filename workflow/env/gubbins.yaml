@@ -1,4 +1,4 @@
-channel:
+channels:
   - r
   - defaults
   - conda-forge
