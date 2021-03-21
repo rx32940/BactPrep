@@ -64,6 +64,26 @@ rule snps_tree:
             iqtree -nt AUTO -m MFP+ASC -pre {params.prefix} -s {input}
         """
 
+rule annotate_coreSNP_alignment:
+    input:
+        original_alignment = rules.call_snp.output,
+        metadata_file = metadata_file
+    output:
+        log = fastGear_dir +  "annotate.log"
+    params:
+        meta_include = metadata_include,
+        key_column_index = biosample_column -1
+    run:
+        if metadata_include and metadata_file and biosample_column:
+            shell("""
+            python {workflow.basedir}/scripts/change_fasta_header.py \
+            {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {output.log}
+            """)
+            shell("echo 'Metadata added to recombination free alignment' > {fastGear_dir}annotate.log")
+        else:
+            shell("echo 'Metadata files missing, fail to produce annotated alignment' > {fastGear_dir}annotate.log")
+
+
 
 
 

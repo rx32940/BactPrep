@@ -1,6 +1,0 @@
-Building DAG of jobs...
-MissingInputException in line 47 of /scratch/rx32940/asia_intV2_malaysia/Bacterial_Genome_Analysis_Toolbox/workflow/rules/gubbins.smk:
-Missing input files for rule annotate_alignment:
-province
-Year
-country
