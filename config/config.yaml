@@ -4,7 +4,7 @@ prokka_dir:
 pirate_input: /scratch/rx32940/asia_int_100Core/assemblies
 output_dir: /scratch/rx32940/asia_intV2_malaysia/
 LD_LIBRARY_PATH: /home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64
-fastGear_exe_path: /home/rx32940/fastGEARpackageLinux64bit/
+fastGear_exe_path: /home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/
 mcr_path: /home/rx32940/matlab/v901/
 threads_num: 10
 kingdom: Bacteria
