@@ -1,8 +1,8 @@
-project_name: asia_intV2_malay
-asm_dir: /scratch/rx32940/asia_int_noOutlier/assemblies
+project_name: asia_intV2_malay_node93
+asm_dir: /scratch/rx32940/asia_intV2_malay_node93/assemblies
 prokka_dir: 
-pirate_input: /scratch/rx32940/asia_int_100Core/assemblies
-output_dir: /scratch/rx32940/asia_intV2_malaysia/
+pirate_input: /scratch/rx32940/asia_intV2_malay_node93/assemblies
+output_dir: /scratch/rx32940/asia_intV2_malay_node93/
 LD_LIBRARY_PATH: /home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64
 fastGear_exe_path: /home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/
 mcr_path: /home/rx32940/matlab/v901/
