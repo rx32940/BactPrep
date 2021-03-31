@@ -1,3 +1,0 @@
-WorkflowError in line 2 of /scratch/rx32940/asia_intV2_malaysia/Bacterial_Genome_Analysis_Toolbox/workflow/Snakefile:
-Config file config/config.yaml not found.
-  File "/scratch/rx32940/asia_intV2_malaysia/Bacterial_Genome_Analysis_Toolbox/workflow/Snakefile", line 2, in <module>

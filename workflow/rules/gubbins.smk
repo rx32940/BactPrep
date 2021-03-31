@@ -1,5 +1,3 @@
-from Bio import SeqIO
-
 rule gubbins:
     input:
         rules.clean_snippy_core.output
@@ -55,16 +53,17 @@ rule annotate_recombFreeSNP_alignment:
         log = gubbins_dir + "snp-sites/annotate.log" 
     params:
         meta_include = metadata_include,
-        key_column_index = biosample_column -1
+        key_column_index = biosample_column -1,
+        output_alignment= gubbins_dir + "snp-sites/asia_intV2_malay_node93_meta.recombFreeSnpsAtcg.fasta"
     run:
         if metadata_include and metadata_file and biosample_column:
             shell("""
             python {workflow.basedir}/scripts/change_fasta_header.py \
-            {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {output.log}
+            {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {params.output_alignment}
             """)
-            shell("echo 'Metadata added to recombination free alignment' > {gubbins_dir}snp-sites/annotate.log")
+            shell("echo 'Metadata added to recombination free alignment' > {output.log}")
         else:
-            shell("echo 'Metadata files missing, fail to produce annotated alignment' > {gubbins_dir}snp-sites/annotate.log")
+            shell("echo 'Metadata files missing, fail to produce annotated alignment' > {output.log}")
 
 
 

@@ -72,16 +72,17 @@ rule annotate_coreSNP_alignment:
         log = fastGear_dir +  "annotate.log"
     params:
         meta_include = metadata_include,
-        key_column_index = biosample_column -1
+        key_column_index = biosample_column -1,
+        output_alignment= fastGear_dir + "asia_intV2_malay_node93_core_mask_snp_meta.fasta "
     run:
         if metadata_include and metadata_file and biosample_column:
             shell("""
             python {workflow.basedir}/scripts/change_fasta_header.py \
-            {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {output.log}
+            {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {params.output_alignment}
             """)
-            shell("echo 'Metadata added to recombination free alignment' > {fastGear_dir}annotate.log")
+            shell("echo 'Metadata added to recombination free alignment' > {output.log}")
         else:
-            shell("echo 'Metadata files missing, fail to produce annotated alignment' > {fastGear_dir}annotate.log")
+            shell("echo 'Metadata files missing, fail to produce annotated alignment' > {output.log}")
 
 
 
