@@ -54,7 +54,7 @@ rule annotate_recombFreeSNP_alignment:
     params:
         meta_include = metadata_include,
         key_column_index = biosample_column -1,
-        output_alignment= gubbins_dir + "snp-sites/asia_intV2_malay_node93_meta.recombFreeSnpsAtcg.fasta"
+        output_alignment= gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta"
     run:
         if metadata_include and metadata_file and biosample_column:
             shell("""
