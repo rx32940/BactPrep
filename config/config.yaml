@@ -1,8 +1,8 @@
-project_name: asia_intV2_malay_node93
-asm_dir: /scratch/rx32940/asia_intV2_malay_node93/assemblies
+project_name: all_int_node263_nz
+asm_dir: /scratch/rx32940/all_int_node263_nz/assemblies
 prokka_dir: 
-pirate_input: /scratch/rx32940/asia_intV2_malay_node93/assemblies
-output_dir: /scratch/rx32940/asia_intV2_malay_node93/
+pirate_input: /scratch/rx32940/all_int_node263_nz/assemblies
+output_dir: /scratch/rx32940/all_int_node263_nz/
 LD_LIBRARY_PATH: /home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64
 fastGear_exe_path: /home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/
 mcr_path: /home/rx32940/matlab/v901/
@@ -11,7 +11,7 @@ kingdom: Bacteria
 genus: Leptospira
 reference: /scratch/rx32940/pathogenic_sero/GCF_000092565.1_ASM9256v1_genomic.fna
 phage_region: /scratch/rx32940/pathogenic_sero/snippy/phage_region.bed
-sample_metadata: /home/rx32940/workDir/aim_2/metadata/Asia_interrogans_acc_list.csv
+sample_metadata: /home/rx32940/workDir/aim_2/metadata/all_lepto_dated_figAnn.csv
 metadata_include: Year,country,province
 biosample_column: 3
 within_species: TRUE

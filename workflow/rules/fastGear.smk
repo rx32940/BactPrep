@@ -73,7 +73,7 @@ rule annotate_coreSNP_alignment:
     params:
         meta_include = metadata_include,
         key_column_index = biosample_column -1,
-        output_alignment= fastGear_dir + "asia_intV2_malay_node93_core_mask_snp_meta.fasta "
+        output_alignment= fastGear_dir + project_prefix + "_core_mask_snp_meta.fasta"
     run:
         if metadata_include and metadata_file and biosample_column:
             shell("""
