@@ -16,6 +16,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 2) make a working directory
     ```
     mkdir {Bacterial_Analysis}*
+    
     cd {Nacterial_Analysis}
     ```
     _* this name can change base on your project_
@@ -27,7 +28,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 4) create conda env for Snakemake and activate the env
     ```
-    conda create -n {snakemake}*
+    conda env create -f workflow/env/install.yaml -n {snakemake}*
     conda activate {snakemake}*
     ```
     _* this name can change base on your project_
