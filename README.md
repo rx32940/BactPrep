@@ -16,6 +16,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 2) make a working directory
     ```
     mkdir {Bacterial_Analysis}*
+    cd {Nacterial_Analysis}
     ```
     _* this name can change base on your project_
 
