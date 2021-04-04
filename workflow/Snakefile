@@ -62,7 +62,6 @@ def get_fastGear_output(matlab_path,fastGear_exe,mcr_path):
 def get_annotated(metadata_file, metadata_include):
     if metadata_file and metadata_include:
         if matlab_path and fastGear_exe and mcr_path:
-            print("test")
             return gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta", fastGear_dir + project_prefix + "_core_mask_snp_meta.fasta",gubbins_dir  + "iqtree/" +  project_prefix + "_meta.GubbinsSNPs.newick", fastGear_dir + "fastgear_iqtree/" +  project_prefix + "_meta.coreSNPs.newick"
 
         else:
