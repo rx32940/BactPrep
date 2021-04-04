@@ -7,11 +7,8 @@ rule fastGear:
         output_mat = fastGear_dir + project_prefix + ".mat"
     shell:
         """
-        
         LD_LIBRARY_PATH={matlab_path}
-
         {fastGear_exe}run_fastGEAR.sh {mcr_path} {input} {params.output_mat} {fastGear_exe}fG_input_specs.txt 
-
         """
 
 rule convert_recombination_to_bed:
