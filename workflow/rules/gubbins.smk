@@ -1,4 +1,4 @@
-rule gubbins:
+rule Gubbins:
     input:
         rules.clean_snippy_core.output
     output:
@@ -17,7 +17,7 @@ rule gubbins:
 
 rule clean_snps:
     input:
-        rules.gubbins.output
+        rules.Gubbins.output
     output:
         gubbins_dir + "snp-sites/" + project_prefix + ".recombFreeSnpsAtcg.fasta"
     conda:
@@ -28,7 +28,7 @@ rule clean_snps:
         snp-sites -c {gubbins_dir}{project_prefix}_noref.filtered_polymorphic_sites.fasta > {output}
         """
 
-rule SNPS_tree:
+rule Gubbins_SNPS_ML_tree:
     input:
         rules.clean_snps.output
     output:
@@ -45,25 +45,40 @@ rule SNPS_tree:
         """
     
 
-rule annotate_recombFreeSNP_alignment:
+rule annotate_GubbinsSNP_alignment:
     input:
         original_alignment = rules.clean_snps.output, 
         metadata_file = metadata_file
     output:
-        log = gubbins_dir + "snp-sites/annotate.log" 
+        gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta"
     params:
         meta_include = metadata_include,
-        key_column_index = biosample_column -1,
-        output_alignment= gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta"
-    run:
-        if metadata_include and metadata_file and biosample_column:
-            shell("""
-            python {workflow.basedir}/scripts/change_fasta_header.py \
-            {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {params.output_alignment}
-            """)
-            shell("echo 'Metadata added to recombination free alignment' > {output.log}")
-        else:
-            shell("echo 'Metadata files missing, fail to produce annotated alignment' > {output.log}")
+        key_column_index = biosample_column -1
+    shell:
+        """
+        python {workflow.basedir}/scripts/change_fasta_header.py \
+        {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {output}
+        """
+
+rule annotate_GubbinsSNPs_tree:
+    input:
+        tree=rules.Gubbins_SNPS_ML_tree.output,
+        metadata_file = metadata_file
+    output:
+        gubbins_dir  + "iqtree/" +  project_prefix + "_meta.GubbinsSNPs.newick"
+    params:
+        meta_include = metadata_include,
+        key_column_index = biosample_column -1
+    shell:
+        """
+        python {workflow.basedir}/scripts/rename_phylogeny_taxa.py \
+        {input.metadata_file} {input.tree} {params.meta_include} {params.key_column_index} {output}
+        """
+
+
+
+
+
 
 
 

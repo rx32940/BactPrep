@@ -1,8 +1,8 @@
-project_name: all_int_node263_nz
-asm_dir: /scratch/rx32940/all_int_node263_nz/assemblies
-prokka_dir: 
-pirate_input: /scratch/rx32940/all_int_node263_nz/assemblies
-output_dir: /scratch/rx32940/all_int_node263_nz/
+project_name: all_int_node264
+asm_dir: /scratch/rx32940/all_int_node264/assemblies/
+gff_dir: 
+pirate_input: /scratch/rx32940/all_int_node264/assemblies/
+output_dir: /scratch/rx32940/all_int_node264/
 LD_LIBRARY_PATH: /home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64
 fastGear_exe_path: /home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/
 mcr_path: /home/rx32940/matlab/v901/
@@ -15,4 +15,4 @@ sample_metadata: /home/rx32940/workDir/aim_2/metadata/all_lepto_dated_figAnn.csv
 metadata_include: Year,country,province
 biosample_column: 3
 within_species: TRUE
-define_core: 99
+define_core: 100

@@ -15,28 +15,65 @@ core_percentage = config["define_core"]
 metadata_file=config["sample_metadata"]
 metadata_include = config["metadata_include"]
 biosample_column = config["biosample_column"]
+within_species=config["within_species"]
 
 subworkflowdir = "rules/"
 
-
-if config["prokka_dir"]: # if gff files already available
-    prokka_dir = config["prokka_dir"]
-else: # if not, start from prokka, get sample names from assemblies
-    prokka_dir = out_dir + "prokka/"
-
-
-# pirate dir
+# pre-defined folder names
 pirate_dir = out_dir + "pirate/"
 roary_dir = out_dir + "roary/"
 iqtree_dir = out_dir + "iqtree/"
 snippy_dir = out_dir + "snippy/"
 gubbins_dir = out_dir + "gubbins/"
-gff_dir = out_dir + "gff/"
 fastGear_dir = out_dir + "fastgear/"
+prokka_dir = out_dir + "prokka/"
+gff_dir_self = config["gff_dir"]
 
-get_sample_dir = gff_dir
-SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir)]
+def get_gff_dir(gff_dir_self):
+    if gff_dir_self:
+        return gff_dir_self
+    else:
+        return out_dir + "gff/"
 
+def get_sample_dir(gff_dir_self):
+    if gff_dir_self:
+        return gff_dir
+    else:
+        return asm_dir
+
+def get_prokka_output(gff_dir_self):
+    if gff_dir == gff_dir_self:
+        pass
+    else:
+        return expand(gff_dir+ "{sample}.gff", sample=SAMPLES)
+
+def get_core_output(within_species):
+    if within_species:
+        return roary_dir + "core_gene_alignment.aln"
+    else:
+        return pirate_dir + "pirate_roary_pres_abs.csv"
+
+def get_fastGear_output(matlab_path,fastGear_exe,mcr_path):
+    if matlab_path and fastGear_exe and mcr_path:
+        return fastGear_dir + "fastgear_iqtree/" + project_prefix + "_core_mask_snp.treefile"
+    else:
+        pass
+
+def get_annotated(metadata_file, metadata_include):
+    if metadata_file and metadata_include:
+        if matlab_path and fastGear_exe and mcr_path:
+            print("test")
+            return gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta", fastGear_dir + project_prefix + "_core_mask_snp_meta.fasta",gubbins_dir  + "iqtree/" +  project_prefix + "_meta.GubbinsSNPs.newick", fastGear_dir + "fastgear_iqtree/" +  project_prefix + "_meta.coreSNPs.newick"
+
+        else:
+            return gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta", gubbins_dir  + project_prefix + "_meta.GubbinsSNPs.newick"
+    else:
+        pass
+
+# get all sample ID from either assembly file names or gff file names (if provided)
+SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir(gff_dir_self))]
+# get gff file dir base on if user had provided
+gff_dir = get_gff_dir(gff_dir_self)
 
 # include rules in the workflow
 include: subworkflowdir + "sample_names.smk"
@@ -49,20 +86,17 @@ include: subworkflowdir + "ml.smk"
 include: subworkflowdir + "fastGear.smk"
 
 
-
-
 # expected output files triggers each rule
 rule all:
     input: 
         out_dir + "all_samples_id.txt",
         # annotate asm for gff files
-        gff_dir,
-        # roary_dir + "core_gene_alignment.aln" if config["within_species"] else pirate_dir + "pirate_roary_pres_abs.csv",
+        get_prokka_output(gff_dir_self),
+        get_core_output(within_species),
         iqtree_dir + project_prefix +".treefile",
         # snippy_dir + "clean.full.noref.aln",
         gubbins_dir + "iqtree/" + project_prefix + ".recombFreeSnpsAtcg.treefile",
-	    gubbins_dir + "snp-sites/annotate.log",
-        fastGear_dir + "fastgear_iqtree/" + project_prefix + "_core_mask_snp.treefile",
-        fastGear_dir +  "annotate.log"
+        get_fastGear_output(matlab_path,fastGear_exe,mcr_path),
+        get_annotated(metadata_file, metadata_include)
         
         
