@@ -1,6 +1,6 @@
-rule roary:
+rule Roary:
     input:
-        rules.get_gff.output
+        expand(rules.get_gff.output, sample=SAMPLES)
     output:
         roary_dir + "core_gene_alignment.aln"
     threads:
@@ -12,7 +12,7 @@ rule roary:
         out_dir = roary_dir
     shell:
         """
-            roary -e -n -p {threads} -f {params.out_dir} {input}/*.gff -v -cd {core_percentage}
+            roary -e -n -p {threads} -f {params.out_dir} {input} -v -cd {core_percentage}
 
             cp -r {roary_dir}*/* {roary_dir}
         """

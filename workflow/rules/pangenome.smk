@@ -1,4 +1,4 @@
-rule pirate:
+rule PIRATE:
     input:
         gff_dir
     output: 
@@ -18,7 +18,7 @@ rule pirate:
             {params.mcl}       
         """
 
-rule convert_roary:
+rule convert_to_Roary:
     input:
         pirate_dir + "PIRATE.*.tsv"
     output:

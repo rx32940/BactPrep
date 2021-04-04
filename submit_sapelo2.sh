@@ -16,7 +16,7 @@ cd $SLURM_SUBMIT_DIR
 
 # ml Biopython/1.75-intel-2019b-Python-3.7.4
 # ml snakemake/5.7.1-foss-2019b-Python-3.7.4
-ml Anaconda3/2020.02
+# ml Anaconda3/2020.02
 
 # conda env create -f workflow/env/install.yaml -n snakemake
 

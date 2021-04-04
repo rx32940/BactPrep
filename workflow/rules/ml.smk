@@ -1,6 +1,6 @@
-rule iqtree:
+rule core_gene_concatenation_ML_tree:
     input:
-        msa = rules.roary.output if config["within_species"] else rules.pirate.output
+        msa = rules.Roary.output if config["within_species"] else rules.PIRATE.output
     output:
         iqtree_dir + project_prefix +".treefile"
     conda:

@@ -1,6 +1,6 @@
 rule fastGear:
     input:
-        rules.roary.output
+        rules.Roary.output
     output:
         fastGear_dir + "output/recombinations_recent.txt"
     params:
@@ -14,7 +14,7 @@ rule fastGear:
 
         """
 
-rule convert_to_bed:
+rule convert_recombination_to_bed:
     input:
         recent = rules.fastGear.output
     output:
@@ -25,8 +25,8 @@ rule convert_to_bed:
 
 rule mask_recombination:
     input:
-        bed = rules.convert_to_bed.output,
-        fasta = rules.roary.output
+        bed = rules.convert_recombination_to_bed.output,
+        fasta = rules.Roary.output
     output:
         fastGear_dir +  project_prefix + "_core_mask.fasta"
     conda:
@@ -36,7 +36,7 @@ rule mask_recombination:
         bedtools maskfasta -fi {input.fasta} -bed {input.bed} -fo {output}
         """
 
-rule call_snp:
+rule call_snp_from_masked_alignment:
     input:
         rules.mask_recombination.output
     output:
@@ -48,9 +48,9 @@ rule call_snp:
             snp-sites -c {input} -o {output}
         """
 
-rule snps_tree:
+rule core_genome_snps_ML_tree:
     input:
-        rules.call_snp.output
+        rules.call_snp_from_masked_alignment.output
     output:
         fastGear_dir + "fastgear_iqtree/" + project_prefix + "_core_mask_snp.treefile"
     conda:
@@ -64,25 +64,35 @@ rule snps_tree:
             iqtree -nt AUTO -m MFP+ASC -pre {params.prefix} -s {input}
         """
 
-rule annotate_coreSNP_alignment:
+rule annotate_core_SNPs_alignment:
     input:
-        original_alignment = rules.call_snp.output,
+        original_alignment = rules.call_snp_from_masked_alignment.output,
         metadata_file = metadata_file
     output:
-        log = fastGear_dir +  "annotate.log"
+        fastGear_dir + project_prefix + "_core_mask_snp_meta.fasta"
     params:
         meta_include = metadata_include,
-        key_column_index = biosample_column -1,
-        output_alignment= fastGear_dir + project_prefix + "_core_mask_snp_meta.fasta"
-    run:
-        if metadata_include and metadata_file and biosample_column:
-            shell("""
+        key_column_index = biosample_column -1  
+    shell:
+        """
             python {workflow.basedir}/scripts/change_fasta_header.py \
-            {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {params.output_alignment}
-            """)
-            shell("echo 'Metadata added to recombination free alignment' > {output.log}")
-        else:
-            shell("echo 'Metadata files missing, fail to produce annotated alignment' > {output.log}")
+            {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {output}
+        """
+
+rule annotate_coreSNP_tree:
+    input:
+        tree=rules.core_genome_snps_ML_tree.output,
+        metadata_file = metadata_file
+    output:
+        fastGear_dir + "fastgear_iqtree/" +  project_prefix + "_meta.coreSNPs.newick"
+    params:
+        meta_include = metadata_include,
+        key_column_index = biosample_column -1
+    shell:
+        """
+        python {workflow.basedir}/scripts/rename_phylogeny_taxa.py \
+        {input.metadata_file} {input.tree} {params.meta_include} {params.key_column_index} {output}
+        """
 
 
 

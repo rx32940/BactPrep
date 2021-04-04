@@ -1,7 +1,7 @@
 
 rule snippy_multi:
     input:
-        asm_dir + "/{sample}.fna"
+        asm_dir + "{sample}.fna"
     output:
         directory(snippy_dir + "{sample}")
     conda:
