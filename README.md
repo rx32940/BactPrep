@@ -9,6 +9,11 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 4) Identify potential recombination regions (recent & ancestral)
 5) Identify SNPs from conserved regions of the bacterial genomes
 
+## Overall Workflow
+<img width="578" alt="Screen Shot 2021-04-04 at 6 57 32 PM" src="https://user-images.githubusercontent.com/31255012/113523736-a366c400-9577-11eb-9f44-cbec59522d11.png">
+
+
+
 ## Installation
 
 1) Install conda in your local computer
