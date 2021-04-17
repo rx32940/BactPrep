@@ -58,7 +58,7 @@ rule core_genome_snps_ML_tree:
         prefix = fastGear_dir + "fastgear_iqtree/" + project_prefix + "_core_mask_snp"
     shell:
         """
-            iqtree -nt AUTO -m MFP+ASC -pre {params.prefix} -s {input}
+            iqtree -bb 1000 -nt AUTO -m MFP+ASC -pre {params.prefix} -s {input}
         """
 
 rule annotate_core_SNPs_alignment:

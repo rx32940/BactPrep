@@ -1,8 +1,8 @@
-project_name: all_int_node264
-asm_dir: /scratch/rx32940/all_int_node264/assemblies/
+project_name: asia_bt_highsupport
+asm_dir: /scratch/rx32940/phylogeography/asia_bt_highsupport/assemblies/
 gff_dir: 
-pirate_input: /scratch/rx32940/all_int_node264/assemblies/
-output_dir: /scratch/rx32940/all_int_node264/
+pirate_input: /scratch/rx32940/phylogeography/asia_bt_highsupport/assemblies/
+output_dir: /scratch/rx32940/phylogeography/asia_bt_highsupport/
 LD_LIBRARY_PATH: /home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64
 fastGear_exe_path: /home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/
 mcr_path: /home/rx32940/matlab/v901/

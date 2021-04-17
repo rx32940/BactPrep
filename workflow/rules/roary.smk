@@ -12,7 +12,7 @@ rule Roary:
         out_dir = roary_dir
     shell:
         """
-            roary -e -n -p {threads} -f {params.out_dir} {input} -v -cd {core_percentage}
+            roary -e -n -p {threads} -f {params.out_dir} {input} -v -cd {core_percentage} -z
 
             cp -r {roary_dir}*/* {roary_dir}
         """
