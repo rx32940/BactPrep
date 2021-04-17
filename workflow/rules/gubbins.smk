@@ -41,7 +41,7 @@ rule Gubbins_SNPS_ML_tree:
         prefix=gubbins_dir + "iqtree/" + project_prefix + ".recombFreeSnpsAtcg"
     shell:
         """
-        iqtree -nt AUTO -m MFP+ASC -pre {params.prefix} -s {input}
+        iqtree -bb 1000 -nt AUTO -m MFP+ASC -pre {params.prefix} -s {input}
         """
     
 
