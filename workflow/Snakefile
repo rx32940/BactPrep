@@ -35,6 +35,8 @@ def get_gff_dir(gff_dir_self):
     else:
         return out_dir + "gff/"
 
+gff_dir = get_gff_dir(gff_dir_self)
+
 def get_sample_dir(gff_dir_self):
     if gff_dir_self:
         return gff_dir
@@ -43,7 +45,7 @@ def get_sample_dir(gff_dir_self):
 
 def get_prokka_output(gff_dir_self):
     if gff_dir == gff_dir_self:
-        None
+        return []
     else:
         return expand(gff_dir+ "{sample}.gff", sample=SAMPLES)
 
@@ -57,17 +59,19 @@ def get_fastGear_output(matlab_path,fastGear_exe,mcr_path):
     if matlab_path and fastGear_exe and mcr_path:
         return fastGear_dir + "fastgear_iqtree/" + project_prefix + "_core_mask_snp.treefile"
     else:
-        None
+        return []
 
 def get_annotated(metadata_file, metadata_include):
     if metadata_file and metadata_include:
         if matlab_path and fastGear_exe and mcr_path:
-            return gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta", fastGear_dir + project_prefix + "_core_mask_snp_meta.fasta",gubbins_dir  + "iqtree/" +  project_prefix + "_meta.GubbinsSNPs.newick", fastGear_dir + "fastgear_iqtree/" +  project_prefix + "_meta.coreSNPs.newick", iqtree_dir + project_prefix + "_meta.coreSNPs.newick"
+            return [gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta", fastGear_dir + project_prefix + "_core_mask_snp_meta.fasta",gubbins_dir  + "iqtree/" +  project_prefix + "_meta.GubbinsSNPs.newick", fastGear_dir + "fastgear_iqtree/" +  project_prefix + "_meta.coreSNPs.newick", iqtree_dir + project_prefix + "_meta.coreSNPs.newick"]
 
         else:
-            return gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta", gubbins_dir  + project_prefix + "_meta.GubbinsSNPs.newick", iqtree_dir + project_prefix + "_meta.coreSNPs.newick"
+            return [gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta", gubbins_dir  + project_prefix + "_meta.GubbinsSNPs.newick", iqtree_dir + project_prefix + "_meta.coreSNPs.newick"]
     else:
-        None
+        return []
+
+
 
 # get all sample ID from either assembly file names or gff file names (if provided)
 SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir(gff_dir_self))]
@@ -84,6 +88,7 @@ include: subworkflowdir + "gubbins.smk"
 include: subworkflowdir + "ml.smk"
 include: subworkflowdir + "fastGear.smk"
 
+print(get_prokka_output(gff_dir_self))
 
 # expected output files triggers each rule
 rule all:
@@ -97,5 +102,3 @@ rule all:
         gubbins_dir + "iqtree/" + project_prefix + ".recombFreeSnpsAtcg.treefile",
         get_fastGear_output(matlab_path,fastGear_exe,mcr_path),
         get_annotated(metadata_file, metadata_include)
-        
-        
