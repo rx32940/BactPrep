@@ -19,7 +19,7 @@ rule annotate_coreGene_tree:
         tree=rules.core_gene_concatenation_ML_tree.output,
         metadata_file = metadata_file
     output:
-        iqtree_dir + project_prefix + "_meta.coreSNPs.newick"
+        iqtree_dir + project_prefix + "_meta.coreConcate.newick"
     params:
         meta_include = metadata_include,
         key_column_index = biosample_column -1

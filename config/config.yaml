@@ -1,8 +1,8 @@
-project_name: all_lepto_nonChinaHomo
-asm_dir: /scratch/rx32940/phylogeography/all_lepto_nonChinaHomo/assemblies/
-gff_dir: /scratch/rx32940/phylogeography/all_lepto_nonChinaHomo/gff/
-pirate_input: /scratch/rx32940/phylogeography/all_lepto_nonChinaHomo/assemblies/
-output_dir: /scratch/rx32940/phylogeography/all_lepto_nonChinaHomo/
+project_name: int_noChinanoLb
+asm_dir: /scratch/rx32940/phylogeography/int_noChinanoLb/assemblies
+gff_dir: /scratch/rx32940/phylogeography/int_noChinanoLb/gff/
+pirate_input:
+output_dir: /scratch/rx32940/phylogeography/int_noChinanoLb/
 LD_LIBRARY_PATH: /home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64
 fastGear_exe_path: /home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/
 mcr_path: /home/rx32940/matlab/v901/
