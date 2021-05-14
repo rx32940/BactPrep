@@ -1,8 +1,8 @@
-project_name: int_noChinanoLb
-asm_dir: /scratch/rx32940/phylogeography/int_noChinanoLb/assemblies
-gff_dir: /scratch/rx32940/phylogeography/int_noChinanoLb/gff/
+project_name: lept.int.geo.pangenome
+asm_dir: /scratch/rx32940/lept.int.geo.pangenome/assemblies
+gff_dir: 
 pirate_input:
-output_dir: /scratch/rx32940/phylogeography/int_noChinanoLb/
+output_dir: /scratch/rx32940/lept.int.geo.pangenome/
 LD_LIBRARY_PATH: /home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64
 fastGear_exe_path: /home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/
 mcr_path: /home/rx32940/matlab/v901/
@@ -11,9 +11,9 @@ kingdom: Bacteria
 genus: Leptospira
 reference: /scratch/rx32940/pathogenic_sero/GCF_000092565.1_ASM9256v1_genomic.fna
 phage_region: /scratch/rx32940/pathogenic_sero/snippy/phage_region.bed
-sample_metadata: /home/rx32940/workDir/aim_2/metadata/all_lepto_dated_figAnn.csv
-metadata_include: Year,country,province
-biosample_column: 3
+sample_metadata: /scratch/rx32940/lept.int.geo.pangenome/lepto.int.geo.all.csv
+metadata_include: Year,serogroups,country
+biosample_column: 1
 within_species: TRUE
-define_core: 100
+define_core: 99
 

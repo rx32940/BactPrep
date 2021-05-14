@@ -20,20 +20,20 @@ within_species=config["within_species"]
 subworkflowdir = "rules/"
 
 # pre-defined folder names
-pirate_dir = out_dir + "pirate/"
-roary_dir = out_dir + "roary/"
-iqtree_dir = out_dir + "iqtree/"
-snippy_dir = out_dir + "snippy/"
-gubbins_dir = out_dir + "gubbins/"
-fastGear_dir = out_dir + "fastgear/"
-prokka_dir = out_dir + "prokka/"
+pirate_dir = os.path.join(out_dir , "pirate/")
+roary_dir = os.path.join(out_dir , "roary/")
+iqtree_dir = os.path.join(out_dir , "iqtree/")
+snippy_dir = os.path.join(out_dir , "snippy/")
+gubbins_dir = os.path.join(out_dir , "gubbins/")
+fastGear_dir = os.path.join(out_dir , "fastgear/")
+prokka_dir = os.path.join(out_dir , "prokka/")
 gff_dir_self = config["gff_dir"]
 
 def get_gff_dir(gff_dir_self):
     if gff_dir_self:
         return gff_dir_self
     else:
-        return out_dir + "gff/"
+        return os.path.join(out_dir , "gff/")
 
 gff_dir = get_gff_dir(gff_dir_self)
 
@@ -47,27 +47,27 @@ def get_prokka_output(gff_dir_self):
     if gff_dir_self:
         return []
     else:
-        return expand(gff_dir+ "{sample}.gff", sample=SAMPLES)
+        return expand(os.path.join(gff_dir, "{sample}.gff"), sample=SAMPLES)
 
 def get_core_output(within_species):
     if within_species:
-        return roary_dir + "core_gene_alignment.aln"
+        return os.path.join(roary_dir , "core_gene_alignment.aln")
     else:
-        return pirate_dir + "pirate_roary_pres_abs.csv"
+        return os.path.join(pirate_dir , "pirate_roary_pres_abs.csv")
 
 def get_fastGear_output(matlab_path,fastGear_exe,mcr_path):
     if matlab_path and fastGear_exe and mcr_path:
-        return fastGear_dir + "fastgear_iqtree/" + project_prefix + "_core_mask_snp.treefile"
+        return os.path.join(fastGear_dir , "fastgear_iqtree" , str(project_prefix + "_core_mask_snp.treefile"))
     else:
         return []
 
 def get_annotated(metadata_file, metadata_include):
     if metadata_file and metadata_include:
         if matlab_path and fastGear_exe and mcr_path:
-            return [gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta", fastGear_dir + project_prefix + "_core_mask_snp_meta.fasta",gubbins_dir  + "iqtree/" +  project_prefix + "_meta.GubbinsSNPs.newick", fastGear_dir + "fastgear_iqtree/" +  project_prefix + "_meta.coreSNPs.newick", iqtree_dir + project_prefix + "_meta.coreConcate.newick""]
+            return [os.path.join(gubbins_dir , str(project_prefix + "_meta.recombFreeSnpsAtcg.fasta")), os.path.join(fastGear_dir , str(project_prefix + "_core_mask_snp_meta.fasta")),os.path.join(gubbins_dir  , "iqtree/" ,str(project_prefix + "_meta.GubbinsSNPs.newick") ), os.path.join(fastGear_dir , "fastgear_iqtree" ,  str(project_prefix + "_meta.coreSNPs.newick")), os.path.join(iqtree_dir , str(project_prefix + "_meta.coreConcate.newick"))]
 
         else:
-            return [gubbins_dir  + project_prefix + "_meta.recombFreeSnpsAtcg.fasta", gubbins_dir  + project_prefix + "_meta.GubbinsSNPs.newick", iqtree_dir + project_prefix + "_meta.coreConcate.newick""]
+            return [os.path.join(gubbins_dir  , str(project_prefix + "_meta.recombFreeSnpsAtcg.fasta")), os.path.join(gubbins_dir , str(project_prefix + "_meta.GubbinsSNPs.newick")), os.path.join(iqtree_dir , str(project_prefix + "_meta.coreConcate.newick"))]
     else:
         return []
 
@@ -92,13 +92,13 @@ print(get_prokka_output(gff_dir_self))
 
 # expected output files triggers each rule
 rule all:
-    input: 
-        out_dir + "all_samples_id.txt",
+    input:
+        os.path.join(out_dir, "all_samples_id.txt"),
         # annotate asm for gff files
         get_prokka_output(gff_dir_self),
         get_core_output(within_species),
-        iqtree_dir + project_prefix +".treefile",
+        os.path.join(iqtree_dir , str(project_prefix +".treefile")),
         # snippy_dir + "clean.full.noref.aln",
-        gubbins_dir + "iqtree/" + project_prefix + ".recombFreeSnpsAtcg.treefile",
+        os.path.join(gubbins_dir , "iqtree" , str(project_prefix + ".recombFreeSnpsAtcg.treefile")),
         get_fastGear_output(matlab_path,fastGear_exe,mcr_path),
         get_annotated(metadata_file, metadata_include)

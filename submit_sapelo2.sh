@@ -23,6 +23,6 @@ cd $SLURM_SUBMIT_DIR
 source activate snakemake
 
 snakemake --cores 10 --use-conda
-snakemake --rulegraph| dot -Tpdf > dag.pdf
+snakemake --rulegraph | dot -Tpdf > dag.pdf
 
 conda deactivate

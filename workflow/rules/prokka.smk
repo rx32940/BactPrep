@@ -1,8 +1,8 @@
 rule Prokka:
     input:
-        asm_dir + "{sample}.fna"
+        os.path.join(asm_dir , "{sample}.fna")
     output:
-        directory(prokka_dir + "{sample}")
+        directory(os.path.join(prokka_dir , "{sample}"))
     conda:
         "../env/prokka.yaml"
     threads:
@@ -23,7 +23,7 @@ rule get_gff:
     input:
         rules.Prokka.output
     output:
-        gff_dir + "{sample}.gff"
+        os.path.join(gff_dir , "{sample}.gff")
     shell:
         """
             cp {input}/{wildcards.sample}.gff {gff_dir}{wildcards.sample}".gff"
