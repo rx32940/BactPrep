@@ -2,7 +2,7 @@ rule PIRATE:
     input:
         gff_dir
     output: 
-        pirate_dir + "core_alignment.fasta"
+        os.path.join(pirate_dir , "core_alignment.fasta")
     conda: 
         "../env/pirate.yaml"
     threads: 
@@ -20,9 +20,9 @@ rule PIRATE:
 
 rule convert_to_Roary:
     input:
-        pirate_dir + "PIRATE.*.tsv"
+        os.path.join(pirate_dir , "PIRATE.*.tsv")
     output:
-        pirate_dir + "pirate_roary_pres_abs.csv"
+        os.path.join(pirate_dir , "pirate_roary_pres_abs.csv")
     params:
         script_dir=workflow.basedir + "/scripts/"
     shell:
