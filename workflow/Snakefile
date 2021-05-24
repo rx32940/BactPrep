@@ -95,10 +95,10 @@ rule all:
     input:
         os.path.join(out_dir, "all_samples_id.txt"),
         # annotate asm for gff files
-        get_prokka_output(gff_dir_self),
-        get_core_output(within_species),
-        os.path.join(iqtree_dir , str(project_prefix +".treefile")),
+        # get_prokka_output(gff_dir_self),
+        # get_core_output(within_species),
+        # os.path.join(iqtree_dir , str(project_prefix +".treefile")),
         # snippy_dir + "clean.full.noref.aln",
-        os.path.join(gubbins_dir , "iqtree" , str(project_prefix + ".recombFreeSnpsAtcg.treefile")),
-        get_fastGear_output(matlab_path,fastGear_exe,mcr_path),
-        get_annotated(metadata_file, metadata_include)
+        os.path.join(gubbins_dir , "iqtree" , str(project_prefix + ".recombFreeSnpsAtcg.treefile"))#,
+        # get_fastGear_output(matlab_path,fastGear_exe,mcr_path),
+        # get_annotated(metadata_file, metadata_include)

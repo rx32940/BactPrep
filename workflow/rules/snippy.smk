@@ -22,7 +22,7 @@ rule snippy_core:
         "../env/snippy.yaml"
     shell:
         """
-        snippy-core --mask {phage} --ref {reference} {input} --prefix {snippy_dir}core
+        snippy-core --ref {reference} {input} --prefix {snippy_dir}core
         """
 
 rule clean_snippy_core:
