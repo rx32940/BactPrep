@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1                    	
 #SBATCH --cpus-per-task=10             
 #SBATCH --time=150:00:00
-#SBATCH --mem=10G
+#SBATCH --mem=30G
 #SBATCH --output=../%x.%j.out       
 #SBATCH --error=../%x.%j.out        
 #SBATCH --mail-user=rx32940@uga.edu
