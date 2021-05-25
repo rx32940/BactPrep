@@ -10,7 +10,7 @@ threads_num: 10
 kingdom: Bacteria
 genus: Leptospira
 reference: /scratch/rx32940/lept.int.geo.pangenome/fastBAPs/BAP.lineages/baps.lineage.1/assemblies/SAMN02436629.fna
-phage_region: 
+phage_region: /scratch/rx32940/lept.int.geo.pangenome/fastBAPs/BAP.lineages/baps.lineage.1/SAMN02436629.phage.bed 
 sample_metadata: /scratch/rx32940/lept.int.geo.pangenome/lepto.int.geo.all.csv
 metadata_include: Year,serogroups,country
 biosample_column: 1
