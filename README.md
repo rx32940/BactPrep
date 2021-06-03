@@ -48,8 +48,44 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     conda deactivate
     ```
+## Instruction #1 (Specify Options)
 
-## Instruction
+```
+usage: start_analysis MODULE [options]
+
+Please always specify the program to use in the first argument, or the whole
+pipeline will attemp to run
+
+positional arguments:
+  {gubbins,roary,fastGear,ALL}
+                        Specify the module you would like to run
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -r , --ref            reference (required for gubbins module)
+  -i , --input          path to input dir with assemlies
+  -n , --name           provide name prefix for the output files
+  -t , --thread         num of threads
+  -o , --output         path to the output directory
+  -g , --gff            path to input dir with gff (Must be gff3 files)
+  -a , --annotate       path to a csv file containing sample metadata
+  -s , --sample         integer indicates which column the sample name is in
+                        the metadata csv file
+  -m [ [ ...]], --metadata [ [ ...]]
+                        metadata chosen to annotate ML tree/alignment after
+                        the sample name
+  -p , --phage          phage region identified for masking (bed file)
+  -c , --core           define core gene definition by percentage for roary
+                        module (default=99)
+  -k , --kingdom        specify the kingom of input assemlies for genome
+                        annotation (default=Bacteria)
+  -z , --genus          specify the genus of input assemlies for genome
+                        annotation (default=Leptospira)
+```
+
+**Run**:```python start_analysis.py ALL(roary/gubbins/fastgear)```
+
+## Instruction #2 (Setting up config)
 
 1) change the params in the ```config/config.yaml``` files, including:
     
