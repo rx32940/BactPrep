@@ -1,0 +1,21 @@
+LD_LIBRARY_PATH: /home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64
+asm_dir: /scratch/rx32940/lept.int.pop.structure/Bacterial_Genome_Analysis_Toolbox/../assemblies
+biosample_column: 1
+define_core: 99
+fastGear_batch: ''
+fastGear_exe_path: /home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/
+fastGear_gene_alignment: ''
+fastgear_gene_file_list:
+- /scratch/rx32940/lept.int.pop.structure/roary/pan_genome_sequences/ppnP.fa.aln
+genus: Leptospira
+gff_dir: null
+kingdom: Bacteria
+mcr_path: /home/rx32940/matlab/v901/
+metadata_include: ''
+output: /scratch/rx32940/lept.int.pop.structure/fastgear_gene/ppnP/ppnP.mat
+output_dir: /scratch/rx32940/lept.int.pop.structure
+phage_region: null
+project_name: bacterial_analysis
+reference: ''
+sample_metadata: ''
+threads_num: 1
