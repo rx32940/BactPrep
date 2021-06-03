@@ -22,7 +22,6 @@ cd $SLURM_SUBMIT_DIR
 
 source activate snakemake
 
-snakemake --cores 10 --use-conda
-snakemake --rulegraph | dot -Tpdf > dag.pdf
+python start_analysis.py All
 
 conda deactivate

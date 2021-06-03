@@ -1,5 +1,6 @@
 import os
-configfile: "config/config.yaml"
+import re
+configfile: "config/test.yaml"
 
 reference = config["reference"]
 
@@ -15,7 +16,8 @@ core_percentage = config["define_core"]
 metadata_file=config["sample_metadata"]
 metadata_include = config["metadata_include"]
 biosample_column = config["biosample_column"]
-within_species=config["within_species"]
+fastgear_aln_input= config["fastGear_gene_alignment"]
+# within_species=config["within_species"]
 
 subworkflowdir = "rules/"
 
@@ -26,6 +28,7 @@ iqtree_dir = os.path.join(out_dir , "iqtree/")
 snippy_dir = os.path.join(out_dir , "snippy/")
 gubbins_dir = os.path.join(out_dir , "gubbins/")
 fastGear_dir = os.path.join(out_dir , "fastgear/")
+fastGear_gene_dir = os.path.join(out_dir , "fastgear_gene/")
 prokka_dir = os.path.join(out_dir , "prokka/")
 gff_dir_self = config["gff_dir"]
 
@@ -43,40 +46,13 @@ def get_sample_dir(gff_dir_self):
     else:
         return asm_dir
 
-def get_prokka_output(gff_dir_self):
-    if gff_dir_self:
-        return []
-    else:
-        return expand(os.path.join(gff_dir, "{sample}.gff"), sample=SAMPLES)
-
-def get_core_output(within_species):
-    if within_species:
-        return os.path.join(roary_dir , "core_gene_alignment.aln")
-    else:
-        return os.path.join(pirate_dir , "pirate_roary_pres_abs.csv")
-
-def get_fastGear_output(matlab_path,fastGear_exe,mcr_path):
-    if matlab_path and fastGear_exe and mcr_path:
-        return os.path.join(fastGear_dir , "fastgear_iqtree" , str(project_prefix + "_core_mask_snp.treefile"))
-    else:
-        return []
-
-def get_annotated(metadata_file, metadata_include):
-    if metadata_file and metadata_include:
-        if matlab_path and fastGear_exe and mcr_path:
-            return [os.path.join(gubbins_dir , str(project_prefix + "_meta.recombFreeSnpsAtcg.fasta")), os.path.join(fastGear_dir , str(project_prefix + "_core_mask_snp_meta.fasta")),os.path.join(gubbins_dir  , "iqtree/" ,str(project_prefix + "_meta.GubbinsSNPs.newick") ), os.path.join(fastGear_dir , "fastgear_iqtree" ,  str(project_prefix + "_meta.coreSNPs.newick")), os.path.join(iqtree_dir , str(project_prefix + "_meta.coreConcate.newick"))]
-
-        else:
-            return [os.path.join(gubbins_dir  , str(project_prefix + "_meta.recombFreeSnpsAtcg.fasta")), os.path.join(gubbins_dir , str(project_prefix + "_meta.GubbinsSNPs.newick")), os.path.join(iqtree_dir , str(project_prefix + "_meta.coreConcate.newick"))]
-    else:
-        return []
-
-
 
 # get all sample ID from either assembly file names or gff file names (if provided)
 SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir(gff_dir_self))]
 # get gff file dir base on if user had provided
-gff_dir = get_gff_dir(gff_dir_self)
+# gff_dir = get_gff_dir(gff_dir_self)
+
+
 
 # include rules in the workflow
 include: subworkflowdir + "sample_names.smk"
@@ -85,20 +61,24 @@ include: subworkflowdir + "pangenome.smk"
 include: subworkflowdir + "roary.smk"
 include: subworkflowdir + "snippy.smk"
 include: subworkflowdir + "gubbins.smk"
-include: subworkflowdir + "ml.smk"
 include: subworkflowdir + "fastGear.smk"
+include: subworkflowdir + "annotate_gubbins.smk"
+include: subworkflowdir + "annotate_roary.smk"
+include: subworkflowdir + "annotate_fastGear.smk"
+include: subworkflowdir + "fastGear_gene.smk"
 
-print(get_prokka_output(gff_dir_self))
+# print(get_prokka_output(gff_dir_self))
 
 # expected output files triggers each rule
 rule all:
     input:
-        os.path.join(out_dir, "all_samples_id.txt"),
-        # annotate asm for gff files
+        config['output'].split(",")
+        # os.path.join(out_dir, "all_samples_id.txt"),
+        # # annotate asm for gff files
         # get_prokka_output(gff_dir_self),
         # get_core_output(within_species),
         # os.path.join(iqtree_dir , str(project_prefix +".treefile")),
-        # snippy_dir + "clean.full.noref.aln",
-        os.path.join(gubbins_dir , "iqtree" , str(project_prefix + ".recombFreeSnpsAtcg.treefile"))#,
-        # get_fastGear_output(matlab_path,fastGear_exe,mcr_path),
-        # get_annotated(metadata_file, metadata_include)
+        # # snippy_dir + "clean.full.noref.aln",
+        # os.path.join(gubbins_dir , "iqtree" , str(project_prefix + ".recombFreeSnpsAtcg.treefile"))#,
+        # # get_fastGear_output(matlab_path,fastGear_exe,mcr_path),
+        # # get_annotated(metadata_file, metadata_include)

@@ -20,9 +20,11 @@ rule snippy_core:
         os.path.join(snippy_dir , "core.full.aln")
     conda:
         "../env/snippy.yaml"
+    params:
+        mask=str("--mask ") + phage if phage is not None else None
     shell:
         """
-        snippy-core --mask {phage} --ref {reference} {input} --prefix {snippy_dir}core
+        snippy-core {params.mask} --ref {reference} {input} --prefix {snippy_dir}core
         """
 
 rule clean_snippy_core:
