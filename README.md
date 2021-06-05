@@ -51,36 +51,55 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 ## Instruction #1 (Specify Options)
 
 ```
+python start_analysis.py -h
 usage: start_analysis MODULE [options]
 
 Please always specify the program to use in the first argument, or the whole
 pipeline will attemp to run
 
 positional arguments:
-  {gubbins,roary,fastGear,ALL}
+  {gubbins,roary,fastGear,fastGear_gene,ALL}
                         Specify the module you would like to run
 
 optional arguments:
   -h, --help            show this help message and exit
-  -r , --ref            reference (required for gubbins module)
+
+general arguments:
   -i , --input          path to input dir with assemlies
-  -n , --name           provide name prefix for the output files
+  -p , --name           provide name prefix for the output files
   -t , --thread         num of threads
   -o , --output         path to the output directory
-  -g , --gff            path to input dir with gff (Must be gff3 files)
+
+arguments for if you would like to add metadata to output:
+  -M, --addMetadata     must have the flag specify if want to allow annotation
   -a , --annotate       path to a csv file containing sample metadata
   -s , --sample         integer indicates which column the sample name is in
                         the metadata csv file
   -m [ [ ...]], --metadata [ [ ...]]
                         metadata chosen to annotate ML tree/alignment after
                         the sample name
-  -p , --phage          phage region identified for masking (bed file)
+
+arguments for gubbins module:
+  -r , --ref            reference (required for gubbins module)
+  -v , --phage          phage region identified for masking (bed file)
+
+arguments for roary module:
+  -g , --gff            path to input dir with gff (this can replace input
+                        assemblies dir in roary module Must be gff3 files)
   -c , --core           define core gene definition by percentage for roary
                         module (default=99)
   -k , --kingdom        specify the kingom of input assemlies for genome
                         annotation (default=Bacteria)
   -z , --genus          specify the genus of input assemlies for genome
                         annotation (default=Leptospira)
+
+arguments for fastGear_gene module:
+  -n , --alignment      input alignment (either -n/-fl is required for
+                        fastGear_gene module)
+  -fl , --alnlist       input alignment list with path to gene alignments
+                        (either -n/-fl is required for fastGear_gene module)
+
+Enjoy the program! :)
 ```
 
 **Run**:```python start_analysis.py ALL(roary/gubbins/fastgear)```
