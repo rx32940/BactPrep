@@ -5,15 +5,16 @@ rule annotate_core_SNPs_alignment:
     output:
         os.path.join(fastGear_dir , str(project_prefix + "_core_mask_snp_meta.fasta"))
     params:
-        meta_include = metadata_include if metadata_include is not None else None,
-        key_column_index = biosample_column -1 if metadata_include is not None else None 
+        meta_include = metadata_include,
+        key_column_index = biosample_column -1
     shell:
         """
-        if metadata_file != "":
-            python {workflow.basedir}/scripts/change_fasta_header.py \
-            {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {output}
-        else:
+        if [[ -z {input.metadata_file} ]]; 
+        then
+            python {workflow.basedir}/scripts/change_fasta_header.py {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {output}
+        else
             touch {output}
+        fi
         """
 
 rule annotate_coreSNP_tree:
@@ -23,13 +24,14 @@ rule annotate_coreSNP_tree:
     output:
         os.path.join(fastGear_dir , "fastgear_iqtree" , str(project_prefix + "_meta.coreSNPs.newick"))
     params:
-        meta_include = metadata_include if metadata_include is not None else None,
-        key_column_index = biosample_column -1 if metadata_include is not None else None
+        meta_include = metadata_include,
+        key_column_index = biosample_column -1
     shell:
         """
-        if metadata_file != "":
-            python {workflow.basedir}/scripts/rename_phylogeny_taxa.py \
-            {input.metadata_file} {input.tree} {params.meta_include} {params.key_column_index} {output}
-        else:
+        if [[ -n {input.metadata_file} ]]; 
+        then
+            python {workflow.basedir}/scripts/rename_phylogeny_taxa.py {input.metadata_file} {input.tree} {params.meta_include} {params.key_column_index} {output}
+        else
             touch {output}
+        fi
         """

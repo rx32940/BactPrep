@@ -25,9 +25,13 @@ general_arguments.add_argument("-i","--input", type=str, help= "path to input di
 general_arguments.add_argument("-p", "--name", type=str, help= "provide name prefix for the output files",metavar='', default= "bacterial_analysis" )
 general_arguments.add_argument('-t','--thread', type=int,  help = "num of threads", metavar='', default = 1)
 general_arguments.add_argument('-o','--output', type=str,  help = "path to the output directory", metavar='', default=str(curren_wd.parent.absolute()))
-general_arguments.add_argument("-a", "--annotate", type=str, help= "path to a csv file containing sample metadata", metavar='', default="")
-general_arguments.add_argument("-s", "--sample", type=int, help= "integer indicates which column the sample name is in the metadata csv file", metavar='',default=1)
-general_arguments.add_argument("-m", "--metadata", help= "metadata chosen to annotate ML tree/alignment after the sample name", nargs='*',metavar='',default="")
+
+# output annotation arguments
+annotate_arguments = general_parser.add_argument_group("arguments for if you would like to add metadata to output")
+annotate_arguments.add_argument("-M", "--addMetadata", default=False, action='store_true', help= "must have the flag specify if want to allow annotation")
+annotate_arguments.add_argument("-a", "--annotate", type=str, help= "path to a csv file containing sample metadata", metavar='', default="")
+annotate_arguments.add_argument("-s", "--sample", type=int, help= "integer indicates which column the sample name is in the metadata csv file", metavar='',default=1)
+annotate_arguments.add_argument("-m", "--metadata", type=str,help= "metadata chosen to annotate ML tree/alignment after the sample name",metavar='',default="")
 
 
 
@@ -63,6 +67,7 @@ REF=args.ref
 OUT=args.output
 THREAD=args.thread
 GFF=args.gff
+ADDANOT=args.addMetadata
 ANOT=args.annotate
 SAMPLE=args.sample
 META=args.metadata
@@ -76,12 +81,12 @@ SINGLE= True if ALN != "" else False
 
 
 
+
 # open 
 
 if FL != "":
     with open(FL) as f:
-        FILELIST = f.readlines()
-                
+        FILELIST = f.readlines()     
     FILELIST = [x.strip() for x in FILELIST] 
 elif ALN !="":
     FILELIST = [ALN]
@@ -115,25 +120,30 @@ def get_annotated(module):
     if module == "roary":
         anot_files=str(os.path.join(OUT,"iqtree",str(NAME + "_meta.coreConcate.newick")))
     if module == "gubbins":
-        anot_files=str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +"," +str(os.path.join(OUT ,'gubbins' ,str(NAME + "_meta.GubbinsSNPs.newick")))
-    if module == "fastgear":
+        anot_files=str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +"," +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick")))
+    if module == "fastGear":
         anot_files=str(os.path.join(OUT,"fastgear" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick")))
+    if module == "ALL":
+        anot_files=str(os.path.join(OUT,"iqtree",str(NAME + "_meta.coreConcate.newick"))) +"," + str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +"," +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick"))) +"," + str(os.path.join(OUT,"fastgear" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick")))
+    if module == "fastGear_gene":
+        ADDANOT=Fasle
+        anot_files=""
     return anot_files
 
 def get_output(module):
-    output_files=""
+
     if module == "roary":
         output_files=str(os.path.join(OUT,"iqtree" , str(NAME +".treefile")))
-        if ANOT:
-            output_files=str(output_files) + ",",get_annotated(module)
+        if ADDANOT:
+            output_files=str(output_files) + ","+get_annotated(module)
     elif module == "gubbins":
         output_files=str(os.path.join(OUT , "gubbins", "iqtree" , str(NAME + ".recombFreeSnpsAtcg.treefile")))
-        if ANOT:
-            output_files=str(output_files) + ",",get_annotated(module)        
+        if ADDANOT:
+            output_files=str(output_files) + ","+get_annotated(module)        
     elif module == "fastGear":
         output_files=str(os.path.join(OUT , "fastgear" , "fastgear_iqtree" + str(NAME + "_core_mask_snp.treefile")))
-        if ANOT:
-            output_files=str(output_files) + ",",get_annotated(module)  
+        if ADDANOT:
+            output_files=str(output_files) + ","+get_annotated(module)  
     elif module == "fastGear_gene":
         if SINGLE:
             output_files=",".join([str(os.path.join(OUT,"fastgear_gene" ,GENE_NAME[0],str(GENE_NAME[0] + ".mat")))])
@@ -141,9 +151,9 @@ def get_output(module):
             output_files=",".join([str(os.path.join(OUT,"fastgear_gene" ,file,str(file + ".mat"))) for file in GENE_NAME])
     elif module == "ALL":
         output_files=str(os.path.join(OUT,"iqtree" , str(NAME +".treefile")))+ "," + str(os.path.join(OUT , "gubbins", "iqtree" , str(NAME + ".recombFreeSnpsAtcg.treefile")))+ "," + str(os.path.join(OUT , "fastgear" , "fastgear_iqtree" , str(NAME + "_core_mask_snp.treefile")))
-        if ANOT:
-            output_files=str(output_files) + ",",get_annotated(module)
-    
+        if ADDANOT:
+            output_files=str(output_files) + "," + get_annotated(module)
+
     output={'output': output_files}      
     return output
 
@@ -168,32 +178,18 @@ config = {'project_name': NAME,
 'LD_LIBRARY_PATH': '/home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64',
 'fastGear_exe_path': '/home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/',
 'mcr_path': '/home/rx32940/matlab/v901/',
-'fastGear_gene_alignment': ALN,
-'fastGear_gene_alignment': FL,
-'fastGear_batch':FL,
 'fastgear_gene_file_list': FILELIST}
 
 
-if MODULE == "roary":
-    config.update(get_output(MODULE))
-    with open("config/test.yaml", "w") as configfile:
-        yaml.dump(config,configfile)
-elif MODULE == "gubbins":
-    config.update(get_output(MODULE))
-    with open("config/test.yaml", "w") as configfile:
-        yaml.dump(config,configfile)
-elif MODULE == "fastgear":
-    config.update(get_output(MODULE))   
-    with open("config/test.yaml", "w") as configfile:
-        yaml.dump(config,configfile)
-else:
-    config.update(get_output(MODULE))     
-    with open("config/test.yaml", "w") as configfile:
-        yaml.dump(config,configfile)
+
+config.update(get_output(MODULE))     
+with open("config/test.yaml", "w") as configfile:
+    yaml.dump(config,configfile)
+
 
 
 if __name__ == "__main__":
-    os.system ("snakemake --cores 10 --use-conda")
+    os.system ("snakemake --cores %d --use-conda"%THREAD)
 
 
 

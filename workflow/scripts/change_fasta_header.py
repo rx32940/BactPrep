@@ -31,8 +31,7 @@ with open(str(sys.argv[2])) as f, open(str(sys.argv[5]), "w") as w:
         print(r.id)
         SeqIO.write(r, w, "fasta")
 
-if __name__ == "__main__":
-    main()
+    
 
 
 
