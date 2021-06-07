@@ -12,7 +12,7 @@
 
 
 
-cd $SLURM_SUBMIT_DIR
+
 
 # ml Biopython/1.75-intel-2019b-Python-3.7.4
 # ml snakemake/5.7.1-foss-2019b-Python-3.7.4
@@ -22,6 +22,20 @@ cd $SLURM_SUBMIT_DIR
 
 source activate snakemake
 
-python start_analysis.py All
+cd $SLURM_SUBMIT_DIR
+
+GENPATH="/scratch/rx32940/pop.structure.lepto.int"
+LINEAGEPATH="/scratch/rx32940/pop.structure.lepto.int/lineages/7.lineage.dated"
+
+python start_analysis.py ALL -p pop.struc.lineage.7.dated \
+-t 10 \
+-v $GENPATH/phage_region.bed \
+-r $GENPATH/GCF_000092565.1_ASM9256v1_genomic.fna \
+-i $LINEAGEPATH/assemblies \
+-M \
+-a $GENPATH/lept.int.asm.qual.meta.filtered.mutant.filtered.cgSTfilled.hierbaps.csv \
+-s 1 \
+-m Year,country.1,hierbaps.reordered
+
 
 conda deactivate

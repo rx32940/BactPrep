@@ -16,7 +16,6 @@ core_percentage = config["define_core"]
 metadata_file=config["sample_metadata"]
 metadata_include = config["metadata_include"]
 biosample_column = config["biosample_column"]
-fastgear_aln_input= config["fastGear_gene_alignment"]
 # within_species=config["within_species"]
 
 subworkflowdir = "rules/"
