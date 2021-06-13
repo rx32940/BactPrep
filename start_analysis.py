@@ -52,7 +52,7 @@ fastgear_arguments = general_parser.add_argument_group("arguments for all three 
 fastgear_arguments.add_argument("--fg","--fastgear_param", type=str, help="path to fastGear params", metavar='', default='/home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/fG_input_specs.txt')
 fastgear_arguments.add_argument("--mcr_path", type=str, help="path to mcr runtime (need to install before use any of the fastGear module", metavar='', default='/home/rx32940/matlab/v901/')
 fastgear_arguments.add_argument("--LD_LIBRARY_PATH", type=str, help="LD_LIBRARY_PATH, this can be find after mcr runtime installation", metavar='',default='/home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64')
-fastgear_arguments.add_argument("--fastgear-exe", type=str, help="path to the excutable of fastGear", metavar='', default='/home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/')
+fastgear_arguments.add_argument("--fastgear_exe", type=str, help="path to the excutable of fastGear", metavar='', default='/home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/')
 
 
 # fastgear_gene arguments
@@ -87,7 +87,7 @@ ALN=args.alignment
 FL=args.alnlist
 SINGLE= True if ALN != "" else False
 FASTGEAR_PARAM=args.fg
-FASTGEAR_EXE=args.fastgear-exe
+FASTGEAR_EXE=args.fastgear_exe
 MCR_PATH=args.mcr_path
 LD_LIB_PATH=args.LD_LIBRARY_PATH
 
