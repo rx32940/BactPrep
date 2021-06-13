@@ -52,18 +52,18 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 ### Module Selection:
     
-**Gubbins:** detect recombination from WGS alignment
+```Gubbins```: detect recombination from WGS alignment
     
-**Roary:** construct bacteria pangenome
+```Roary```: construct bacteria pangenome
     
-**fastGear:** will attempt to detect recombination for each gene in the  all genes in the  pangenome individually
+```fastGear```: will attempt to detect recombination for each gene in the  all genes in the  pangenome individually
                 - predict recombinaiton among lineages detected by BAPs (can also provide your own lineage)
                 - this module use gene loci detected by Roary, thus will also run module roary
                 - please use fastGear_gene module for individual gene/alignment of interest
 
-**fastGear_gene:** will detect recombination from a gene/alignment interested
+```fastGear_gene```: will detect recombination from a gene/alignment interested
 
-**fastGear_core:** will dect recombinations only from the core genes detected by Roary
+```fastGear_core```: will dect recombinations only from the core genes detected by Roary
                 - this is part of the ALL module
                 - this module use gene loci detected by Roary, thus will also run module roary
                 - will mask detected recombination region, and call SNPs from conserved region of core genome alignment
@@ -72,7 +72,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 
         
-**ALL:** this module will attempt to run gubbins, roary, and fastGear_core module
+```ALL```: this module will attempt to run gubbins, roary, and fastGear_core module
 
 
 ```
