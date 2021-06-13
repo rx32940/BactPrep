@@ -50,6 +50,31 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
 ## Instruction #1 (Specify Options)
 
+### Module Selection:
+    
+**Gubbins:** detect recombination from WGS alignment
+    
+**Roary:** construct bacteria pangenome
+    
+**fastGear:** will attempt to detect recombination for each gene in the  all genes in the  pangenome individually
+                - predict recombinaiton among lineages detected by BAPs (can also provide your own lineage)
+                - this module use gene loci detected by Roary, thus will also run module roary
+                - please use fastGear_gene module for individual gene/alignment of interest
+
+**fastGear_gene:** will detect recombination from a gene/alignment interested
+
+**fastGear_core:** will dect recombinations only from the core genes detected by Roary
+                - this is part of the ALL module
+                - this module use gene loci detected by Roary, thus will also run module roary
+                - will mask detected recombination region, and call SNPs from conserved region of core genome alignment
+                - recombinations were detected for each gene individually
+                - will also reconstruct phylogeny for the dataset based on the core clonal SNPs.
+
+
+        
+**ALL:** this module will attempt to run gubbins, roary, and fastGear_core module
+
+
 ```
 python start_analysis.py -h
 usage: start_analysis MODULE [options]
@@ -58,7 +83,7 @@ Please always specify the program to use in the first argument, or the whole
 pipeline will attemp to run
 
 positional arguments:
-  {gubbins,roary,fastGear,fastGear_gene,ALL}
+  {gubbins,roary,fastGear_core,fastGear,fastGear_gene,ALL}
                         Specify the module you would like to run
 
 optional arguments:
@@ -75,8 +100,7 @@ arguments for if you would like to add metadata to output:
   -a , --annotate       path to a csv file containing sample metadata
   -s , --sample         integer indicates which column the sample name is in
                         the metadata csv file
-  -m [ [ ...]], --metadata [ [ ...]]
-                        metadata chosen to annotate ML tree/alignment after
+  -m , --metadata       metadata chosen to annotate ML tree/alignment after
                         the sample name
 
 arguments for gubbins module:
@@ -93,6 +117,15 @@ arguments for roary module:
   -z , --genus          specify the genus of input assemlies for genome
                         annotation (default=Leptospira)
 
+arguments for all three fastGear modules (fastGear_core, fastGear, fastGear_gene):
+  --fg , --fastgear_param 
+                        path to fastGear params
+  --mcr_path            path to mcr runtime (need to install before use any of
+                        the fastGear module
+  --LD_LIBRARY_PATH     LD_LIBRARY_PATH, this can be find after mcr runtime
+                        installation
+  --fastgear-exe        path to the excutable of fastGear
+
 arguments for fastGear_gene module:
   -n , --alignment      input alignment (either -n/-fl is required for
                         fastGear_gene module)
@@ -102,7 +135,7 @@ arguments for fastGear_gene module:
 Enjoy the program! :)
 ```
 
-**Run**:```python start_analysis.py ALL(roary/gubbins/fastgear)```
+**Run**:```python start_analysis.py ALL(roary/gubbins/fastGear)```
 
 ## Instruction #2 (Setting up config)
 

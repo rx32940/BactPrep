@@ -3,7 +3,7 @@ import argparse
 import yaml
 from pathlib import Path
 
-modules = ['gubbins', 'roary', 'fastGear', 'fastGear_gene','ALL']
+modules = ['gubbins', 'roary', 'fastGear_core','fastGear', 'fastGear_gene','ALL']
 
 
 # declare an argparse variable 
@@ -16,7 +16,7 @@ epilog='Enjoy the program! :)')
 # postional arguments required to provide by user
 general_parser.add_argument('MODULE', action='store', type=str, 
 help='Specify the module you would like to run', 
-choices=['gubbins', 'roary', 'fastGear', 'fastGear_gene','ALL'])
+choices=['gubbins', 'roary', 'fastGear_core','fastGear', 'fastGear_gene','ALL'])
 curren_wd = Path(os.getcwd())
 
 # General Arguments
@@ -46,6 +46,14 @@ roary_arguments.add_argument("-g", "--gff", type=str, help= "path to input dir w
 roary_arguments.add_argument("-c", "--core", type=int,help= "define core gene definition by percentage for roary module (default=99)",metavar='',default=99)
 roary_arguments.add_argument("-k", "--kingdom", type=str,help= "specify the kingom of input assemlies for genome annotation (default=Bacteria)",metavar='',default="Bacteria")
 roary_arguments.add_argument("-z", "--genus", type=str,help= "specify the genus of input assemlies for genome annotation (default=Leptospira)",metavar='',default="Leptospira")
+
+# fastGear modules alignments (for all three fastGear moudles)
+fastgear_arguments = general_parser.add_argument_group("arguments for all three fastGear modules (fastGear_core, fastGear, fastGear_gene)")
+fastgear_arguments.add_argument("--fg","--fastgear_param", type=str, help="path to fastGear params", metavar='', default='/home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/fG_input_specs.txt')
+fastgear_arguments.add_argument("--mcr_path", type=str, help="path to mcr runtime (need to install before use any of the fastGear module", metavar='', default='/home/rx32940/matlab/v901/')
+fastgear_arguments.add_argument("--LD_LIBRARY_PATH", type=str, help="LD_LIBRARY_PATH, this can be find after mcr runtime installation", metavar='',default='/home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64')
+fastgear_arguments.add_argument("--fastgear-exe", type=str, help="path to the excutable of fastGear", metavar='', default='/home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/')
+
 
 # fastgear_gene arguments
 fastgear_gene_arguments = general_parser.add_argument_group("arguments for fastGear_gene module")
@@ -78,8 +86,10 @@ GENUS=args.genus
 ALN=args.alignment
 FL=args.alnlist
 SINGLE= True if ALN != "" else False
-
-
+FASTGEAR_PARAM=args.fg
+FASTGEAR_EXE=args.fastgear-exe
+MCR_PATH=args.mcr_path
+LD_LIB_PATH=args.LD_LIBRARY_PATH
 
 
 # open 
@@ -121,11 +131,14 @@ def get_annotated(module):
         anot_files=str(os.path.join(OUT,"iqtree",str(NAME + "_meta.coreConcate.newick")))
     if module == "gubbins":
         anot_files=str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +"," +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick")))
-    if module == "fastGear":
-        anot_files=str(os.path.join(OUT,"fastgear" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick")))
+    if module == "fastGear_core":
+        anot_files=str(os.path.join(OUT,"fastgear_core" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick")))
     if module == "ALL":
-        anot_files=str(os.path.join(OUT,"iqtree",str(NAME + "_meta.coreConcate.newick"))) +"," + str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +"," +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick"))) +"," + str(os.path.join(OUT,"fastgear" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick")))
+        anot_files=str(os.path.join(OUT,"iqtree",str(NAME + "_meta.coreConcate.newick"))) +"," + str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +"," +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick"))) +"," + str(os.path.join(OUT,"fastgear_core" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick")))
     if module == "fastGear_gene":
+        ADDANOT=Fasle
+        anot_files=""
+    if module == "fastGear":
         ADDANOT=Fasle
         anot_files=""
     return anot_files
@@ -141,16 +154,23 @@ def get_output(module):
         if ADDANOT:
             output_files=str(output_files) + ","+get_annotated(module)        
     elif module == "fastGear":
-        output_files=str(os.path.join(OUT , "fastgear" , "fastgear_iqtree" + str(NAME + "_core_mask_snp.treefile")))
+        output_files=str(os.path.join(OUT , "fastgear" , "plot_pangenome/pan_fastgear_plot_recombination_count.pdf")) 
         if ADDANOT:
-            output_files=str(output_files) + ","+get_annotated(module)  
+            output_files=str(output_files) + ","+get_annotated(module) 
+    elif module == "fastGear_core":
+        output_files=str(os.path.join(OUT , "fastgear_core" , "plot_coregenome/core_fastgear_plot_recombination_count.pdf")) + ","\
+            + str(os.path.join(OUT, "fastgear_core" , "fastgear_iqtree" , str(NAME + "_core_mask_snp.treefile")))  
     elif module == "fastGear_gene":
         if SINGLE:
             output_files=",".join([str(os.path.join(OUT,"fastgear_gene" ,GENE_NAME[0],str(GENE_NAME[0] + ".mat")))])
         else:
             output_files=",".join([str(os.path.join(OUT,"fastgear_gene" ,file,str(file + ".mat"))) for file in GENE_NAME])
     elif module == "ALL":
-        output_files=str(os.path.join(OUT,"iqtree" , str(NAME +".treefile")))+ "," + str(os.path.join(OUT , "gubbins", "iqtree" , str(NAME + ".recombFreeSnpsAtcg.treefile")))+ "," + str(os.path.join(OUT , "fastgear" , "fastgear_iqtree" , str(NAME + "_core_mask_snp.treefile")))
+        output_files=str(os.path.join(OUT,"iqtree" , str(NAME +".treefile")))+ ","\
+            + str(os.path.join(OUT , "gubbins", "iqtree" , str(NAME + ".recombFreeSnpsAtcg.treefile")))+ ","\
+                + str(os.path.join(OUT , "fastgear_core" , "plot_coregenome/core_fastgear_plot_recombination_count.pdf")) + ","\
+                    + str(os.path.join(OUT, "fastgear_core" , "fastgear_iqtree" , str(NAME + "_core_mask_snp.treefile"))) + ","\
+                        + str(os.path.join(OUT , "fastgear_core" , "plot_coregenome/core_fastgear_plot_recombination_count.pdf"))
         if ADDANOT:
             output_files=str(output_files) + "," + get_annotated(module)
 
@@ -175,11 +195,11 @@ config = {'project_name': NAME,
 'genus': GENUS,
 'define_core': CORE,
 'phage_region':PHAGE,
-'LD_LIBRARY_PATH': '/home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64',
-'fastGear_exe_path': '/home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/',
-'mcr_path': '/home/rx32940/matlab/v901/',
+'LD_LIBRARY_PATH': LD_LIB_PATH,
+'fastGear_exe_path': FASTGEAR_EXE,
+'mcr_path': MCR_PATH,
+'fastGear_params': FASTGEAR_PARAM,
 'fastgear_gene_file_list': FILELIST}
-
 
 
 config.update(get_output(MODULE))     

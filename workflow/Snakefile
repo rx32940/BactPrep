@@ -16,6 +16,7 @@ core_percentage = config["define_core"]
 metadata_file=config["sample_metadata"]
 metadata_include = config["metadata_include"]
 biosample_column = config["biosample_column"]
+fastGear_params=config['fastGear_params']
 # within_species=config["within_species"]
 
 subworkflowdir = "rules/"
@@ -26,6 +27,7 @@ roary_dir = os.path.join(out_dir , "roary/")
 iqtree_dir = os.path.join(out_dir , "iqtree/")
 snippy_dir = os.path.join(out_dir , "snippy/")
 gubbins_dir = os.path.join(out_dir , "gubbins/")
+fastGear_core_dir = os.path.join(out_dir , "fastgear_core/")
 fastGear_dir = os.path.join(out_dir , "fastgear/")
 fastGear_gene_dir = os.path.join(out_dir , "fastgear_gene/")
 prokka_dir = os.path.join(out_dir , "prokka/")
@@ -61,10 +63,12 @@ include: subworkflowdir + "roary.smk"
 include: subworkflowdir + "snippy.smk"
 include: subworkflowdir + "gubbins.smk"
 include: subworkflowdir + "fastGear.smk"
+include: subworkflowdir + "fastGear_core.smk"
 include: subworkflowdir + "annotate_gubbins.smk"
 include: subworkflowdir + "annotate_roary.smk"
 include: subworkflowdir + "annotate_fastGear.smk"
 include: subworkflowdir + "fastGear_gene.smk"
+
 
 # print(get_prokka_output(gff_dir_self))
 
