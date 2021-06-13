@@ -27,7 +27,7 @@ rule plot_core_fastGear:
     input:
         loci=rules.extract_core_loci.output,
         tree=rules.core_gene_concatenation_ML_tree.output,
-        rules.fastGear_core.output
+        fastGear_out=rules.fastGear_core.output
     output:
         fastGear_core_dir + "plot_coregenome/core_fastgear_plot_recombination_count.pdf"
     shell:
