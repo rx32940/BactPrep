@@ -2,7 +2,9 @@ rule Roary:
     input:
         expand(rules.get_gff.output, sample=SAMPLES)
     output:
-        roary_dir + "core_gene_alignment.aln"
+        roary_dir + "core_gene_alignment.aln",
+        roary_dir + "core_alignment_header.embl",
+        roary_dir + "gene_presence_absence.csv"
     threads:
         THREADS
     conda:
@@ -19,7 +21,7 @@ rule Roary:
 
 rule core_gene_concatenation_ML_tree:
     input:
-        msa = rules.Roary.output
+        msa = rules.Roary.output[0]
     output:
         iqtree_dir + project_prefix +".treefile"
     conda:

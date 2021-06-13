@@ -1,71 +1,67 @@
+checkpoint change_pan_gene_aln_headers:
+    input:
+        rules.Roary.output[2]
+    output:
+        temp(directory(os.path.join(fastGear_dir ,"roary_pangenome_seq")))
+    shell:
+        """
+            mkdir -p {fastGear_dir}roary_pangenome_seq
+            python {workflow.basedir}/scripts/change.roary.gene.alns.headers.py {roary_dir}pan_genome_sequences {fastGear_dir}roary_pangenome_seq {input}
+        """
+
 rule fastGear:
     input:
-        rules.Roary.output
+        rules.change_pan_gene_aln_headers.output
     output:
-        os.path.join(fastGear_dir , "output/recombinations_recent.txt")
-    params:
-        output_mat = os.path.join(fastGear_dir , str(project_prefix + ".mat"))
+        os.path.join(fastGear_dir , "loci_fastGear_out","{locus}/output/recombinations_recent.txt"),
+        temp(os.path.join(fastGear_dir , "loci_fastGear_out","{locus}/{locus}.fa"))
     shell:
         """
         LD_LIBRARY_PATH={matlab_path}
-        {fastGear_exe}run_fastGEAR.sh {mcr_path} {input} {params.output_mat} {fastGear_exe}fG_input_specs.txt 
+        {fastGear_exe}run_fastGEAR.sh {mcr_path} {fastGear_dir}roary_pangenome_seq/{wildcards.locus}.fa.aln {fastGear_dir}loci_fastGear_out/{wildcards.locus}/{wildcards.locus}.mat {fastGear_params} 
+        cp {fastGear_dir}roary_pangenome_seq/{wildcards.locus}.fa.aln {fastGear_dir}loci_fastGear_out/{wildcards.locus}/{wildcards.locus}.fa
         """
 
-rule convert_recombination_to_bed:
+def get_all_loci(wildcards):
+    all_loci = [locus.replace("/",".").split(".")[-3] for locus in os.listdir(checkpoints.change_pan_gene_aln_headers.get().output[0]) if not locus.startswith('.') ]
+    print(all_loci)
+    return expand(os.path.join(fastGear_dir , "loci_fastGear_out","{locus}/output/recombinations_recent.txt"), locus=all_loci)
+
+rule create_loci_file:
     input:
-        recent = rules.fastGear.output
+        get_all_loci
     output:
-        os.path.join(fastGear_dir , "output/recombinations_recent.bed")
-    script:
-        "../scripts/fastGear_to_bed.py"
+        fastGear_dir + "plot_pangenome/all_loci_list.txt"
+    run:
+        loci = [file.split("/")[-3] for file in input]
+        print(loci)
+        with open(str(output[0]), mode='w', encoding='utf-8') as myfile:
+            myfile.write('\n'.join(loci))
+
+rule plot_pan_fastGear:
+    input:
+        loci=rules.create_loci_file.output,
+        tree=rules.core_gene_concatenation_ML_tree.output
+    output:
+        fastGear_dir + "plot_pangenome/pan_fastgear_plot_recombination_count.pdf"
+
+    shell:
+        """
+        cd {fastGear_dir}plot_pangenome/
+        python {workflow.basedir}/scripts/post_fastGear.py \
+        -i {fastGear_dir}panloci_fastGear_out \
+        -g {input.loci} \
+        -o {fastGear_dir}plot_pangenome/pan_fastgear_plot \
+        -s True -f pdf -p {input.tree} -z False -y 100 -x 100
+        """
+
+
  
-
-rule mask_recombination:
-    input:
-        bed = rules.convert_recombination_to_bed.output,
-        fasta = rules.Roary.output
-    output:
-        os.path.join(fastGear_dir , str(project_prefix + "_core_mask.fasta"))
-    conda:
-        "../env/bedtools.yaml"
-    shell:
-        """
-        bedtools maskfasta -fi {input.fasta} -bed {input.bed} -fo {output}
-        """
-
-rule call_snp_from_masked_alignment:
-    input:
-        rules.mask_recombination.output
-    output:
-        os.path.join(fastGear_dir , str(project_prefix + "_core_mask_snp.fasta"))
-    conda:
-        "../env/bedtools.yaml"
-    shell:
-        """
-            snp-sites -c {input} -o {output}
-        """
-
-rule core_genome_snps_ML_tree:
-    input:
-        rules.call_snp_from_masked_alignment.output
-    output:
-        os.path.join(fastGear_dir , "fastgear_iqtree" , str(project_prefix + "_core_mask_snp.treefile"))
-    conda:
-        "../env/iqtree.yaml"
-    threads:
-        THREADS
-    params:
-        prefix = os.path.join(fastGear_dir , "fastgear_iqtree" , str(project_prefix + "_core_mask_snp"))
-    shell:
-        """
-            iqtree -bb 1000 -nt AUTO -m MFP+ASC -pre {params.prefix} -s {input}
-        """
-
-
-
 
 
 
 
 
         
+
+
