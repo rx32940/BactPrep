@@ -1,3 +1,0 @@
-SyntaxError in line 30 of /scratch/rx32940/pop.structure.lepto.int/lineages/4.lineage/Bacterial_Genome_Analysis_Toolbox/workflow/rules/fastGear_core.smk:
-positional argument follows keyword argument
-  File "/scratch/rx32940/pop.structure.lepto.int/lineages/4.lineage/Bacterial_Genome_Analysis_Toolbox/workflow/Snakefile", line 66, in <module>

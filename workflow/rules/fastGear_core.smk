@@ -14,30 +14,12 @@ rule fastGear_core:
         rules.change_pan_gene_aln_headers.output
     output:
         os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/output/recombinations_recent.txt"),
-        temp(os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/{core_locus}.fa"))
+        os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/{core_locus}.fa")
     shell:
         """
         LD_LIBRARY_PATH={matlab_path}
         {fastGear_exe}run_fastGEAR.sh {mcr_path} {fastGear_dir}roary_pangenome_seq/{wildcards.core_locus}.fa.aln {fastGear_core_dir}core_loci_fastGear_out/{wildcards.core_locus}/{wildcards.core_locus}.mat {fastGear_params}
         cp {fastGear_dir}roary_pangenome_seq/{wildcards.core_locus}.fa.aln {fastGear_core_dir}core_loci_fastGear_out/{wildcards.core_locus}/{wildcards.core_locus}.fa
-        """
-
-
-rule plot_core_fastGear:
-    input:
-        loci=rules.extract_core_loci.output,
-        tree=rules.core_gene_concatenation_ML_tree.output,
-        fastGear_out=rules.fastGear_core.output
-    output:
-        fastGear_core_dir + "plot_coregenome/core_fastgear_plot_recombination_count.pdf"
-    shell:
-        """
-        cd {fastGear_core_dir}plot_coregenome/
-        python {workflow.basedir}/scripts/post_fastGear.py \
-        -i {fastGear_core_dir}core_loci_fastGear_out \
-        -g {input.loci} \
-        -o {fastGear_core_dir}plot_coregenome/core_fastgear_plot \
-        -s True -f pdf -p {input.tree} -z True -y 100 -x 100
         """
 
 rule convert_recombination_to_bed:
@@ -53,7 +35,7 @@ rule mask_recombination:
         bed = rules.convert_recombination_to_bed.output,
         fasta = rules.fastGear_core.output[1]
     output:
-        temp(os.path.join(fastGear_core_dir , "masked_coregene_aln","{core_locus}_core_mask.fasta"))
+        os.path.join(fastGear_core_dir , "masked_coregene_aln","{core_locus}_core_mask.fasta")
     conda:
         "../env/bedtools.yaml"
     shell:
@@ -66,6 +48,34 @@ def get_masked_core_aln(wildcards):
         core_loci=[locus for locus in f.read().split('\n') if len(locus) > 0]
     return expand(os.path.join(fastGear_core_dir , "masked_coregene_aln","{core_locus}_core_mask.fasta"), core_locus=core_loci)
 
+
+rule create_core_loci_file:
+    input:
+        get_masked_core_aln
+    output:
+        fastGear_core_dir + "core_loci_list.txt"
+    run:
+        loci = [file.split("/")[-1].split("_core_mask")[0].strip() for file in input if not file.startswith(".")]
+        with open(str(output[0]), mode='w', encoding='utf-8') as myfile:
+            myfile.write('\n'.join(loci))
+
+
+rule plot_core_fastGear:
+    input:
+        loci=rules.create_core_loci_file.output,
+        tree=rules.core_gene_concatenation_ML_tree.output,
+    output:
+        fastGear_core_dir + "plot_coregenome/core_fastgear_plot_recombination_count.pdf"
+    shell:
+        """
+        cd {fastGear_core_dir}plot_coregenome/
+        python {workflow.basedir}/scripts/post_fastGear.py \
+        -i {fastGear_core_dir}core_loci_fastGear_out \
+        -g {input.loci} \
+        -o {fastGear_core_dir}plot_coregenome/core_fastgear_plot \
+        -s True -f pdf -p {input.tree} -z True -y 100 -x 100
+        """
+
 rule concate_gene_aln:
     input:
         get_masked_core_aln
@@ -73,12 +83,8 @@ rule concate_gene_aln:
         os.path.join(fastGear_core_dir, "fastGear_masked_coregene_aln.fasta")
     shell:
         """
-            touch {output}
-            cat {input[0]}
-            while read $file;
-            do
-            cat $file >> {output}
-            done
+    
+            perl {workflow.basedir}/scripts/catfasta2phyml.pl -f --concatenate --verbose {fastGear_core_dir}masked_coregene_aln/*fasta > {output}
         """
 
 rule call_snp_from_masked_alignment:
