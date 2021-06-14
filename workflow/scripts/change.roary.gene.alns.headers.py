@@ -41,7 +41,7 @@ def change_header(gene_fasta, changed_fasta):
 
 
 # get directory
-directory = os.fsencode(os.path.join(roary, "pan_genome_sequences"))
+directory = os.fsencode(os.path.join(input_dir))
 
 for file in os.listdir(directory):
     filename = os.fsdecode(file)
