@@ -12,7 +12,9 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 7) Add Annotation to alignment and ML trees taxa (designed for BEAST Analysis)
 
 ## Overall Workflow
-<img width="723" alt="Screen Shot 2021-04-04 at 7 07 13 PM" src="https://user-images.githubusercontent.com/31255012/113523905-00af4500-9579-11eb-8264-cf4eab09491d.png">
+
+![Screen Shot 2021-06-15 at 2 59 36 PM](https://user-images.githubusercontent.com/31255012/122108542-51011980-cdea-11eb-9015-748a45fff0d4.png)
+
 
 
 ## Installation
