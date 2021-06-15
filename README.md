@@ -1,18 +1,18 @@
-# Bacterial_Genome_Analysis_Toolbox
+# BactPrep
 
 This pipeline is written specifically for annotating the **bacteria whole genome sequences (WGS)**. The pipeline handles multiple operations that are necessary for bacterial genome analysis. Including:
 
 1) Annotating bacterial WGS 
 2) Constructing a pangenome for bacterial WGS dataset
-3) Identify core and accessory loci for bacterial WGS dataset (both intra- and inter- species)
-4) Produce core gene concatenation alignment
-4) Identify potential recombination regions (recent & ancestral)
+3) Identify core and accessory loci for bacterial WGS dataset (both intra- (Roary) and inter- (PIRATE) species)
+4) Produce core gene concatenation alignment (with & without recombination detection)
+4) Identify potential recombination regions (recent & ancestral) - (WGS wise & Per-gene)
 5) Identify SNPs from conserved regions of the bacterial genomes
+6) Reconstruct Phylogeny of input dataset (Maximum Liklihood)
+7) Add Annotation to alignment and ML trees taxa (designed for BEAST Analysis)
 
 ## Overall Workflow
 <img width="723" alt="Screen Shot 2021-04-04 at 7 07 13 PM" src="https://user-images.githubusercontent.com/31255012/113523905-00af4500-9579-11eb-8264-cf4eab09491d.png">
-
-
 
 
 ## Installation
@@ -23,7 +23,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     mkdir {Bacterial_Analysis}*
     
-    cd {Nacterial_Analysis}
+    cd {Bacterial_Analysis}
     ```
     _* this name can change base on your project_
 
@@ -39,18 +39,37 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     _* this name can change base on your project_
 
-5) install snakemake
-    ```
-    conda install -c bioconda snakemake
-    ```
+5) If you would like to run any module with ```fastGear``` Analysis (module ```ALL```/```fastGear_core```/```fastGear```/```fastGear_gene```), please use the link  to download mcr (MATLAB Runtime) into the  ```resources/mcr``` directory:
+    1. mcr has many versions, use the link to download the version compatible with **fastGear**:
+        
+        1. change directory to: ```{absolute_path_to_BactPrep}/resources/mcr```
+        2. you can download mcr provided by fastGear developers: https://users.ics.aalto.fi/~pemartti/fastGEAR/ 
+        ```wget --no-check-certificate https://users.ics.aalto.fi/~pemartti/fastGEAR/MCRInstallerLinux64bit.zip```)
+        3. Unzip the downloaded file ```unzip MCRInstallerLinux64bit.zip```
+            1. or download version **R2016a** from MATLAB: https://www.mathworks.com/products/compiler/matlab-runtime.html
+        4. change directory after unzip the downloaded file ```cd MCRInstallerLinux64bit```
+        5. install: ```./install -destinationFolder {absolute_path_to_BactPrep}/resources/mcr/ -mode silent -agreeToLicense yes```
+            1. if you would like to install with a GUI interface, please allow **X11 display** at the terminial, do ```./install```, this will open the GUI installation, and will allow you to change the directory to install, please install to ```{absolute_path_to_BactPrep}/resources/mcr``` 
 
-6) after running all your analysis, deactivate the env
+    2. if you already have mcr (R2016a) on your machine (or used this pipeline before), you do not need to reinstall mcr, 
+    please specify the absolute path with ```--mcr_path``` flag, which leads to the absolute path of your installed mcr 
+        
+        1. ```--mcr_path```: ex. ```--mcr_path {absolute_path_to_BactPrep}resources/v901/```
+
+
+6) You are now good to go! 
+    RUN: ```python start_analysis.py ALL(roary/gubbins/fastGear)```
+
+5) after running all your analysis, deactivate the env
     ```
     conda deactivate
     ```
 ## Instruction #1 (Specify Options)
 
 ### Module Selection:
+
+```ALL```: this module will attempt to run ```gubbins```, ```roary```, and ```fastGear_core``` module
+            - All options required for these three modules are also required for ```ALL``` module
     
 ```Gubbins```: detect recombination from WGS alignment
     
@@ -72,7 +91,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 
         
-```ALL```: this module will attempt to run gubbins, roary, and fastGear_core module
+
 
 
 ```
@@ -83,7 +102,7 @@ Please always specify the program to use in the first argument, or the whole
 pipeline will attemp to run
 
 positional arguments:
-  {gubbins,roary,fastGear_core,fastGear,fastGear_gene,ALL}
+    {ALL, gubbins,roary,fastGear_core,fastGear,fastGear_gene}
                         Specify the module you would like to run
 
 optional arguments:
@@ -137,7 +156,14 @@ Enjoy the program! :)
 
 **Run**:```python start_analysis.py ALL(roary/gubbins/fastGear)```
 
-## Instruction #2 (Setting up config)
+## Output Files
+
+### ALL module
+
+
+## Setting up config 
+
+**This section is specifically for advanced users and developers**
 
 1) change the params in the ```config/config.yaml``` files, including:
     

@@ -1,0 +1,5 @@
+15 # Number of iterations
+15 15 20 30 # Upper bound for the number of clusters (possibly multiple values)­
+0 # Run clustering for all upper bounds (0=no / 1=yes)
+- # File containing a partition for strains
+1 # 1=produce reduced output, 0=produce complete output
