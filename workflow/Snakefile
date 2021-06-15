@@ -1,6 +1,6 @@
 import os
 import re
-configfile: "config/test.yaml"
+configfile: "config/config.yaml"
 
 reference = config["reference"]
 

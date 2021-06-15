@@ -5,6 +5,7 @@ from pathlib import Path
 
 modules = ['gubbins', 'roary', 'fastGear_core','fastGear', 'fastGear_gene','ALL']
 
+CWD = os.getcwd()
 
 # declare an argparse variable 
 general_parser = argparse.ArgumentParser(prog="start_analysis", usage='%(prog)s MODULE [options]', 
@@ -16,7 +17,7 @@ epilog='Enjoy the program! :)')
 # postional arguments required to provide by user
 general_parser.add_argument('MODULE', action='store', type=str, 
 help='Specify the module you would like to run', 
-choices=['gubbins', 'roary', 'fastGear_core','fastGear', 'fastGear_gene','ALL'])
+choices=['ALL','gubbins', 'roary', 'fastGear_core','fastGear', 'fastGear_gene'])
 curren_wd = Path(os.getcwd())
 
 # General Arguments
@@ -24,7 +25,7 @@ general_arguments = general_parser.add_argument_group("general arguments")
 general_arguments.add_argument("-i","--input", type=str, help= "path to input dir with assemlies", metavar='', default=os.path.join(curren_wd, "../assemblies"))
 general_arguments.add_argument("-p", "--name", type=str, help= "provide name prefix for the output files",metavar='', default= "bacterial_analysis" )
 general_arguments.add_argument('-t','--thread', type=int,  help = "num of threads", metavar='', default = 1)
-general_arguments.add_argument('-o','--output', type=str,  help = "path to the output directory", metavar='', default=str(curren_wd.parent.absolute()))
+general_arguments.add_argument('-o','--output', type=str,  help = "path to the output directory", metavar='', default=os.path.join(CWD, 'results'))
 
 # output annotation arguments
 annotate_arguments = general_parser.add_argument_group("arguments for if you would like to add metadata to output")
@@ -49,10 +50,9 @@ roary_arguments.add_argument("-z", "--genus", type=str,help= "specify the genus 
 
 # fastGear modules alignments (for all three fastGear moudles)
 fastgear_arguments = general_parser.add_argument_group("arguments for all three fastGear modules (fastGear_core, fastGear, fastGear_gene)")
-fastgear_arguments.add_argument("--fg","--fastgear_param", type=str, help="path to fastGear params", metavar='', default='/home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/fG_input_specs.txt')
-fastgear_arguments.add_argument("--mcr_path", type=str, help="path to mcr runtime (need to install before use any of the fastGear module", metavar='', default='/home/rx32940/matlab/v901/')
-fastgear_arguments.add_argument("--LD_LIBRARY_PATH", type=str, help="LD_LIBRARY_PATH, this can be find after mcr runtime installation", metavar='',default='/home/rx32940/matlab/v901/runtime/glnxa64:/home/rx32940/matlab/v901/bin/glnxa64:/home/rx32940/matlab/v901/sys/os/glnxa64')
-fastgear_arguments.add_argument("--fastgear_exe", type=str, help="path to the excutable of fastGear", metavar='', default='/home/rx32940/SOFTWARE/fastGEARpackageLinux64bit/')
+fastgear_arguments.add_argument("--fg","--fastgear_param", type=str, help="path to fastGear params", metavar='', default=str(os.path.join(CWD,'resources/fastGEARpackageLinux64bit/fG_input_specs.txt')))
+fastgear_arguments.add_argument("--mcr_path", type=str, help="path to mcr runtime (need to install before use any of the fastGear module", metavar='', default=os.path.join(CWD, 'resources/mcr/v901/'))
+fastgear_arguments.add_argument("--fastgear_exe", type=str, help="path to the excutable of fastGear", metavar='', default=str(os.path.join(CWD,'resources/fastGEARpackageLinux64bit/run_fastGEAR.sh')))
 
 
 # fastgear_gene arguments
@@ -89,8 +89,9 @@ SINGLE= True if ALN != "" else False
 FASTGEAR_PARAM=args.fg
 FASTGEAR_EXE=args.fastgear_exe
 MCR_PATH=args.mcr_path
-LD_LIB_PATH=args.LD_LIBRARY_PATH
-
+LD_LIB_PATH=str(os.path.join(MCR_PATH,'runtime/glnxa64:')) + \
+    str(os.path.join(MCR_PATH , 'bin/glnxa64:')) +\
+        str(os.path.join(MCR_PATH , 'sys/os/glnxa64')))
 
 # open 
 
@@ -132,9 +133,13 @@ def get_annotated(module):
     if module == "gubbins":
         anot_files=str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +"," +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick")))
     if module == "fastGear_core":
-        anot_files=str(os.path.join(OUT,"fastgear_core" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick")))
+        anot_files=str(os.path.join(OUT,"fastgear_core" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick"))) + "," + str(os.path.join(OUT , "fastgear_core",str(NAME + "_core_mask_snp_meta.fasta")))
     if module == "ALL":
-        anot_files=str(os.path.join(OUT,"iqtree",str(NAME + "_meta.coreConcate.newick"))) +"," + str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +"," +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick"))) +"," + str(os.path.join(OUT,"fastgear_core" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick")))
+        anot_files=str(os.path.join(OUT,"iqtree",str(NAME + "_meta.coreConcate.newick"))) +","\
+             + str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +","\
+                  +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick"))) +","\
+                       + str(os.path.join(OUT,"fastgear_core" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick"))) + ","\
+                            + str(os.path.join(OUT , "fastgear_core",str(NAME + "_core_mask_snp_meta.fasta")))
     if module == "fastGear_gene":
         ADDANOT=Fasle
         anot_files=""
@@ -179,8 +184,6 @@ def get_output(module):
 
 
 
-
-
 # construct the config file 
 config = {'project_name': NAME,
 'asm_dir': INPUT,
@@ -203,7 +206,7 @@ config = {'project_name': NAME,
 
 
 config.update(get_output(MODULE))     
-with open("config/test.yaml", "w") as configfile:
+with open("config/config.yaml", "w") as configfile:
     yaml.dump(config,configfile)
 
 

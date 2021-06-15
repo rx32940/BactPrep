@@ -21,12 +21,16 @@ source activate snakemake
 cd $SLURM_SUBMIT_DIR
 
 GENPATH="/scratch/rx32940/pop.structure.lepto.int"
-LINEAGEPATH="/scratch/rx32940/pop.structure.lepto.int/lineages/4.lineage"
+LINEAGEPATH="/scratch/rx32940/pop.structure.lepto.int/lineages/7.lineage.dated"
 
-python start_analysis.py ALL -p pop.struc.lineage.4 \
+python start_analysis.py ALL -p pop.struc.lineage.7.dated \
+-o $LINEAGEPATH \
 -t 10 \
 -v $GENPATH/phage_region.bed \
 -r $GENPATH/GCF_000092565.1_ASM9256v1_genomic.fna \
--i $LINEAGEPATH/assemblies 
+-i $LINEAGEPATH/assemblies -M \
+-a $GENPATH/lept.int.asm.qual.meta.filtered.mutant.filtered.cgSTfilled.hierbaps.csv \
+-s 1 \
+-m Year,country.1
 
 conda deactivate
