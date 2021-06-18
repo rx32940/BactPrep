@@ -8,12 +8,11 @@ rule Prokka:
     threads:
         THREADS
     params:
-        genus = config["genus"],
         kingdom = config["kingdom"],
         output_dir = prokka_dir
     shell:
         """
-        prokka -kingdom {params.kingdom} -genus {params.genus} \
+        prokka -kingdom {params.kingdom} \
         -outdir {output} \
         -prefix {wildcards.sample} \
         {input} --force -cpu {threads}
