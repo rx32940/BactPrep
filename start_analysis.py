@@ -46,7 +46,6 @@ roary_arguments = general_parser.add_argument_group("arguments for roary module"
 roary_arguments.add_argument("-g", "--gff", type=str, help= "path to input dir with gff (this can replace input assemblies dir in roary module Must be gff3 files)", metavar='')
 roary_arguments.add_argument("-c", "--core", type=int,help= "define core gene definition by percentage for roary module (default=99)",metavar='',default=99)
 roary_arguments.add_argument("-k", "--kingdom", type=str,help= "specify the kingom of input assemlies for genome annotation (default=Bacteria)",metavar='',default="Bacteria")
-roary_arguments.add_argument("-z", "--genus", type=str,help= "specify the genus of input assemlies for genome annotation (default=Leptospira)",metavar='',default="Leptospira")
 
 # fastGear modules alignments (for all three fastGear moudles)
 fastgear_arguments = general_parser.add_argument_group("arguments for all three fastGear modules (fastGear_core, fastGear, fastGear_gene)")
@@ -82,7 +81,6 @@ META=args.metadata
 PHAGE=args.phage
 CORE=args.core
 KINGDOM=args.kingdom
-GENUS=args.genus
 ALN=args.alignment
 FL=args.alnlist
 SINGLE= True if ALN != "" else False
@@ -91,7 +89,7 @@ FASTGEAR_EXE=args.fastgear_exe
 MCR_PATH=args.mcr_path
 LD_LIB_PATH=str(os.path.join(MCR_PATH,'runtime/glnxa64:')) + \
     str(os.path.join(MCR_PATH , 'bin/glnxa64:')) +\
-        str(os.path.join(MCR_PATH , 'sys/os/glnxa64')))
+        str(os.path.join(MCR_PATH , 'sys/os/glnxa64'))
 
 # open 
 
@@ -195,7 +193,6 @@ config = {'project_name': NAME,
 'biosample_column': SAMPLE,
 'gff_dir': GFF,
 'kingdom': KINGDOM,
-'genus': GENUS,
 'define_core': CORE,
 'phage_region':PHAGE,
 'LD_LIBRARY_PATH': LD_LIB_PATH,
