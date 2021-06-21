@@ -51,7 +51,7 @@ roary_arguments.add_argument("-k", "--kingdom", type=str,help= "specify the king
 fastgear_arguments = general_parser.add_argument_group("arguments for all three fastGear modules (fastGear_core, fastGear, fastGear_gene)")
 fastgear_arguments.add_argument("--fg","--fastgear_param", type=str, help="path to fastGear params", metavar='', default=str(os.path.join(CWD,'resources/fastGEARpackageLinux64bit/fG_input_specs.txt')))
 fastgear_arguments.add_argument("--mcr_path", type=str, help="path to mcr runtime (need to install before use any of the fastGear module", metavar='', default=os.path.join(CWD, 'resources/mcr/v901/'))
-fastgear_arguments.add_argument("--fastgear_exe", type=str, help="path to the excutable of fastGear", metavar='', default=str(os.path.join(CWD,'resources/fastGEARpackageLinux64bit/run_fastGEAR.sh')))
+fastgear_arguments.add_argument("--fastgear_exe", type=str, help="path to the excutable of fastGear", metavar='', default=str(os.path.join(CWD,'resources/fastGEARpackageLinux64bit')))
 
 
 # fastgear_gene arguments

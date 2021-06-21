@@ -49,7 +49,7 @@ def get_sample_dir(gff_dir_self):
 
 
 # get all sample ID from either assembly file names or gff file names (if provided)
-SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir(gff_dir_self))]
+SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir(gff_dir_self)) if not file.startswith(".")]
 # get gff file dir base on if user had provided
 # gff_dir = get_gff_dir(gff_dir_self)
 

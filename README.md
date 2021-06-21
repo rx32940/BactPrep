@@ -162,6 +162,21 @@ Enjoy the program! :)
 
 ### ALL module
 
+## Examples
+
+**1) IF matlab runtime (MCR) version R2016a is installed or this is not the first time you are running this pipeline.**
+if you have already installed MCR R2016a and fastGear executable before on your machine, or you have already installed these two dependencies the previous times you were using BactPrep. You can use flag ```--mcr_path``` and ```--fastgear_exe``` to avoid installing these two dependencies again. **you don't need to run ```INSTALL.sh``` script again if these two scripts is already installed, but a conda env is still necessary to run snakemake pipeline**
+
+EXAMPLE:
+
+```
+python start_analysis.py fastGear -p all_Lint_fastGear_pan \
+-o $LINEAGEPATH \
+-t 10 \
+-i $GENPATH/assemblies \
+--mcr_path /home/rx32940/matlab/v901 \
+--fastgear_exe /home/rx32940/SOFTWARE/fastGEARpackageLinux64bit 
+```
 
 ## Setting up config 
 
