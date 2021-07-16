@@ -13,7 +13,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 ## Overall Workflow
 
-![Screen Shot 2021-06-15 at 2 59 36 PM](https://user-images.githubusercontent.com/31255012/122108542-51011980-cdea-11eb-9015-748a45fff0d4.png)
+![Screen Shot 2021-06-15 at 2 59 36 PM](![image](https://user-images.githubusercontent.com/31255012/126012975-bb4c8def-cd6f-4d55-9a6a-0bd2ff2069cc.png))
 
 
 
