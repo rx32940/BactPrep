@@ -13,7 +13,8 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 ## Overall Workflow
 
-![Screen Shot 2021-06-15 at 2 59 36 PM](https://user-images.githubusercontent.com/31255012/122108542-51011980-cdea-11eb-9015-748a45fff0d4.png)
+![pipeline_workflow](https://user-images.githubusercontent.com/31255012/126013330-8ffed1fb-af59-45f2-9393-2cfe6331b324.png)
+
 
 
 
@@ -359,7 +360,7 @@ python start_analysis.py wgsRecomb \
 
 ```
 
-**8)IF additional arguments need to be specificed for Roary and Gubbins when using "coreGEN", "wgsRecomb", or "ALL" module**
+**8) IF additional arguments need to be specificed for Roary and Gubbins when using "coreGEN", "wgsRecomb", or "ALL" module**
 additional Roary and Gubbins arguments that is not specificed by BactPrep can be added by using the ```-R``` of ```-G``` flags, respectively. Dependencies used for these additional arguments need to be install by user.
 
 Example:
