@@ -3,8 +3,17 @@ channels:
   - bioconda
   - conda-forge
   - defaults
+  - r
+  - anaconda
 dependencies:
   - mamba
   - python=3.7.8
   - snakemake=5.32.0
   - biopython=1.77
+  - unzip
+  - tar
+  - tree
+  - bioconductor-ggtree
+  - bioconductor-treeio
+  - r-dplyr 
+  - pyyaml

@@ -11,10 +11,11 @@ rule Roary:
         "../env/roary.yaml"
     params:
         alignment = "-e -n",
-        out_dir = roary_dir
+        out_dir = roary_dir,
+        additional=" " + roary_params if roary_params != "" else ""
     shell:
         """
-            roary -e -n -p {threads} -f {params.out_dir} {input} -v -cd {core_percentage} -z
+            roary{params.additional} -e -n -p {threads} -f {params.out_dir} {input} -v -cd {core_percentage} -z
 
             cp -r {roary_dir}*/* {roary_dir}
         """

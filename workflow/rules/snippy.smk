@@ -21,10 +21,10 @@ rule snippy_core:
     conda:
         "../env/snippy.yaml"
     params:
-        mask=str("--mask ") + phage if phage is not None else None
+        mask=" --mask " + phage if phage != "" else ""
     shell:
         """
-        snippy-core {params.mask} --ref {reference} {input} --prefix {snippy_dir}core
+        snippy-core{params.mask} --ref {reference} {input} --prefix {snippy_dir}core
         """
 
 rule clean_snippy_core:
