@@ -13,7 +13,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 ## Overall Workflow
 
-![pipeline_workflow](https://user-images.githubusercontent.com/31255012/126013116-1bb26043-c053-48df-99a4-c1b58c737db4.png)
+![Screen Shot 2021-06-15 at 2 59 36 PM](https://user-images.githubusercontent.com/31255012/122108542-51011980-cdea-11eb-9015-748a45fff0d4.png)
 
 
 
@@ -144,23 +144,23 @@ arguments for if you would like to add metadata to output:
 arguments for wgsRecomb module:
   -r , --ref            reference (required for wgsRecomb module)
   -v , --phage          phage region identified for masking (bed file)
+  -G , --gubbins        any additional Gubbins arguments (please refer to Gubbins manual)
 
 arguments for coreGen module:
-  -g , --gff            path to input dir with gff (this can replace input assemblies dir in coreGen 
-                        module Must be gff3 files)
+  -g , --gff            path to input dir with gff (this can replace input assemblies dir in coreGen module Must be gff3 files)
   -c , --core           define core gene definition by percentage for coreGen module (default=99)
   -k , --kingdom        specify the kingom of input assemlies for genome annotation (default=Bacteria)
+  -R , --roary          any additional roary arguments (please refer to Roary manual)
 
 arguments for all three fastGear modules (coreRecomb, panRecomb, geneRecomb):
-  --fg , --fastgear_param 
-                        path to fastGear params
   --mcr_path            path to mcr runtime (need to install before use any of the fastGear module
   --fastgear_exe        path to the excutable of fastGear
+  --fg , --fastgear_param 
+                        path to fastGear params
 
 arguments for geneRecomb module:
   -n , --alignment      input alignment (either -n/-fl is required for geneRecomb module)
-  -fl , --alnlist       input alignment list with path to gene alignments (either -n/-fl is required for
-                        geneRecomb module)
+  -fl , --alnlist       input alignment list with path to gene alignments (either -n/-fl is required for geneRecomb module)
 
 Enjoy the program! :)
 ```
