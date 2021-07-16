@@ -2,21 +2,23 @@ import os
 import re
 configfile: "config/config.yaml"
 
-reference = config["reference"]
+reference = str(config["reference"])
 
-phage=config["phage_region"]
-project_prefix = config["project_name"]
+phage=config["phage_region"].strip()
+project_prefix = config["project_name"].strip()
 THREADS = config["threads_num"]
-asm_dir = config["asm_dir"]
-out_dir = config["output_dir"]
-matlab_path = config["LD_LIBRARY_PATH"]
-fastGear_exe = config["fastGear_exe_path"]
-mcr_path = config["mcr_path"]
+asm_dir = config["asm_dir"].strip() if config["asm_dir"][-1] == "/" else str(config["asm_dir"] + "/").strip()
+out_dir = config["output_dir"].strip() if config["output_dir"][-1] == "/" else str(config["output_dir"] + "/").strip()
+matlab_path = config["LD_LIBRARY_PATH"].strip() 
+fastGear_exe = config["fastGear_exe_path"].strip() if config["fastGear_exe_path"][-1] == "/" else str(config["fastGear_exe_path"] + "/").strip()
+mcr_path = config["mcr_path"].strip() if config["mcr_path"][-1] == "/" else str(config["mcr_path"] + "/").strip()
 core_percentage = config["define_core"]
-metadata_file=config["sample_metadata"]
-metadata_include = config["metadata_include"]
+metadata_file=config["sample_metadata"].strip()
+metadata_include = config["metadata_include"].strip()
 biosample_column = config["biosample_column"]
-fastGear_params=config['fastGear_params']
+fastGear_params=config['fastGear_params'].strip()
+roary_params=config['roary'].strip()
+gubbins_params=config['gubbins'].strip()
 # within_species=config["within_species"]
 
 subworkflowdir = "rules/"
@@ -24,7 +26,7 @@ subworkflowdir = "rules/"
 # pre-defined folder names
 pirate_dir = os.path.join(out_dir , "pirate/")
 roary_dir = os.path.join(out_dir , "roary/")
-iqtree_dir = os.path.join(out_dir , "iqtree/")
+iqtree_dir = os.path.join(out_dir , "roary/roary_iqtree/")
 snippy_dir = os.path.join(out_dir , "snippy/")
 gubbins_dir = os.path.join(out_dir , "gubbins/")
 fastGear_core_dir = os.path.join(out_dir , "fastgear_core/")
@@ -76,12 +78,4 @@ include: subworkflowdir + "fastGear_gene.smk"
 rule all:
     input:
         config['output'].split(",")
-        # os.path.join(out_dir, "all_samples_id.txt"),
-        # # annotate asm for gff files
-        # get_prokka_output(gff_dir_self),
-        # get_core_output(within_species),
-        # os.path.join(iqtree_dir , str(project_prefix +".treefile")),
-        # # snippy_dir + "clean.full.noref.aln",
-        # os.path.join(gubbins_dir , "iqtree" , str(project_prefix + ".recombFreeSnpsAtcg.treefile"))#,
-        # # get_fastGear_output(matlab_path,fastGear_exe,mcr_path),
-        # # get_annotated(metadata_file, metadata_include)
+

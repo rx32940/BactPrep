@@ -1,3 +1,11 @@
+rule rename_file_prefix:
+    output:
+        os.path.join(asm_dir , "{sample}.fna")
+    shell:
+        """
+        mv {asm_dir}{wildcards.sample}* {output}
+        """
+
 rule Prokka:
     input:
         os.path.join(asm_dir , "{sample}.fna")

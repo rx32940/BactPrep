@@ -8,24 +8,24 @@ rule Gubbins:
     threads:
         THREADS
     params:
-        out_prefix = gubbins_dir + project_prefix
+        out_prefix = gubbins_dir + project_prefix,
+        additional=" " + gubbins_params if gubbins_params != "" else ""
     shell:
         """
         cd {gubbins_dir}
-        run_gubbins.py --threads {threads} -v -p {params.out_prefix} {input}
+        run_gubbins.py{params.additional} --threads {threads} -v -p {params.out_prefix} {input}
         """
 
 rule clean_snps:
     input:
         rules.Gubbins.output
     output:
-        gubbins_dir + "snp-sites/" + project_prefix + ".recombFreeSnpsAtcg.fasta"
+        gubbins_dir + project_prefix + ".GubbinsNoRef.fasta"
     conda:
         "../env/gubbins.yaml"
     shell:
         """
-        cat {input} | seqkit grep -v -p Reference > {gubbins_dir}{project_prefix}_noref.filtered_polymorphic_sites.fasta
-        snp-sites -c {gubbins_dir}{project_prefix}_noref.filtered_polymorphic_sites.fasta > {output}
+        cat {input} | seqkit grep -v -p Reference > {output}
         """
 
 rule Gubbins_SNPS_ML_tree:
@@ -41,7 +41,7 @@ rule Gubbins_SNPS_ML_tree:
         prefix=gubbins_dir + "iqtree/" + project_prefix + ".recombFreeSnpsAtcg"
     shell:
         """
-        iqtree -bb 1000 -nt AUTO -m MFP+ASC -pre {params.prefix} -s {input}
+        iqtree -bb 1000 -nt AUTO -m MFP -pre {params.prefix} -s {input}
         """
     
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --partition=batch
+#SBATCH --partition=bahl_salv_p
 #SBATCH --job-name=sub.sh
 #SBATCH --ntasks=1                    	
 #SBATCH --cpus-per-task=10             
@@ -20,17 +20,17 @@ source activate snakemake
 
 cd $SLURM_SUBMIT_DIR
 
-GENPATH="/scratch/rx32940/pop.structure.lepto.int"
-LINEAGEPATH="/scratch/rx32940/pop.structure.lepto.int/lineages/7.lineage.dated"
+WORKPATH="/scratch/rx32940/PMEN1"
 
-python start_analysis.py ALL -p pop.struc.lineage.7.dated \
--o $LINEAGEPATH \
--t 10 \
--v $GENPATH/phage_region.bed \
--r $GENPATH/GCF_000092565.1_ASM9256v1_genomic.fna \
--i $LINEAGEPATH/assemblies -M \
--a $GENPATH/lept.int.asm.qual.meta.filtered.mutant.filtered.cgSTfilled.hierbaps.csv \
--s 1 \
--m Year,country.1
+python start_analysis.py ALL \
+-p PMEN1.dated \
+-o $WORKPATH -g $WORKPATH/gff \
+-r $WORKPATH/GCF_000026665.1_ASM2666v1_genomic.fna \
+-R "-r -y -iv 1.5"
+# -t 10 \
+# -M \
+# -a $WORKPATH/PMEN1.dated.metadata.csv \
+# -m Year,Country
+
 
 conda deactivate

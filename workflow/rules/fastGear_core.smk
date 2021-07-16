@@ -14,6 +14,8 @@ rule fastGear_core:
         rules.change_pan_gene_aln_headers.output
     output:
         os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/output/recombinations_recent.txt"),
+        os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/output/recombinations_ancestral.txt"),
+        os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/output/lineage_information.txt"),
         os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/{core_locus}.fa")
     shell:
         """
@@ -24,7 +26,9 @@ rule fastGear_core:
 
 rule convert_recombination_to_bed:
     input:
-        recent = rules.fastGear_core.output[0]
+        recent = rules.fastGear_core.output[0],
+        ancestral=rules.fastGear_core.output[1],
+        lineage=rules.fastGear_core.output[2]
     output:
         os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/output/recombinations_recent.bed")
     script:
@@ -33,7 +37,7 @@ rule convert_recombination_to_bed:
 rule mask_recombination:
     input:
         bed = rules.convert_recombination_to_bed.output,
-        fasta = rules.fastGear_core.output[1]
+        fasta = rules.fastGear_core.output[3]
     output:
         os.path.join(fastGear_core_dir , "masked_coregene_aln","{core_locus}_core_mask.fasta")
     conda:
@@ -96,7 +100,7 @@ rule call_snp_from_masked_alignment:
         "../env/bedtools.yaml"
     shell:
         """
-            snp-sites -c {input} -o {output}
+            snp-sites -cb {input} -o {output}
         """
 
 rule core_genome_snps_ML_tree:
@@ -112,7 +116,7 @@ rule core_genome_snps_ML_tree:
         prefix = os.path.join(fastGear_core_dir , "fastgear_iqtree" , str(project_prefix + "_core_mask_snp"))
     shell:
         """
-            iqtree -bb 1000 -nt AUTO -m MFP+ASC -pre {params.prefix} -s {input}
+            iqtree -bb 1000 -nt AUTO -m MFP -pre {params.prefix} -s {input}
         """
 
 

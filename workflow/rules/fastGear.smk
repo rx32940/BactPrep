@@ -2,7 +2,7 @@ checkpoint change_pan_gene_aln_headers:
     input:
         rules.Roary.output[2]
     output:
-        temp(directory(os.path.join(fastGear_dir ,"roary_pangenome_seq")))
+        directory(os.path.join(fastGear_dir ,"roary_pangenome_seq"))
     shell:
         """
             mkdir -p {fastGear_dir}roary_pangenome_seq
@@ -14,7 +14,7 @@ rule fastGear:
         rules.change_pan_gene_aln_headers.output
     output:
         os.path.join(fastGear_dir , "loci_fastGear_out","{locus}/output/recombinations_recent.txt"),
-        temp(os.path.join(fastGear_dir , "loci_fastGear_out","{locus}/{locus}.fa"))
+        os.path.join(fastGear_dir , "loci_fastGear_out","{locus}/{locus}.fa")
     shell:
         """
         LD_LIBRARY_PATH={matlab_path}
@@ -49,7 +49,7 @@ rule plot_pan_fastGear:
         """
         cd {fastGear_dir}plot_pangenome/
         python {workflow.basedir}/scripts/post_fastGear.py \
-        -i {fastGear_dir}panloci_fastGear_out \
+        -i {fastGear_dir}loci_fastGear_out \
         -g {input.loci} \
         -o {fastGear_dir}plot_pangenome/pan_fastgear_plot \
         -s True -f pdf -p {input.tree} -z False -y 100 -x 100

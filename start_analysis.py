@@ -3,7 +3,7 @@ import argparse
 import yaml
 from pathlib import Path
 
-modules = ['gubbins', 'roary', 'fastGear_core','fastGear', 'fastGear_gene','ALL']
+modules = ['wgsRecomb', 'coreGen', 'coreRecomb','panRecomb', 'geneRecomb','ALL']
 
 CWD = os.getcwd()
 
@@ -17,7 +17,7 @@ epilog='Enjoy the program! :)')
 # postional arguments required to provide by user
 general_parser.add_argument('MODULE', action='store', type=str, 
 help='Specify the module you would like to run', 
-choices=['ALL','gubbins', 'roary', 'fastGear_core','fastGear', 'fastGear_gene'])
+choices=['ALL','wgsRecomb', 'coreGen', 'coreRecomb','panRecomb', 'geneRecomb'])
 curren_wd = Path(os.getcwd())
 
 # General Arguments
@@ -36,34 +36,35 @@ annotate_arguments.add_argument("-m", "--metadata", type=str,help= "metadata cho
 
 
 
-# gubbins arguments
-gubbins_arguments = general_parser.add_argument_group("arguments for gubbins module")
-gubbins_arguments.add_argument('-r','--ref', type=str, help = "reference (required for gubbins module)", metavar='',default="")
-gubbins_arguments.add_argument("-v", "--phage", type=str,help= "phage region identified for masking (bed file)",metavar='')
+# wgsRecomb arguments
+Recomb_arguments = general_parser.add_argument_group("arguments for wgsRecomb module")
+Recomb_arguments.add_argument('-r','--ref', type=str, help = "reference (required for wgsRecomb module)", metavar='',default="")
+Recomb_arguments.add_argument("-v", "--phage", type=str,help= "phage region identified for masking (bed file)",metavar='',default="")
+Recomb_arguments.add_argument("-G", "--gubbins", type=str,help= "any additional Gubbins arguments (please refer to Gubbins manual)",metavar='',default="")
 
-# roary arguments
-roary_arguments = general_parser.add_argument_group("arguments for roary module")
-roary_arguments.add_argument("-g", "--gff", type=str, help= "path to input dir with gff (this can replace input assemblies dir in roary module Must be gff3 files)", metavar='')
-roary_arguments.add_argument("-c", "--core", type=int,help= "define core gene definition by percentage for roary module (default=99)",metavar='',default=99)
+# coreGen arguments
+roary_arguments = general_parser.add_argument_group("arguments for coreGen module")
+roary_arguments.add_argument("-g", "--gff", type=str, help= "path to input dir with gff (this can replace input assemblies dir in coreGen module Must be gff3 files)", metavar='')
+roary_arguments.add_argument("-c", "--core", type=int,help= "define core gene definition by percentage for coreGen module (default=99)",metavar='',default=99)
 roary_arguments.add_argument("-k", "--kingdom", type=str,help= "specify the kingom of input assemlies for genome annotation (default=Bacteria)",metavar='',default="Bacteria")
+roary_arguments.add_argument("-R", "--roary", type=str,help= "any additional roary arguments (please refer to Roary manual)",metavar='',default="")
 
 # fastGear modules alignments (for all three fastGear moudles)
-fastgear_arguments = general_parser.add_argument_group("arguments for all three fastGear modules (fastGear_core, fastGear, fastGear_gene)")
-fastgear_arguments.add_argument("--fg","--fastgear_param", type=str, help="path to fastGear params", metavar='', default=str(os.path.join(CWD,'resources/fastGEARpackageLinux64bit/fG_input_specs.txt')))
+fastgear_arguments = general_parser.add_argument_group("arguments for all three fastGear modules (coreRecomb, panRecomb, geneRecomb)")
 fastgear_arguments.add_argument("--mcr_path", type=str, help="path to mcr runtime (need to install before use any of the fastGear module", metavar='', default=os.path.join(CWD, 'resources/mcr/v901/'))
-fastgear_arguments.add_argument("--fastgear_exe", type=str, help="path to the excutable of fastGear", metavar='', default=str(os.path.join(CWD,'resources/fastGEARpackageLinux64bit')))
+fastgear_arguments.add_argument("--fastgear_exe", type=str, help="path to the excutable of fastGear", metavar='', default=str(os.path.join(CWD,'resources/fastGEARpackageLinux64bit/')))
+fastgear_arguments.add_argument("--fg","--fastgear_param", type=str, help="path to fastGear params", metavar='', default="")
 
-
-# fastgear_gene arguments
-fastgear_gene_arguments = general_parser.add_argument_group("arguments for fastGear_gene module")
-fastgear_gene_arguments.add_argument("-n", "--alignment", type=str,help= "input alignment\n(either -n/-fl is required for fastGear_gene module) ",metavar='',default="")
-fastgear_gene_arguments.add_argument("-fl", "--alnlist", type=str,help= "input alignment list with path to gene alignments\n(either -n/-fl is required for fastGear_gene module) ",metavar='',default="")
+# geneRecomb arguments
+fastgear_gene_arguments = general_parser.add_argument_group("arguments for geneRecomb module")
+fastgear_gene_arguments.add_argument("-n", "--alignment", type=str,help= "input alignment\n(either -n/-fl is required for geneRecomb module) ",metavar='',default="")
+fastgear_gene_arguments.add_argument("-fl", "--alnlist", type=str,help= "input alignment list with path to gene alignments\n(either -n/-fl is required for geneRecomb module) ",metavar='',default="")
 
 
 args = general_parser.parse_args()
 
-if args.MODULE == "fastGear_gene" and (args.alignment == "" and args.alnlist == ""):
-    general_parser.error("gene alignment/alignment list (-n/-fl) must provided for fastGear_gene module") 
+if args.MODULE == "geneRecomb" and (args.alignment == "" and args.alnlist == ""):
+    general_parser.error("gene alignment/alignment list (-n/-fl) must provided for geneRecomb module") 
 if args.alignment != "" and args.alnlist != "":
     general_parser.error("please do not specify gene file and list and same time")
 
@@ -74,18 +75,20 @@ REF=args.ref
 OUT=args.output
 THREAD=args.thread
 GFF=args.gff
+ROARY=args.roary
 ADDANOT=args.addMetadata
 ANOT=args.annotate
 SAMPLE=args.sample
 META=args.metadata
 PHAGE=args.phage
+GUBBINS=args.gubbins
 CORE=args.core
 KINGDOM=args.kingdom
 ALN=args.alignment
 FL=args.alnlist
 SINGLE= True if ALN != "" else False
-FASTGEAR_PARAM=args.fg
 FASTGEAR_EXE=args.fastgear_exe
+FASTGEAR_PARAM=args.fg if args.fg != "" else str(os.path.join(FASTGEAR_EXE,'fG_input_specs.txt'))
 MCR_PATH=args.mcr_path
 LD_LIB_PATH=str(os.path.join(MCR_PATH,'runtime/glnxa64:')) + \
     str(os.path.join(MCR_PATH , 'bin/glnxa64:')) +\
@@ -126,50 +129,51 @@ GENE_NAME=get_geneNames()
 
 def get_annotated(module):
     anot_files=None
-    if module == "roary":
-        anot_files=str(os.path.join(OUT,"iqtree",str(NAME + "_meta.coreConcate.newick")))
-    if module == "gubbins":
+    if module == "coreGen":
+        anot_files=str(os.path.join(OUT,"roary","roary_iqtree",str(NAME + "_meta.coreConcate.newick"))) + "," + str(os.path.join(OUT,"roary",str(NAME + "_coreConcate_meta.fasta")))
+    if module == "wgsRecomb":
         anot_files=str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +"," +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick")))
-    if module == "fastGear_core":
+    if module == "coreRecomb":
         anot_files=str(os.path.join(OUT,"fastgear_core" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick"))) + "," + str(os.path.join(OUT , "fastgear_core",str(NAME + "_core_mask_snp_meta.fasta")))
     if module == "ALL":
-        anot_files=str(os.path.join(OUT,"iqtree",str(NAME + "_meta.coreConcate.newick"))) +","\
-             + str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +","\
-                  +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick"))) +","\
-                       + str(os.path.join(OUT,"fastgear_core" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick"))) + ","\
+        anot_files=str(os.path.join(OUT,"roary","roary_iqtree",str(NAME + "_meta.coreConcate.newick"))) +","\
+            + str(os.path.join(OUT,"roary",str(NAME + "_coreConcate_meta.fasta"))) + ","\
+                + str(os.path.join(OUT, "gubbins",str(NAME + "_meta.recombFreeSnpsAtcg.fasta"))) +","\
+                    +str(os.path.join(OUT ,'gubbins','iqtree' ,str(NAME + "_meta.GubbinsSNPs.newick"))) +","\
+                        + str(os.path.join(OUT,"fastgear_core" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick"))) + ","\
                             + str(os.path.join(OUT , "fastgear_core",str(NAME + "_core_mask_snp_meta.fasta")))
-    if module == "fastGear_gene":
+    if module == "geneRecomb":
         ADDANOT=Fasle
         anot_files=""
-    if module == "fastGear":
+    if module == "panRecomb":
         ADDANOT=Fasle
         anot_files=""
     return anot_files
 
 def get_output(module):
 
-    if module == "roary":
-        output_files=str(os.path.join(OUT,"iqtree" , str(NAME +".treefile")))
+    if module == "coreGen":
+        output_files=str(os.path.join(OUT,'roary',"roary_iqtree" , str(NAME +".treefile")))
         if ADDANOT:
             output_files=str(output_files) + ","+get_annotated(module)
-    elif module == "gubbins":
+    elif module == "wgsRecomb":
         output_files=str(os.path.join(OUT , "gubbins", "iqtree" , str(NAME + ".recombFreeSnpsAtcg.treefile")))
         if ADDANOT:
             output_files=str(output_files) + ","+get_annotated(module)        
-    elif module == "fastGear":
+    elif module == "panRecomb":
         output_files=str(os.path.join(OUT , "fastgear" , "plot_pangenome/pan_fastgear_plot_recombination_count.pdf")) 
         if ADDANOT:
             output_files=str(output_files) + ","+get_annotated(module) 
-    elif module == "fastGear_core":
+    elif module == "coreRecomb":
         output_files=str(os.path.join(OUT , "fastgear_core" , "plot_coregenome/core_fastgear_plot_recombination_count.pdf")) + ","\
             + str(os.path.join(OUT, "fastgear_core" , "fastgear_iqtree" , str(NAME + "_core_mask_snp.treefile")))  
-    elif module == "fastGear_gene":
+    elif module == "geneRecomb":
         if SINGLE:
             output_files=",".join([str(os.path.join(OUT,"fastgear_gene" ,GENE_NAME[0],str(GENE_NAME[0] + ".mat")))])
         else:
             output_files=",".join([str(os.path.join(OUT,"fastgear_gene" ,file,str(file + ".mat"))) for file in GENE_NAME])
     elif module == "ALL":
-        output_files=str(os.path.join(OUT,"iqtree" , str(NAME +".treefile")))+ ","\
+        output_files=str(os.path.join(OUT,"roary","roary_iqtree" , str(NAME +".treefile")))+ ","\
             + str(os.path.join(OUT , "gubbins", "iqtree" , str(NAME + ".recombFreeSnpsAtcg.treefile")))+ ","\
                 + str(os.path.join(OUT , "fastgear_core" , "plot_coregenome/core_fastgear_plot_recombination_count.pdf")) + ","\
                     + str(os.path.join(OUT, "fastgear_core" , "fastgear_iqtree" , str(NAME + "_core_mask_snp.treefile"))) + ","\
@@ -199,7 +203,9 @@ config = {'project_name': NAME,
 'fastGear_exe_path': FASTGEAR_EXE,
 'mcr_path': MCR_PATH,
 'fastGear_params': FASTGEAR_PARAM,
-'fastgear_gene_file_list': FILELIST}
+'fastgear_gene_file_list': FILELIST,
+'roary':ROARY,
+'gubbins':GUBBINS}
 
 
 config.update(get_output(MODULE))     
