@@ -20,6 +20,8 @@ help='Specify the module you would like to run',
 choices=['ALL','wgsRecomb', 'coreGen', 'coreRecomb','panRecomb', 'geneRecomb'])
 curren_wd = Path(os.getcwd())
 
+
+
 # General Arguments
 general_arguments = general_parser.add_argument_group("general arguments")
 general_arguments.add_argument("-i","--input", type=str, help= "path to input dir with assemlies", metavar='', default=os.path.join(curren_wd, "../assemblies"))
@@ -35,19 +37,18 @@ annotate_arguments.add_argument("-s", "--sample", type=int, help= "integer indic
 annotate_arguments.add_argument("-m", "--metadata", type=str,help= "metadata chosen to annotate ML tree/alignment after the sample name",metavar='',default="")
 
 
-
 # wgsRecomb arguments
 Recomb_arguments = general_parser.add_argument_group("arguments for wgsRecomb module")
 Recomb_arguments.add_argument('-r','--ref', type=str, help = "reference (required for wgsRecomb module)", metavar='',default="")
 Recomb_arguments.add_argument("-v", "--phage", type=str,help= "phage region identified for masking (bed file)",metavar='',default="")
-Recomb_arguments.add_argument("-G", "--gubbins", type=str,help= "any additional Gubbins arguments (please refer to Gubbins manual)",metavar='',default="")
+Recomb_arguments.add_argument("-G", "--gubbins", type=str,help= "any additional Gubbins arguments (PLEASE start the string with space) ",metavar='',default="")
 
 # coreGen arguments
 roary_arguments = general_parser.add_argument_group("arguments for coreGen module")
 roary_arguments.add_argument("-g", "--gff", type=str, help= "path to input dir with gff (this can replace input assemblies dir in coreGen module Must be gff3 files)", metavar='')
 roary_arguments.add_argument("-c", "--core", type=int,help= "define core gene definition by percentage for coreGen module (default=99)",metavar='',default=99)
 roary_arguments.add_argument("-k", "--kingdom", type=str,help= "specify the kingom of input assemlies for genome annotation (default=Bacteria)",metavar='',default="Bacteria")
-roary_arguments.add_argument("-R", "--roary", type=str,help= "any additional roary arguments (please refer to Roary manual)",metavar='',default="")
+roary_arguments.add_argument("-R", "--roary", type=str,help= "any additional roary arguments (PLEASE start the string with space)",metavar='',default="")
 
 # fastGear modules alignments (for all three fastGear moudles)
 fastgear_arguments = general_parser.add_argument_group("arguments for all three fastGear modules (coreRecomb, panRecomb, geneRecomb)")
@@ -93,6 +94,7 @@ MCR_PATH=args.mcr_path
 LD_LIB_PATH=str(os.path.join(MCR_PATH,'runtime/glnxa64:')) + \
     str(os.path.join(MCR_PATH , 'bin/glnxa64:')) +\
         str(os.path.join(MCR_PATH , 'sys/os/glnxa64'))
+
 
 # open 
 
