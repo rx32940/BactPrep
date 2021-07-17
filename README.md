@@ -37,8 +37,12 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 4) If first time using the pipeline
     ```
-    bash INSTALL.sh
+    
     conda env create -f workflow/env/install.yaml -n {BactPrep}*
+
+    conda activate {BactPrep}
+
+    bash INSTALL.sh
 
     ```
     _* this name can change base on your project_
@@ -112,9 +116,6 @@ This pipeline is written specifically for annotating the **bacteria whole genome
                 - will mask detected recombination region, and call SNPs from conserved region of core genome alignment
                 - recombinations were detected for each gene individually
                 - will also reconstruct phylogeny for the dataset based on the core clonal SNPs.
-
-
-        
 
 
 
@@ -238,9 +239,6 @@ Enjoy the program! :)
     └── snippy (snippy output - individual samples' snp calling with the reference genome)
 ```
 
-
-
-
 ## Examples
 
 **1) Get Start - How to run ALL Module**
@@ -363,13 +361,15 @@ python start_analysis.py wgsRecomb \
 **8) IF additional arguments need to be specificed for Roary and Gubbins when using "coreGEN", "wgsRecomb", or "ALL" module**
 additional Roary and Gubbins arguments that is not specificed by BactPrep can be added by using the ```-R``` of ```-G``` flags, respectively. Dependencies used for these additional arguments need to be install by user.
 
+**SPACE is necessary at the beginning of the string**
+
 Example:
 ```
 python start_analysis.py ALL \
 -p PMEN1.dated \
 -o $WORKPATH -g $WORKPATH/gff \
 -r $WORKPATH/GCF_000026665.1_ASM2666v1_genomic.fna \
--R "-r -y -iv 1.5"
+-R " -r -y -iv 1.5"
 
 ```
 ## Setting up config 

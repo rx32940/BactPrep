@@ -18,6 +18,8 @@ rule Roary:
             roary{params.additional} -e -n -p {threads} -f {params.out_dir} {input} -v -cd {core_percentage} -z
 
             cp -r {roary_dir}*/* {roary_dir}
+
+            rm -rf {roary_dir}_*
         """
 
 rule core_gene_concatenation_ML_tree:
