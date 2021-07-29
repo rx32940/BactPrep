@@ -88,7 +88,7 @@ rule concate_gene_aln:
     shell:
         """
     
-            perl {workflow.basedir}/scripts/catfasta2phyml.pl -f --concatenate --verbose {fastGear_core_dir}masked_coregene_aln/*fasta > {output}
+            perl {workflow.basedir}/scripts/catfasta2phyml.pl -f -c -s --verbose {fastGear_core_dir}masked_coregene_aln/*fasta > {output}
         """
 
 rule call_snp_from_masked_alignment:
