@@ -6,15 +6,15 @@ fastGear_exe_path: /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinu
 fastGear_params: /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/fG_input_specs.txt
 fastgear_gene_file_list: ''
 gff_dir: null
-gubbins: ''
+gubbins: ' -f 30'
 kingdom: Bacteria
 mcr_path: /scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/
 metadata_include: Year,Country
-output: /scratch/rx32940/PMEN1/roary/roary_iqtree/PMEN1.dated.treefile,/scratch/rx32940/PMEN1/gubbins/iqtree/PMEN1.dated.recombFreeSnpsAtcg.treefile,/scratch/rx32940/PMEN1/fastgear_core/plot_coregenome/core_fastgear_plot_recombination_count.pdf,/scratch/rx32940/PMEN1/fastgear_core/fastgear_iqtree/PMEN1.dated_core_mask_snp.treefile,/scratch/rx32940/PMEN1/fastgear_core/plot_coregenome/core_fastgear_plot_recombination_count.pdf,/scratch/rx32940/PMEN1/roary/roary_iqtree/PMEN1.dated_meta.coreConcate.newick,/scratch/rx32940/PMEN1/roary/PMEN1.dated_coreConcate_meta.fasta,/scratch/rx32940/PMEN1/gubbins/PMEN1.dated_meta.recombFreeSnpsAtcg.fasta,/scratch/rx32940/PMEN1/gubbins/iqtree/PMEN1.dated_meta.GubbinsSNPs.newick,/scratch/rx32940/PMEN1/fastgear_core/fastgear_iqtree/PMEN1.dated_meta.coreSNPs.newick,/scratch/rx32940/PMEN1/fastgear_core/PMEN1.dated_core_mask_snp_meta.fasta
+output: /scratch/rx32940/PMEN1/fastgear_core/plot_coregenome/core_fastgear_plot_recombination_count.pdf,/scratch/rx32940/PMEN1/fastgear_core/fastgear_iqtree/PMEN1.dated_core_mask_snp.treefile
 output_dir: /scratch/rx32940/PMEN1
 phage_region: ''
 project_name: PMEN1.dated
 reference: /scratch/rx32940/PMEN1/GCF_000026665.1_ASM2666v1_genomic.fna
-roary: ' -r -y -iv 1.5'
+roary: ''
 sample_metadata: /scratch/rx32940/PMEN1/PMEN1.dated.metadata.csv
 threads_num: 5
