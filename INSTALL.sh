@@ -3,10 +3,7 @@
 cd $PWD
 
 
-# 1) create conda environment with all python dependencies installed
-conda env create -f workflow/env/install.yaml -n BactPrep
-
-
+# 1) make dir for software if not exist
 mkdir -p resources
 
 # 2) Install MATLAB runtime 
@@ -15,7 +12,7 @@ wget https://users.ics.aalto.fi/~pemartti/fastGEAR/MCRInstallerLinux64bit.zip -P
 
 # 2.2) unzip mcr and install
 mkdir -p $PWD/resources/mcr
-unzip resources/MCRInstallerLinux64bit.zip -d $PWD/resources/mcr
+unzip $PWD/resources/MCRInstallerLinux64bit.zip -d $PWD/resources/mcr
 bash $PWD/resources/mcr/install -destinationFolder $PWD/resources/mcr -mode silent -agreeToLicense yes
 
 # 3) Install fastGear excutable
@@ -25,4 +22,5 @@ wget https://users.ics.aalto.fi/~pemartti/fastGEAR/fastGEARpackageLinux64bit.tar
 # 3.2) unzip fastGear excutable 
 tar -zvxf $PWD/resources/fastGEARpackageLinux64bit.tar.gz -C resources
 
-
+# remove zip files from both programs
+rm $PWD/resources/MCRInstallerLinux64bit.zip $PWD/resources/fastGEARpackageLinux64bit.tar.gz
