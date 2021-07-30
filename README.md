@@ -20,7 +20,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 ## Installation
 
-1) Install conda in your local computer
+1) Install conda (Python3) in your local computer or on the computing cluster
 
 2) make a working directory
     ```
@@ -34,13 +34,17 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     git clone git@github.com:rx32940/BactPrep.git
     ```
+    
+    **or**
+    
+    download BactPrep release from Github
 
 4) If first time using the pipeline
     ```
     
-    conda env create -f workflow/env/install.yaml -n {BactPrep}*
+    conda env create -f workflow/env/install.yaml -n BactPrep python=3.7
 
-    conda activate {BactPrep}
+    conda activate {BactPrep}*
 
     bash INSTALL.sh
 

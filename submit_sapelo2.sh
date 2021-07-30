@@ -10,11 +10,9 @@
 #SBATCH --mail-user=rx32940@uga.edu
 #SBATCH --mail-type=ALL
 
-# ml Biopython/1.75-intel-2019b-Python-3.7.4
-# ml snakemake/5.7.1-foss-2019b-Python-3.7.4
-# ml Anaconda3/2020.02
 
-# conda env create -f workflow/env/install.yaml -n snakemake
+# ml Miniconda3/4.10.3
+# conda env create -f workflow/env/install.yaml -n BactPrep python=3.7
 
 source activate snakemake
 
