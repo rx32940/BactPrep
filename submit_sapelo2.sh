@@ -14,7 +14,7 @@
 # ml Miniconda3/4.10.3
 # conda env create -f workflow/env/install.yaml -n BactPrep python=3.7
 
-source activate snakemake
+source activate BactPrep
 
 cd $SLURM_SUBMIT_DIR
 

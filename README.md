@@ -86,7 +86,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     2. if you already have mcr (R2016a) on your machine (or used this pipeline before), you do not need to reinstall mcr, 
     please specify the absolute path with ```--mcr_path``` flag, which leads to the absolute path of your installed mcr 
         
-        1. ```--mcr_path```: ex. ```--mcr_path {absolute_path_to_BactPrep}resources/v901/```
+        1. ```--mcr_path```: ex. ```--mcr_path {absolute_path_to_BactPrep}resources/mcr/```
         
 
 6) You are now good to go! 

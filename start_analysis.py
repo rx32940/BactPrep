@@ -91,9 +91,9 @@ SINGLE= True if ALN != "" else False
 FASTGEAR_EXE=args.fastgear_exe
 FASTGEAR_PARAM=args.fg if args.fg != "" else str(os.path.join(FASTGEAR_EXE,'fG_input_specs.txt'))
 MCR_PATH=args.mcr_path
-LD_LIB_PATH=str(os.path.join(MCR_PATH,'runtime/glnxa64:')) + \
-    str(os.path.join(MCR_PATH , 'bin/glnxa64:')) +\
-        str(os.path.join(MCR_PATH , 'sys/os/glnxa64'))
+LD_LIB_PATH=str(os.path.join(MCR_PATH,'v901/runtime/glnxa64:')) + \
+    str(os.path.join(MCR_PATH , 'v901/bin/glnxa64:')) +\
+        str(os.path.join(MCR_PATH , 'v901/sys/os/glnxa64'))
 
 
 # open 
