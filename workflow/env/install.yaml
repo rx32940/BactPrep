@@ -17,3 +17,4 @@ dependencies:
   - bioconductor-treeio
   - r-dplyr 
   - pyyaml
+  - matplotlib
