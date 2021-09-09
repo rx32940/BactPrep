@@ -1,4 +1,0 @@
-Building DAG of jobs...
-MissingInputException in line 78 of /scratch/rx32940/PMEN1/BactPrep/workflow/Snakefile:
-Missing input files for rule all:
-
