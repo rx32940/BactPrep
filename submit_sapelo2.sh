@@ -20,7 +20,7 @@ cd $SLURM_SUBMIT_DIR
 
 WORKPATH="/scratch/rx32940/PMEN1"
 
-time python start_analysis.py coreRecomb \
+time python start_analysis.py panRecomb \
 -p PMEN1.dated \
 -o $WORKPATH -i $WORKPATH/assemblies \
 -M \
