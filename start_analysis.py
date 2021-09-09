@@ -52,7 +52,7 @@ roary_arguments.add_argument("-R", "--roary", type=str,help= "any additional roa
 
 # fastGear modules alignments (for all three fastGear moudles)
 fastgear_arguments = general_parser.add_argument_group("arguments for all three fastGear modules (coreRecomb, panRecomb, geneRecomb)")
-fastgear_arguments.add_argument("--mcr_path", type=str, help="path to mcr runtime (need to install before use any of the fastGear module", metavar='', default=os.path.join(CWD, 'resources/mcr/v901/'))
+fastgear_arguments.add_argument("--mcr_path", type=str, help="path to mcr runtime (need to install before use any of the fastGear module", metavar='', default=os.path.join(CWD, 'resources/mcr/'))
 fastgear_arguments.add_argument("--fastgear_exe", type=str, help="path to the excutable of fastGear", metavar='', default=str(os.path.join(CWD,'resources/fastGEARpackageLinux64bit/')))
 fastgear_arguments.add_argument("--fg","--fastgear_param", type=str, help="path to fastGear params", metavar='', default="")
 
@@ -145,10 +145,10 @@ def get_annotated(module):
                         + str(os.path.join(OUT,"fastgear_core" , "fastgear_iqtree" ,  str(NAME + "_meta.coreSNPs.newick"))) + ","\
                             + str(os.path.join(OUT , "fastgear_core",str(NAME + "_core_mask_snp_meta.fasta")))
     if module == "geneRecomb":
-        ADDANOT=Fasle
+        ADDANOT=False
         anot_files=""
     if module == "panRecomb":
-        ADDANOT=Fasle
+        ADDANOT=False
         anot_files=""
     return anot_files
 
@@ -183,6 +183,7 @@ def get_output(module):
         if ADDANOT:
             output_files=str(output_files) + "," + get_annotated(module)
 
+    output_files = output_files[:-1] if output_files[-1] is "," else output_files
     output={'output': output_files}      
     return output
 

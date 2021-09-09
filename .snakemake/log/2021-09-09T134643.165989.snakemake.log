@@ -1,0 +1,15 @@
+Building DAG of jobs...
+Updating job create_loci_file.
+Using shell: /usr/bin/bash
+Provided cores: 5
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	create_loci_file
+	5179	fastGear
+	1	plot_pan_fastGear
+	5182
+Select jobs to execute...
+Terminating processes on user request, this might take some time.
+Complete log: /scratch/rx32940/PMEN1/BactPrep/.snakemake/log/2021-09-09T134643.165989.snakemake.log

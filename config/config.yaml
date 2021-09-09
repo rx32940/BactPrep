@@ -8,9 +8,9 @@ fastgear_gene_file_list: ''
 gff_dir: null
 gubbins: ' -f 30'
 kingdom: Bacteria
-mcr_path: /scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/
+mcr_path: /scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901
 metadata_include: Year,Country
-output: /scratch/rx32940/PMEN1/fastgear_core/plot_coregenome/core_fastgear_plot_recombination_count.pdf,/scratch/rx32940/PMEN1/fastgear_core/fastgear_iqtree/PMEN1.dated_core_mask_snp.treefile
+output: /scratch/rx32940/PMEN1/fastgear/plot_pangenome/pan_fastgear_plot_recombination_count.pdf
 output_dir: /scratch/rx32940/PMEN1
 phage_region: ''
 project_name: PMEN1.dated

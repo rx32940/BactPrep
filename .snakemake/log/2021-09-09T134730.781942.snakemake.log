@@ -1,0 +1,116 @@
+Building DAG of jobs...
+Updating job create_loci_file.
+Using shell: /usr/bin/bash
+Provided cores: 5
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	create_loci_file
+	5179	fastGear
+	1	plot_pan_fastGear
+	5182
+Select jobs to execute...
+
+[Thu Sep  9 13:47:36 2021]
+rule fastGear:
+    input: /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq
+    output: /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/ywqC/output/recombinations_recent.txt, /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/ywqC/ywqC.fa
+    jobid: 5771
+    wildcards: locus=ywqC
+
+
+[Thu Sep  9 13:47:36 2021]
+rule fastGear:
+    input: /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq
+    output: /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_2304/output/recombinations_recent.txt, /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_2304/group_2304.fa
+    jobid: 2758
+    wildcards: locus=group_2304
+
+
+[Thu Sep  9 13:47:36 2021]
+rule fastGear:
+    input: /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq
+    output: /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_1653/output/recombinations_recent.txt, /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_1653/group_1653.fa
+    jobid: 2760
+    wildcards: locus=group_1653
+
+
+[Thu Sep  9 13:47:36 2021]
+rule fastGear:
+    input: /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq
+    output: /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4292/output/recombinations_recent.txt, /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4292/group_4292.fa
+    jobid: 4020
+    wildcards: locus=group_4292
+
+
+[Thu Sep  9 13:47:36 2021]
+rule fastGear:
+    input: /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq
+    output: /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4371/output/recombinations_recent.txt, /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4371/group_4371.fa
+    jobid: 1193
+    wildcards: locus=group_4371
+
+[Thu Sep  9 13:47:36 2021]
+[Thu Sep  9 13:47:36 2021]
+[Thu Sep  9 13:47:36 2021]
+Error in rule fastGear:
+Error in rule fastGear:
+Error in rule fastGear:
+    jobid: 5771
+    jobid: 2760
+    jobid: 2758
+    output: /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/ywqC/output/recombinations_recent.txt, /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/ywqC/ywqC.fa
+    output: /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_1653/output/recombinations_recent.txt, /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_1653/group_1653.fa
+    output: /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_2304/output/recombinations_recent.txt, /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_2304/group_2304.fa
+    shell:
+        
+        LD_LIBRARY_PATH=/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/runtime/glnxa64:/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/bin/glnxa64:/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/sys/os/glnxa64
+        /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/run_fastGEAR.sh /scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/ /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq/ywqC.fa.aln /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/ywqC/ywqC.mat /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/fG_input_specs.txt 
+        cp /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq/ywqC.fa.aln /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/ywqC/ywqC.fa
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    shell:
+        
+        LD_LIBRARY_PATH=/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/runtime/glnxa64:/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/bin/glnxa64:/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/sys/os/glnxa64
+        /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/run_fastGEAR.sh /scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/ /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq/group_1653.fa.aln /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_1653/group_1653.mat /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/fG_input_specs.txt 
+        cp /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq/group_1653.fa.aln /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_1653/group_1653.fa
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    shell:
+        
+        LD_LIBRARY_PATH=/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/runtime/glnxa64:/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/bin/glnxa64:/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/sys/os/glnxa64
+        /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/run_fastGEAR.sh /scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/ /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq/group_2304.fa.aln /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_2304/group_2304.mat /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/fG_input_specs.txt 
+        cp /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq/group_2304.fa.aln /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_2304/group_2304.fa
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+
+
+[Thu Sep  9 13:47:36 2021]
+Error in rule fastGear:
+    jobid: 4020
+    output: /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4292/output/recombinations_recent.txt, /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4292/group_4292.fa
+    shell:
+        
+        LD_LIBRARY_PATH=/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/runtime/glnxa64:/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/bin/glnxa64:/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/sys/os/glnxa64
+        /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/run_fastGEAR.sh /scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/ /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq/group_4292.fa.aln /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4292/group_4292.mat /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/fG_input_specs.txt 
+        cp /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq/group_4292.fa.aln /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4292/group_4292.fa
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+[Thu Sep  9 13:47:36 2021]
+Error in rule fastGear:
+    jobid: 1193
+    output: /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4371/output/recombinations_recent.txt, /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4371/group_4371.fa
+    shell:
+        
+        LD_LIBRARY_PATH=/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/runtime/glnxa64:/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/bin/glnxa64:/scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/sys/os/glnxa64
+        /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/run_fastGEAR.sh /scratch/rx32940/PMEN1/BactPrep/resources/mcr/v901/v901/ /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq/group_4371.fa.aln /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4371/group_4371.mat /scratch/rx32940/PMEN1/BactPrep/resources/fastGEARpackageLinux64bit/fG_input_specs.txt 
+        cp /scratch/rx32940/PMEN1/fastgear/roary_pangenome_seq/group_4371.fa.aln /scratch/rx32940/PMEN1/fastgear/loci_fastGear_out/group_4371/group_4371.fa
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /scratch/rx32940/PMEN1/BactPrep/.snakemake/log/2021-09-09T134730.781942.snakemake.log
