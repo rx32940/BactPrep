@@ -60,8 +60,8 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     -o $OUTPATH \
     -t 10 \
     -i $INPATH/assemblies \
-    --mcr_path {path_to_previous_BactPrep_folder}/matlab/v901 \
-    --fastgear_exe {path_to_previous_BactPrep_folder}/fastGEARpackageLinux64bit 
+    --mcr_path {path_to_previous_BactPrep_folder}/resources/mcr \
+    --fastgear_exe {path_to_previous_BactPrep_folder}/resources/fastGEARpackageLinux64bit 
     ```
     
 5) If you have trouble installing fastGear with ```INSTALL.sh``` script. please follow the instruction below for installation.
@@ -263,7 +263,7 @@ python start_analysis.py ALL -p PMEN1.dated \
 -o $OUTPATH \
 -t 10 \
 -g $INPATH/gff \ # gff dir as input
---mcr_path /home/user/matlab/v901 \ # absolute path to mcr R2016b
+--mcr_path {path_to_previous_BactPrep_folder}/resources/mcr \ # absolute path to mcr R2016b
 --fastgear_exe /home/user/SOFTWARE/fastGEARpackageLinux64bit # absolute path to fastGear excutable
 
 ```
