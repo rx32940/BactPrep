@@ -210,14 +210,15 @@ config = {'project_name': NAME,
 'roary':ROARY,
 'gubbins':GUBBINS}
 
-
+BactPrep_path = os.path.abspath(os.path.dirname(__file__))
 config.update(get_output(MODULE))     
-with open("config/config.yaml", "w") as configfile:
+with open(os.path.join(BactPrep_path,"config/config.yaml"), "w") as configfile:
     yaml.dump(config,configfile)
 
 
 
 if __name__ == "__main__":
+    os.chdir(BactPrep_path)
     os.system ("snakemake --cores %d --use-conda"%THREAD)
 
 
