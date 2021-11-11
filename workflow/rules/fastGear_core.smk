@@ -100,12 +100,13 @@ rule call_snp_from_masked_alignment:
         "../env/bedtools.yaml"
     shell:
         """
-            snp-sites -cb {input} -o {output}
+            snp-sites -c {input} -o {output}
         """
 
 rule core_genome_snps_ML_tree:
     input:
-        rules.call_snp_from_masked_alignment.output
+        snps_aln=rules.call_snp_from_masked_alignment.output,
+        core_aln=rules.concate_gene_aln.output
     output:
         os.path.join(fastGear_core_dir , "fastgear_iqtree" , str(project_prefix + "_core_mask_snp.treefile"))
     conda:
@@ -116,7 +117,7 @@ rule core_genome_snps_ML_tree:
         prefix = os.path.join(fastGear_core_dir , "fastgear_iqtree" , str(project_prefix + "_core_mask_snp"))
     shell:
         """
-            iqtree -bb 1000 -nt AUTO -m MFP -pre {params.prefix} -s {input}
+            iqtree -bb 1000 -nt AUTO -m MFP -pre {params.prefix} -s {input.snps_aln} -fconst $(snp-sites -C {input.core_aln})
         """
 
 
