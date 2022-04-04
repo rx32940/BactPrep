@@ -39,6 +39,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 4) If first time using the pipeline
     ```
+    cd BactPrep
     
     conda env create -f workflow/env/install.yaml -n BactPrep python=3.7
 
