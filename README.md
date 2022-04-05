@@ -248,13 +248,22 @@ Enjoy the program! :)
 
 **Sample Dataset**: [218 Streptococcus pneumoniae  PMEN1 WGS assemblies collected from the year 1984 - 2008 from 22 unique countries globally]((https://zenodo.org/record/5603335#.YkxP9y9h1TY)
     - The sample dataset can be downloaded to your work directory by:
-    ```
-    mkdir -p $INPATH/assemblies
-    
-    cd $INPATH/assemblies
-    
-    zenodo_get -d 10.5281/zenodo.5603335
-    ```
+```
+mkdir -p $INPATH/assemblies
+
+cd $INPATH/assemblies
+
+zenodo_get -d 10.5281/zenodo.5603335
+```
+
+**Reference genome** for _Streptococcus pneumoniae_ PMEN1 cab be downloaded from NCBI: [Streptococcus pneumoniae ATCC 700669 (firmicutes)](https://www.ncbi.nlm.nih.gov/assembly/GCF_000026665.1/)
+```
+cd $INPATH/
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/026/665/GCF_000026665.1_ASM2666v1/GCF_000026665.1_ASM2666v1_genomic.fna.gz
+
+gunzip GCF_000026665.1_ASM2666v1_genomic.fna.gz
+```
 
 **1) Get Start - How to run ALL Module**
 if you would like to run "wgsRecomb", "coreGen", and "coreRecomb" modules all together, you can just use the "ALL" module. **Note: a reference genome (-r) is necessary to run "wgsRecomb" module**
