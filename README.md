@@ -265,6 +265,8 @@ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/026/665/GCF_000026665.1_AS
 gunzip GCF_000026665.1_ASM2666v1_genomic.fna.gz
 ```
 
+
+
 **1) Get Start - How to run ALL Module**
 if you would like to run "wgsRecomb", "coreGen", and "coreRecomb" modules all together, you can just use the "ALL" module. **Note: a reference genome (-r) is necessary to run "wgsRecomb" module**
 
@@ -272,7 +274,7 @@ EXAMPLE:
 ```
 python start_analysis.py ALL -p PMEN1.dated \
 -o $OUTPATH \
--i $INPATH/assemblies
+-i $INPATH/assemblies \
 -r $INPATH/GCF_000026665.1_ASM2666v1_genomic.fna
 ```
 
@@ -307,8 +309,8 @@ python start_analysis.py ALL -p PMEN1.dated \
 -i $INPATH/assemblies \
 -r $INPATH/GCF_000026665.1_ASM2666v1_genomic.fna \
 -M \
--a $INPATH/PMEN1.dated.metadata.csv
--s 1
+-a $INPATH/PMEN1.dated.metadata.csv \
+-s 1 \
 -m Year,Country
 ```
 **3) IF you would only like to run "wgsRecomb"**
