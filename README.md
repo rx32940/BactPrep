@@ -246,7 +246,7 @@ Enjoy the program! :)
 
 ## Examples
 
-**Sample Dataset**: [218 Streptococcus pneumoniae  PMEN1 WGS assemblies collected from the year 1984 - 2008 from 22 unique countries globally]((https://zenodo.org/record/5603335#.YkxP9y9h1TY)
+**Sample Dataset**: [218 Streptococcus pneumoniae  PMEN1 WGS assemblies collected from the year 1984 - 2008 from 22 unique countries globally](https://zenodo.org/record/5603335#.YkxP9y9h1TY)
     - The sample dataset can be downloaded to your work directory by:
 ```
 mkdir -p $INPATH/assemblies
