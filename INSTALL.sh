@@ -24,3 +24,9 @@ tar -zvxf $PWD/resources/fastGEARpackageLinux64bit.tar.gz -C resources
 
 # remove zip files from both programs
 rm $PWD/resources/MCRInstallerLinux64bit.zip $PWD/resources/fastGEARpackageLinux64bit.tar.gz
+
+
+# 4) add python file to path
+chmod 755 $PWD/start_analysis.py
+
+export PATH="$PWD:$PATH"
