@@ -41,7 +41,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     cd BactPrep
     
-    conda conda create -n {BactPrep}* conda-forge::mamba
+    conda create -n {BactPrep}* conda-forge::mamba
 
     conda activate {BactPrep}*
     
