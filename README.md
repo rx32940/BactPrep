@@ -120,7 +120,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 
 ```
-usage: start_analysis MODULE [options]
+usage: start_analysis.py MODULE [options]
 
 Please always specify the program to use in the first argument, or the whole pipeline will attemp to run
 
