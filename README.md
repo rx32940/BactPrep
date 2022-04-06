@@ -33,15 +33,6 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     git clone git@github.com:rx32940/BactPrep.git
     ```
     
-    **or**
-    
-    **download BactPrep release from Github**
-    ```
-    wget https://github.com/rx32940/BactPrep/releases/download/v1.0-beta.2/BactPrep.tar.gz
-    
-    tar -zvxf BactPrep.tar.gz
-    
-    ```
 
 4) If first time using the pipeline
     ```
