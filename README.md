@@ -167,7 +167,7 @@ arguments for geneRecomb module:
 Enjoy the program! :)
 ```
 
-**Run**: ```python start_analysis.py ALL(coreGen/wgsRecomb/panRecomb)```
+**Run**: ```start_analysis.py ALL(coreGen/wgsRecomb/panRecomb)```
 
 ## Output Files
 
@@ -267,7 +267,7 @@ if you would like to run "wgsRecomb", "coreGen", and "coreRecomb" modules all to
 
 EXAMPLE:
 ```
-python start_analysis.py ALL -p PMEN1.dated \
+start_analysis.py ALL -p PMEN1.dated \
 -o $OUTPATH \
 -i $INPATH/assemblies \
 -r $INPATH/GCF_000026665.1_ASM2666v1_genomic.fna
@@ -276,7 +276,7 @@ python start_analysis.py ALL -p PMEN1.dated \
 1.1) If you already have gff files obtained from previous analysis, **gff dir** can be used as input for "coreGen module". This will saves a lot time
 
 ```
-python start_analysis.py ALL -p PMEN1.dated \
+start_analysis.py ALL -p PMEN1.dated \
 -o $OUTPATH \
 -t 10 \
 -g $INPATH/gff \ # gff dir as input
@@ -299,7 +299,7 @@ ERS004775 | HK P38 | 2000 | China
 
 EXAMPLE:
 ```
-python start_analysis.py ALL -p PMEN1.dated \
+start_analysis.py ALL -p PMEN1.dated \
 -o $OUTPATH \
 -i $INPATH/assemblies \
 -r $INPATH/GCF_000026665.1_ASM2666v1_genomic.fna \
@@ -313,7 +313,7 @@ please keep in mind, a reference genome must provided by user."wgsRecomb" module
 
 EXAMPLE:
 ```
-python start_analysis.py wgsRecomb -p PMEN1.dated \
+start_analysis.py wgsRecomb -p PMEN1.dated \
 -o $OUTPATH \
 -i $INPATH/assemblies \
 -r $INPATH/GCF_000026665.1_ASM2666v1_genomic.fna 
@@ -325,7 +325,7 @@ a reference file would be required for this module. All input WGS assemblies wil
 
 EXAMPLE:
 ```
-python start_analysis.py wgsRecomb -p PMEN1.dated \
+start_analysis.py wgsRecomb -p PMEN1.dated \
 -o $OUTPATH \
 -i $INPATH/assemblies 
 
@@ -336,7 +336,7 @@ pipeline implemented in the "coreGen" module will run first. "coreRecomb" module
 
 EXAMPLE:
 ```
-python start_analysis.py coreRecomb \
+start_analysis.py coreRecomb \
 -p PMEN1.dated \
 -o $WORKPATH -i $WORKPATH/assemblies \
 -r $WORKPATH/GCF_000026665.1_ASM2666v1_genomic.fna \
@@ -357,7 +357,7 @@ conda env create -f workflow/env/install.yaml -n BactPrep
 
 conda activate BactPrep
 
-python start_analysis.py panRecomb -p PMEN1.dated_fastGear_pan \
+start_analysis.py panRecomb -p PMEN1.dated_fastGear_pan \
 -o $OUTPATH \
 -t 10 \
 -i $INPATH/assemblies \
@@ -371,7 +371,7 @@ phage region can be provided to snippy before running gubbins. If you would like
 EXAMPLE:
 
 ```
-python start_analysis.py wgsRecomb \
+start_analysis.py wgsRecomb \
 -p PMEN1.dated \
 -o $WORKPATH -i $WORKPATH/assemblies \
 -r $WORKPATH/GCF_000026665.1_ASM2666v1_genomic.fna \
@@ -386,7 +386,7 @@ additional Roary and Gubbins arguments that is not specificed by BactPrep can be
 
 Example:
 ```
-python start_analysis.py ALL \
+start_analysis.py ALL \
 -p PMEN1.dated \
 -o $WORKPATH -g $WORKPATH/gff \
 -r $WORKPATH/GCF_000026665.1_ASM2666v1_genomic.fna \
