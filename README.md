@@ -28,14 +28,20 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     _* this name can change base on your project_
 
-3) clone the repository into local working directory or download the most recent released issue from github
+3) **clone the repository into local working directory** 
     ```
     git clone git@github.com:rx32940/BactPrep.git
     ```
     
     **or**
     
-    download BactPrep release from Github
+    **download BactPrep release from Github**
+    ```
+    wget https://github.com/rx32940/BactPrep/releases/download/v1.0-beta.2/BactPrep.tar.gz
+    
+    tar -zvxf BactPrep.tar.gz
+    
+    ```
 
 4) If first time using the pipeline
     ```
@@ -47,23 +53,12 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     
     mamba install --file workflow/env/install.yaml
 
-    bash INSTALL.sh
+    source INSTALL.sh
 
     ```
     _* this name can change base on your project_
 
 4.1) if used the pipeline before or has matlab runtime R2016b (MCR) **AND** fastGear executable installed on the machine, use flag ```--mcr_path``` and ```--fastgear_exe``` to specify the absolute path to MCR and fasrGear executable. IF these two software were installed during previous use of BactPrep. you can find them in the ```resources``` folder from the previous download (please see example #6 below for detail).
-
-    ```
-    conda activate {BactPrep}*
-
-    python start_analysis.py panRecomb -p all_Lint_fastGear_pan \
-    -o $OUTPATH \
-    -t 10 \
-    -i $INPATH/assemblies \
-    --mcr_path {path_to_previous_BactPrep_folder}/resources/mcr \
-    --fastgear_exe {path_to_previous_BactPrep_folder}/resources/fastGEARpackageLinux64bit 
-    ```
     
 5) If you have trouble installing fastGear with ```INSTALL.sh``` script. please follow the instruction below for installation.
     1. mcr has many versions, use the link to download the version compatible with **fastGear**:
@@ -265,7 +260,7 @@ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/026/665/GCF_000026665.1_AS
 gunzip GCF_000026665.1_ASM2666v1_genomic.fna.gz
 ```
 
-
+---
 
 **1) Get Start - How to run ALL Module**
 if you would like to run "wgsRecomb", "coreGen", and "coreRecomb" modules all together, you can just use the "ALL" module. **Note: a reference genome (-r) is necessary to run "wgsRecomb" module**
