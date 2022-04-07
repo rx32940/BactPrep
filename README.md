@@ -18,7 +18,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 ## Installation
 
-1) Install conda (Python3) in your local computer or on the computing cluster
+1) Install conda (Python3) in your local computer or on the computing cluster. Detailed instruction can be find [here](https://docs.conda.io/en/latest/miniconda.html)
 
 2) make a working directory
     ```
