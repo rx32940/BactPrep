@@ -30,7 +30,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 3) **clone the repository into local working directory** 
     ```
-    git clone git@github.com:rx32940/BactPrep.git
+    git clone https://github.com/rx32940/BactPrep.git
     ```
     
 
@@ -38,7 +38,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     cd BactPrep
     
-    conda create -n {BactPrep}* conda-forge::mamba
+    conda create -n {BactPrep}* python=3.7.8 conda-forge::mamba
 
     conda activate {BactPrep}*
     
