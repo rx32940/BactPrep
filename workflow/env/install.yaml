@@ -1,4 +1,4 @@
-conda-forge::biopython=1.77
+conda-forge::biopython
 conda-forge::unzip
 conda-forge::tar
 conda-forge::tree
@@ -8,4 +8,4 @@ conda-forge::matplotlib
 conda-forge::zenodo_get
 bioconda::bioconductor-ggtree
 bioconda::bioconductor-treeio
-bioconda::snakemake=5.32.0
+bioconda::snakemake
