@@ -184,7 +184,7 @@ def get_output(module):
         if ADDANOT:
             output_files=str(output_files) + "," + get_annotated(module)
 
-    output_files = output_files[:-1] if output_files[-1] is "," else output_files
+    output_files = output_files[:-1] if output_files[-1] == "," else output_files
     output={'output': output_files}      
     return output
 

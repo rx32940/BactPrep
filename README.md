@@ -38,9 +38,11 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     cd BactPrep
     
-    conda create -n {BactPrep}* python=3.7.8 conda-forge::mamba
+    conda create -n {BactPrep}* python=3
 
     conda activate {BactPrep}*
+
+    conda install mamba -c conda-forge
     
     mamba install --file workflow/env/install.yaml
 
@@ -240,6 +242,8 @@ mkdir -p $INPATH/assemblies
 cd $INPATH/assemblies
 
 zenodo_get -d 10.5281/zenodo.5603335
+
+rm $INPATH/assemblies/md5sums*
 ```
 
 **Reference genome** for _Streptococcus pneumoniae_ PMEN1 cab be downloaded from NCBI: [Streptococcus pneumoniae ATCC 700669 (firmicutes)](https://www.ncbi.nlm.nih.gov/assembly/GCF_000026665.1/)
