@@ -36,17 +36,17 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
 4) If first time using the pipeline
     ```
-    cd BactPrep # change into cloned directory
+    cd BactPrep 
     
-    conda create -n BactPrep python=3 # creating a conda env
+    conda create -n BactPrep python=3 
 
-    conda activate BactPrep # activate created env
+    conda activate BactPrep 
 
-    conda install mamba -c conda-forge # install mamba to faciliate installation
+    conda install mamba -c conda-forge 
     
-    mamba install --file workflow/env/install.yaml # installl dependencies
+    mamba install --file workflow/env/install.yaml 
 
-    source INSTALL.sh # run install script
+    source INSTALL.sh 
 
     ```
     _* this name can change base on your project_
