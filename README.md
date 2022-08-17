@@ -51,41 +51,40 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     _* this name can change base on your project_
 
-4.1) if used the pipeline before or has matlab runtime R2016b (MCR) **AND** fastGear executable installed on the machine, use flag ```--mcr_path``` and ```--fastgear_exe``` to specify the absolute path to MCR and fasrGear executable. IF these two software were installed during previous use of BactPrep. you can find them in the ```resources``` folder from the previous download (please see example #6 below for detail).
+ - - 4.1) if used the pipeline before or has matlab runtime R2016b (MCR) **AND** fastGear executable installed on the machine, use flag ```--mcr_path``` and ```--fastgear_exe``` to specify the absolute path to MCR and fasrGear executable. IF these two software were installed during previous use of BactPrep. you can find them in the ```resources``` folder from the previous download (please see example #6 below for detail).
     
-5) If you have trouble installing fastGear with ```INSTALL.sh``` script. please follow the instruction below for installation.
-    1. mcr has many versions, use the link to download the version compatible with **fastGear**:
-    
-        Download and install fastGear excutable:
-            1. change directory to: ```{absolute_path_to_BactPrep}/resources/mcr```
-            2. you can download mcr provided by fastGear developers: https://users.ics.aalto.fi/~pemartti/fastGEAR/ 
-            ```wget --no-check-certificate https://users.ics.aalto.fi/~pemartti/fastGEAR/fastGEARpackageLinux64bit.tar.gz -P {absolute_path_to_BactPrep}/resources```)
-            3. Unzip the downloaded file
-            ```tar -zvxf fastGEARpackageLinux64bit.tar.gz```
 
-        Download and install Matlab Runtime:
-        1. Download MCR zip provided by fastGear developers:
-        ```wget https://users.ics.aalto.fi/~pemartti/fastGEAR/MCRInstallerLinux64bit.zip -P {absolute_path_to_BactPrep}/resources --no-check-certificate```
-        2. Unzip the downloaded file ```unzip MCRInstallerLinux64bit.zip```
-            1. or download version **R2016a** from MATLAB: https://www.mathworks.com/products/compiler/matlab-runtime.html
-        3. change directory after unzip the downloaded file ```cd MCRInstallerLinux64bit```
-        4. install: ```./install -destinationFolder {absolute_path_to_BactPrep}/resources/mcr/ -mode silent -agreeToLicense yes```
-            1. if you would like to install with a GUI interface, please allow **X11 display** at the terminial, do ```./install```, this will open the GUI installation, and will allow you to change the directory to install, please install to ```{absolute_path_to_BactPrep}/resources/mcr``` 
-
-    2. if you already have mcr (R2016a) on your machine (or used this pipeline before), you do not need to reinstall mcr, 
-    please specify the absolute path with ```--mcr_path``` flag, which leads to the absolute path of your installed mcr 
-        
-        1. ```--mcr_path```: ex. ```--mcr_path {absolute_path_to_BactPrep}resources/mcr/```
-        
-
-6) You are now good to go! 
+5) You are now good to go! 
     RUN: ```python start_analysis.py ALL(coreGen/wgsRecomb/panRecomb)```
 
-5) after running all your analysis, deactivate the env
+6) after running all your analysis, deactivate the env
     ```
     conda deactivate
     ```
-## Instruction #1 (Specify Options)
+
+## Sample dataset
+[218 Streptococcus pneumoniae  PMEN1 WGS assemblies collected from the year 1984 - 2008 from 22 unique countries globally](https://zenodo.org/record/5603335#.YkxP9y9h1TY)
+    - The sample dataset can be downloaded to your work directory by:
+```
+mkdir -p $INPATH/assemblies
+
+cd $INPATH/assemblies
+
+zenodo_get -d 10.5281/zenodo.5603335
+
+rm $INPATH/assemblies/md5sums*
+```
+
+**Reference genome** for _Streptococcus pneumoniae_ PMEN1 cab be downloaded from NCBI: [Streptococcus pneumoniae ATCC 700669 (firmicutes)](https://www.ncbi.nlm.nih.gov/assembly/GCF_000026665.1/)
+```
+cd $INPATH/
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/026/665/GCF_000026665.1_ASM2666v1/GCF_000026665.1_ASM2666v1_genomic.fna.gz
+
+gunzip GCF_000026665.1_ASM2666v1_genomic.fna.gz
+```
+
+## Instruction
 
 ### Module Selection:
 
@@ -109,6 +108,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
                 - will mask detected recombination region, and call SNPs from conserved region of core genome alignment
                 - recombinations were detected for each gene individually
                 - will also reconstruct phylogeny for the dataset based on the core clonal SNPs.
+
 
 
 
@@ -164,98 +164,9 @@ Enjoy the program! :)
 
 ## Output Files
 
-### ALL module
-
-**OUTPUT:**
-```
-    ├── fastgear_core (coreRecomb output)
-        ├── core_loci_fastGear_out (FastGear recombinaition analysis for each core gene)
-        ├── core_loci_list.txt (list of genes analyzed in coreRecomb module)
-        ├── fastgear_iqtree (ML phylogeny reconstructed using recombinaition masked core SNPs)
-        ├── fastGear_masked_coregene_aln.fasta (core gene concatenation aln w/recombinaition masked)
-        ├── masked_coregene_aln (recombination masked gene alns - individual genes)
-        ├── plot_coregenome (combined statistics and final plots for fastGear core)
-        ├── PMEN1.dated_core_mask_snp.fasta (recomb-masked core SNPs alns used for fastGear_iqtree)
-        ├── PMEN1.dated_core_mask_snp_meta.fasta (recomb-masked core SNPs alns with annotation added)
-        └── roary_coreGeneAln_locustag.txt (same file as core_loci_list.txt)
-    ├── gff (Prokka annotated gff)
-    ├── gubbins (gubbins output - detailed explanantion for each file can be find in Gubbins manual)
-        ├── iqtree (ML phylogeny reconstructed using recomb-Free SNPs)
-        ├── PMEN1.dated.branch_base_reconstruction.embl
-        ├── PMEN1.dated.filtered_polymorphic_sites.fasta
-        ├── PMEN1.dated.filtered_polymorphic_sites.phylip
-        ├── PMEN1.dated.final_tree.tre
-        ├── PMEN1.dated_meta.recombFreeSnpsAtcg.fasta (taxa annotated alns for Gubbins detected recomb-free SNPs)
-        ├── PMEN1.dated.node_labelled.final_tree.tre
-        ├── PMEN1.dated_noref.filtered_polymorphic_sites.fasta
-        ├── PMEN1.dated.per_branch_statistics.csv
-        ├── PMEN1.dated.recombination_predictions.embl
-        ├── PMEN1.dated.recombination_predictions.gff
-        ├── PMEN1.dated.summary_of_snp_distribution.vcf
-        └── snp-sites 
-    ├── prokka (Prokka output - individual WGS assemblies's genome annotation)
-    ├── roary (roary output)
-        ├── accessory_binary_genes.fa
-        ├── accessory_binary_genes.fa.newick
-        ├── _accessory_clusters
-        ├── _accessory_clusters.clstr
-        ├── accessory_graph.dot
-        ├── accessory.header.embl
-        ├── accessory.tab
-        ├── blast_identity_frequency.Rtab
-        ├── _blast_results
-        ├── _clustered
-        ├── _clustered.clstr
-        ├── clustered_proteins
-        ├── _combined_files
-        ├── _combined_files.groups
-        ├── core_accessory_graph.dot
-        ├── core_accessory.header.embl
-        ├── core_accessory.tab
-        ├── core_alignment_header.embl
-        ├── core_gene_alignment.aln
-        ├── gene_presence_absence.csv
-        ├── gene_presence_absence.Rtab
-        ├── _inflated_mcl_groups
-        ├── _inflated_unsplit_mcl_groups
-        ├── _labeled_mcl_groups
-        ├── number_of_conserved_genes.Rtab
-        ├── number_of_genes_in_pan_genome.Rtab
-        ├── number_of_new_genes.Rtab
-        ├── number_of_unique_genes.Rtab
-        ├── pan_genome_reference.fa
-        ├── pan_genome_sequences
-        ├── PMEN1.dated_coreConcate_meta.fasta
-        ├── roary_iqtree (ML phylogeny reconstructed with core gene concatenation alignment)
-        ├── summary_statistics.txt
-        └── _uninflated_mcl_groups
-    └── snippy (snippy output - individual samples' snp calling with the reference genome)
-```
-
-## Examples
-
-**Sample Dataset**: [218 Streptococcus pneumoniae  PMEN1 WGS assemblies collected from the year 1984 - 2008 from 22 unique countries globally](https://zenodo.org/record/5603335#.YkxP9y9h1TY)
-    - The sample dataset can be downloaded to your work directory by:
-```
-mkdir -p $INPATH/assemblies
-
-cd $INPATH/assemblies
-
-zenodo_get -d 10.5281/zenodo.5603335
-
-rm $INPATH/assemblies/md5sums*
-```
-
-**Reference genome** for _Streptococcus pneumoniae_ PMEN1 cab be downloaded from NCBI: [Streptococcus pneumoniae ATCC 700669 (firmicutes)](https://www.ncbi.nlm.nih.gov/assembly/GCF_000026665.1/)
-```
-cd $INPATH/
-
-wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/026/665/GCF_000026665.1_ASM2666v1/GCF_000026665.1_ASM2666v1_genomic.fna.gz
-
-gunzip GCF_000026665.1_ASM2666v1_genomic.fna.gz
-```
-
 ---
+
+## FAQS
 
 **1) Get Start - How to run ALL Module**
 if you would like to run "wgsRecomb", "coreGen", and "coreRecomb" modules all together, you can just use the "ALL" module. **Note: a reference genome (-r) is necessary to run "wgsRecomb" module**
@@ -388,3 +299,28 @@ start_analysis.py ALL \
 -R " -r -y -iv 1.5"
 
 ```
+
+5) If you have trouble installing fastGear with ```INSTALL.sh``` script. please follow the instruction below for installation.
+    1. mcr has many versions, use the link to download the version compatible with **fastGear**:
+    
+        Download and install fastGear excutable:
+            1. change directory to: ```{absolute_path_to_BactPrep}/resources/mcr```
+            2. you can download mcr provided by fastGear developers: https://users.ics.aalto.fi/~pemartti/fastGEAR/ 
+            ```wget --no-check-certificate https://users.ics.aalto.fi/~pemartti/fastGEAR/fastGEARpackageLinux64bit.tar.gz -P {absolute_path_to_BactPrep}/resources```)
+            3. Unzip the downloaded file
+            ```tar -zvxf fastGEARpackageLinux64bit.tar.gz```
+
+        Download and install Matlab Runtime:
+        1. Download MCR zip provided by fastGear developers:
+        ```wget https://users.ics.aalto.fi/~pemartti/fastGEAR/MCRInstallerLinux64bit.zip -P {absolute_path_to_BactPrep}/resources --no-check-certificate```
+        2. Unzip the downloaded file ```unzip MCRInstallerLinux64bit.zip```
+            1. or download version **R2016a** from MATLAB: https://www.mathworks.com/products/compiler/matlab-runtime.html
+        3. change directory after unzip the downloaded file ```cd MCRInstallerLinux64bit```
+        4. install: ```./install -destinationFolder {absolute_path_to_BactPrep}/resources/mcr/ -mode silent -agreeToLicense yes```
+            1. if you would like to install with a GUI interface, please allow **X11 display** at the terminial, do ```./install```, this will open the GUI installation, and will allow you to change the directory to install, please install to ```{absolute_path_to_BactPrep}/resources/mcr``` 
+
+    2. if you already have mcr (R2016a) on your machine (or used this pipeline before), you do not need to reinstall mcr, 
+    please specify the absolute path with ```--mcr_path``` flag, which leads to the absolute path of your installed mcr 
+        
+        1. ```--mcr_path```: ex. ```--mcr_path {absolute_path_to_BactPrep}resources/mcr/```
+        
