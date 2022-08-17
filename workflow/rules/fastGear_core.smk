@@ -30,7 +30,7 @@ rule convert_recombination_to_bed:
         ancestral=rules.fastGear_core.output[1],
         lineage=rules.fastGear_core.output[2]
     output:
-        os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/output/recombinations_recent.bed")
+        os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/output/recombinations.bed")
     script:
         "../scripts/fastGear_to_bed.py"
         
@@ -100,7 +100,7 @@ rule call_snp_from_masked_alignment:
         "../env/bedtools.yaml"
     shell:
         """
-            snp-sites -c {input} -o {output}
+            snp-sites {input} -o {output}
         """
 
 rule core_genome_snps_ML_tree:
