@@ -75,7 +75,7 @@ zenodo_get -d 10.5281/zenodo.5603335
 rm $INPATH/assemblies/md5sums*
 ```
 
-**Reference genome** for _Streptococcus pneumoniae_ PMEN1 cab be downloaded from NCBI: [Streptococcus pneumoniae ATCC 700669 (firmicutes)](https://www.ncbi.nlm.nih.gov/assembly/GCF_000026665.1/)
+**Reference genome** for _Streptococcus pneumoniae_ PMEN1 can be downloaded from NCBI: [Streptococcus pneumoniae ATCC 700669 (firmicutes)](https://www.ncbi.nlm.nih.gov/assembly/GCF_000026665.1/)
 ```
 cd $INPATH/
 
