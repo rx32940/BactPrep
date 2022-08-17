@@ -55,7 +55,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     
 
 5) You are now good to go! 
-    RUN: ```python start_analysis.py ALL(coreGen/wgsRecomb/panRecomb)```
+    RUN: ```start_analysis.py ALL(coreGen/wgsRecomb/panRecomb)```
 
 6) after running all your analysis, deactivate the env
     ```
