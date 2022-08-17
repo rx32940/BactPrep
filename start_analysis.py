@@ -220,7 +220,7 @@ with open(os.path.join(BactPrep_path,"config/config.yaml"), "w") as configfile:
 
 if __name__ == "__main__":
     os.chdir(BactPrep_path)
-    os.system ("snakemake --conda-frontend mamba --cores %d --use-conda"%THREAD)
+    os.system ("snakemake --conda-frontend mamba --cores %d --use-conda --nolock"%THREAD)
 
 
 
