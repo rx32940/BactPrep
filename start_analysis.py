@@ -25,7 +25,7 @@ curren_wd = Path(os.getcwd())
 
 # General Arguments
 general_arguments = general_parser.add_argument_group("general arguments")
-general_arguments.add_argument("-i","--input", type=str, help= "path to input dir with assemlies", metavar='', default=os.path.join(curren_wd, "../assemblies"))
+general_arguments.add_argument("-i","--input", type=str, help= "path to input dir with assemblies", metavar='', default=os.path.join(curren_wd, "../assemblies"))
 general_arguments.add_argument("-p", "--name", type=str, help= "provide name prefix for the output files",metavar='', default= "bacterial_analysis" )
 general_arguments.add_argument('-t','--thread', type=int,  help = "num of threads", metavar='', default = 1)
 general_arguments.add_argument('-o','--output', type=str,  help = "path to the output directory", metavar='', default=os.path.join(CWD, 'results'))

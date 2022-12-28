@@ -44,7 +44,9 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 
     conda install mamba -c conda-forge 
     
-    mamba install --file workflow/env/install.yaml 
+    # if this step is not complete, set channel priirity in conda env to flexible with command: 
+    # conda config --set channel_priority true
+    mamba install --file workflow/env/install.yaml  
 
     source INSTALL.sh 
 
@@ -125,7 +127,7 @@ optional arguments:
   -h, --help            show this help message and exit
 
 general arguments:
-  -i , --input          path to input dir with assemlies
+  -i , --input          path to input dir with assemblies
   -p , --name           provide name prefix for the output files
   -t , --thread         num of threads
   -o , --output         path to the output directory
