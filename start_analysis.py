@@ -160,7 +160,7 @@ def get_output(module):
         if ADDANOT:
             output_files=str(output_files) + ","+get_annotated(module)
     elif module == "wgsRecomb":
-        output_files=str(os.path.join(OUT , "gubbins", "iqtree" , str(NAME + ".recombFreeSnpsAtcg.treefile")))
+        output_files=str(os.path.join(OUT , "gubbins", "iqtree" , str(NAME + ".gubbins.treefile")))
         if ADDANOT:
             output_files=str(output_files) + ","+get_annotated(module)        
     elif module == "panRecomb":
@@ -177,7 +177,7 @@ def get_output(module):
             output_files=",".join([str(os.path.join(OUT,"fastgear_gene" ,file,str(file + ".mat"))) for file in GENE_NAME])
     elif module == "ALL":
         output_files=str(os.path.join(OUT,"roary","roary_iqtree" , str(NAME +".treefile")))+ ","\
-            + str(os.path.join(OUT , "gubbins", "iqtree" , str(NAME + ".recombFreeSnpsAtcg.treefile")))+ ","\
+            + str(os.path.join(OUT , "gubbins", "iqtree" , str(NAME + ".gubbins.treefile")))+ ","\
                 + str(os.path.join(OUT , "fastgear_core" , "plot_coregenome/core_fastgear_plot_recombination_count.pdf")) + ","\
                     + str(os.path.join(OUT, "fastgear_core" , "fastgear_iqtree" , str(NAME + "_core_mask_snp.treefile"))) + ","\
                         + str(os.path.join(OUT , "fastgear_core" , "plot_coregenome/core_fastgear_plot_recombination_count.pdf"))
