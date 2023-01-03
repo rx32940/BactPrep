@@ -2,4 +2,4 @@ channels:
   - bioconda
 dependencies:
   - snippy
-  - seqkit
+  - bcftools=1.9
