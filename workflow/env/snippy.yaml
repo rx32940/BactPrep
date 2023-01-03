@@ -1,5 +1,6 @@
 channels:
+  - conda-forge
   - bioconda
+  - defaults
 dependencies:
-  - snippy
-  - bcftools=1.9
+  - snippy=4.6
