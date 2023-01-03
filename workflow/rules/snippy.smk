@@ -24,7 +24,7 @@ rule snippy_core:
         mask=" --mask " + phage if phage != "" else ""
     shell:
         """
-        snippy-core{params.mask} --ref {reference} {input} --prefix {snippy_dir}core
+        snippy-core{params.mask} {input} --prefix {snippy_dir}core
         """
 
 rule clean_snippy_core:
