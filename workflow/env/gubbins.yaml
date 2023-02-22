@@ -1,6 +1,9 @@
 channels:
+  - r
+  - defaults
+  - conda-forge
   - bioconda
 dependencies:
   - gubbins
-  - snp-sites
   - seqkit
+

@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=batch
-#SBATCH --job-name=sub.sh
+#SBATCH --job-name=wgsRecomb
 #SBATCH --ntasks=1                    	
 #SBATCH --cpus-per-task=5      
 #SBATCH --time=100:00:00
@@ -16,14 +16,17 @@
 
 source activate BactPrep
 
-cd $SLURM_SUBMIT_DIR
 
-WORKPATH="/scratch/rx32940/testBactPrep"
+BACTPREP="/scratch/rx32940/whole_genome/analysis/Lint/BactPrep"
+WORKPATH="/scratch/rx32940/whole_genome/analysis/Lint"
+REF="/scratch/rx32940/whole_genome/ref"
 
-time python start_analysis.py ALL \
--p PMEN1.dated \
+cd $BACTPREP
+
+time python start_analysis.py wgsRecomb \
+-p Lint_recomb \
 -o $WORKPATH -i $WORKPATH/assemblies \
--r $WORKPATH/GCF_000026665.1_ASM2666v1_genomic.fna \
+-r $REF/GCF_000026665.1_ASM2666v1_genomic.fna \
 -G " -f 30" -t 5 
 
 
