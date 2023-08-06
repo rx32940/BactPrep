@@ -38,11 +38,9 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     cd BactPrep 
     
-    conda create -n BactPrep python=3 
+    conda create -n BactPrep python=3 -c conda-forge mamba -y
 
     conda activate BactPrep 
-
-    conda install mamba -c conda-forge 
     
     # if this step is not complete, set channel priirity in conda env to flexible with command: 
     # conda config --set channel_priority true
