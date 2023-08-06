@@ -12,7 +12,7 @@ rule Prokka:
     output:
         directory(os.path.join(prokka_dir , "{sample}"))
     conda:
-        "../env/prokka.yaml"
+        WORKFLOW + "env/prokka.yaml"
     threads:
         THREADS
     params:

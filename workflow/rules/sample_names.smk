@@ -4,4 +4,4 @@ rule get_sample_names:
     output:
         os.path.join(out_dir , "all_samples_id.txt")
     script:
-        "../scripts/get_sample_names.py"
+        "{WORKFLOW}scripts/get_sample_names.py"

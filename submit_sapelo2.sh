@@ -1,34 +1,22 @@
-#!/bin/bash
-#SBATCH --partition=batch
-#SBATCH --job-name=wgsRecomb
-#SBATCH --ntasks=1                    	
-#SBATCH --cpus-per-task=5      
-#SBATCH --time=100:00:00
-#SBATCH --mem=100G
-#SBATCH --output=../%x.%j.out       
-#SBATCH --error=../%x.%j.out        
-#SBATCH --mail-user=rx32940@uga.edu
-#SBATCH --mail-type=ALL
-
-
-# ml Miniconda3/4.10.3
-# conda env create -f workflow/env/install.yaml -n BactPrep python=3.7
+#BSUB -P BactPrep1
+#BSUB -n 1
+#BSUB -R "span[hosts=1]"
+#BSUB -R "rusage[mem=50GB]"
+#BSUB -o BactPrep1.%J.out
+#BSUB -n 4
 
 source activate BactPrep
 
+WORKPATH="/home/rxu28/random/BactPrep1"
+REF="/home/rxu28/random/BactPrep1"
 
-BACTPREP="/scratch/rx32940/whole_genome/analysis/Lint/BactPrep"
-WORKPATH="/scratch/rx32940/whole_genome/analysis/Lint"
-REF="/scratch/rx32940/whole_genome/ref"
-
-cd $BACTPREP
-
-time python start_analysis.py wgsRecomb \
--p Lint_recomb \
+time start_analysis.py ALL \
+-p BactPrep1 \
 -o $WORKPATH -i $WORKPATH/assemblies \
 -r $REF/GCF_000026665.1_ASM2666v1_genomic.fna \
--G " -f 30" -t 5 
-
-
+-G " -f 30" -t 4 \
+-M -a $WORKPATH/../PMEN1.dated.metadata.218.csv \
+-s 1 \
+-m Year,Country
 
 conda deactivate

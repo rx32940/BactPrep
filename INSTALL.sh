@@ -5,7 +5,7 @@ cd $PWD
 # 1) add python file to path
 chmod 755 $PWD/start_analysis.py
 
-export PATH="$PWD:$PATH"
+ln -s $PWD/start_analysis.py "$(echo $PATH | tr ':' '\n' | grep -m 1 conda)/start_analysis.py"
 
 # 2) make dir for software if not exist
 mkdir -p resources

@@ -4,7 +4,7 @@ rule PIRATE:
     output: 
         os.path.join(pirate_dir , "core_alignment.fasta")
     conda: 
-        "../env/pirate.yaml"
+        WORKFLOW + "env/pirate.yaml"
     threads: 
         THREADS
     params:
@@ -24,9 +24,9 @@ rule convert_to_Roary:
     output:
         os.path.join(pirate_dir , "pirate_roary_pres_abs.csv")
     params:
-        script_dir=workflow.basedir + "/scripts/"
+        script_dir=WORKFLOW + "scripts/"
     shell:
         """
-           perl {params.script_dir}PIRATE_to_roary.pl -i {input} -o {pirate_dir}pirate_roary_pres_abs.csv 
+           perl {WORKFLOW}PIRATE_to_roary.pl -i {input} -o {pirate_dir}pirate_roary_pres_abs.csv 
         
         """

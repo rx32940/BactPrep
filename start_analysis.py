@@ -1,12 +1,15 @@
 #!/usr/bin/env python
+
 import os
 import argparse
 import yaml
 from pathlib import Path
+import shutil
 
 modules = ['wgsRecomb', 'coreGen', 'coreRecomb','panRecomb', 'geneRecomb','ALL']
 
 CWD = os.getcwd()
+BACTPREPPATH = os.path.dirname(os.path.realpath(__file__))
 
 # declare an argparse variable 
 general_parser = argparse.ArgumentParser(prog="start_analysis", usage='%(prog)s MODULE [options]', 
@@ -19,13 +22,11 @@ epilog='Enjoy the program! :)')
 general_parser.add_argument('MODULE', action='store', type=str, 
 help='Specify the module you would like to run', 
 choices=['ALL','wgsRecomb', 'coreGen', 'coreRecomb','panRecomb', 'geneRecomb'])
-curren_wd = Path(os.getcwd())
-
-
+current_wd = Path(os.getcwd())
 
 # General Arguments
 general_arguments = general_parser.add_argument_group("general arguments")
-general_arguments.add_argument("-i","--input", type=str, help= "path to input dir with assemblies", metavar='', default=os.path.join(curren_wd, "../assemblies"))
+general_arguments.add_argument("-i","--input", type=str, help= "path to input dir with assemblies", metavar='', default=os.path.join(current_wd, "../assemblies"))
 general_arguments.add_argument("-p", "--name", type=str, help= "provide name prefix for the output files",metavar='', default= "bacterial_analysis" )
 general_arguments.add_argument('-t','--thread', type=int,  help = "num of threads", metavar='', default = 1)
 general_arguments.add_argument('-o','--output', type=str,  help = "path to the output directory", metavar='', default=os.path.join(CWD, 'results'))
@@ -53,8 +54,8 @@ roary_arguments.add_argument("-R", "--roary", type=str,help= "any additional roa
 
 # fastGear modules alignments (for all three fastGear moudles)
 fastgear_arguments = general_parser.add_argument_group("arguments for all three fastGear modules (coreRecomb, panRecomb, geneRecomb)")
-fastgear_arguments.add_argument("--mcr_path", type=str, help="path to mcr runtime (need to install before use any of the fastGear module", metavar='', default=os.path.join(CWD, 'resources/mcr/'))
-fastgear_arguments.add_argument("--fastgear_exe", type=str, help="path to the excutable of fastGear", metavar='', default=str(os.path.join(CWD,'resources/fastGEARpackageLinux64bit/')))
+fastgear_arguments.add_argument("--mcr_path", type=str, help="path to mcr runtime (need to install before use any of the fastGear module", metavar='', default=os.path.join(BACTPREPPATH, 'resources/mcr/'))
+fastgear_arguments.add_argument("--fastgear_exe", type=str, help="path to the excutable of fastGear", metavar='', default=str(os.path.join(BACTPREPPATH,'resources/fastGEARpackageLinux64bit/')))
 fastgear_arguments.add_argument("--fg","--fastgear_param", type=str, help="path to fastGear params", metavar='', default="")
 
 # geneRecomb arguments
@@ -69,6 +70,7 @@ if args.MODULE == "geneRecomb" and (args.alignment == "" and args.alnlist == "")
     general_parser.error("gene alignment/alignment list (-n/-fl) must provided for geneRecomb module") 
 if args.alignment != "" and args.alnlist != "":
     general_parser.error("please do not specify gene file and list and same time")
+
 
 MODULE = args.MODULE
 NAME=args.name
@@ -191,7 +193,8 @@ def get_output(module):
 
 
 # construct the config file 
-config = {'project_name': NAME,
+config = {'bactprep_path': BACTPREPPATH,
+'project_name': NAME,
 'asm_dir': INPUT,
 'output_dir': OUT,
 'reference': REF,
@@ -211,17 +214,16 @@ config = {'project_name': NAME,
 'roary':ROARY,
 'gubbins':GUBBINS}
 
-BactPrep_path = os.path.abspath(os.path.dirname(__file__))
 config.update(get_output(MODULE))     
 config_file=NAME + "_config.yaml"
 with open(os.path.join(OUT,config_file), "w") as configfile:
     yaml.dump(config,configfile)
 
 
-
 if __name__ == "__main__":
-    os.chdir(BactPrep_path)
-    os.system ("snakemake --conda-frontend mamba --cores %d --use-conda --nolock --configfile %s"%(THREAD,os.path.join(OUT,config_file)))
+    os.chdir(OUT)
+    shutil.copy(os.path.join(BACTPREPPATH, "workflow", "Snakefile"), OUT) 
+    os.system ("snakemake --conda-frontend mamba --cores %d --use-conda --nolock --configfile %s --snakefile %s"%(THREAD,os.path.join(OUT,config_file), os.path.join(OUT,"Snakefile")))
 
 
 
