@@ -1,5 +1,5 @@
 channels:
   - bioconda
 dependencies:
-  - bedtools
-  - snp-sites
+  - bedtools=2.31.0
+  - snp-sites=2.5.1

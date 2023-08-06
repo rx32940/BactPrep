@@ -5,7 +5,7 @@ rule snippy_multi:
     output:
         directory(os.path.join(snippy_dir , "{sample}"))
     conda:
-        "../env/snippy.yaml"
+        WORKFLOW + "env/snippy.yaml"
     threads:
         THREADS
     shell:
@@ -19,7 +19,7 @@ rule snippy_core:
     output:
         os.path.join(snippy_dir , "core.full.aln")
     conda:
-        "../env/snippy.yaml"
+        WORKFLOW + "env/snippy.yaml"
     params:
         mask=" --mask " + phage if phage != "" else ""
     shell:
@@ -33,7 +33,7 @@ rule clean_snippy_core:
     output:
         os.path.join(snippy_dir , "clean.full.aln")
     conda:
-        "../env/snippy.yaml"
+        WORKFLOW + "env/snippy.yaml"
     shell:
         """
         snippy-clean_full_aln {input} > {snippy_dir}clean.full.aln

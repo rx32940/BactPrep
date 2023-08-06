@@ -8,7 +8,7 @@ rule Roary:
     threads:
         THREADS
     conda:
-        "../env/roary.yaml"
+        WORKFLOW + "env/roary.yaml"
     params:
         alignment = "-e -n",
         out_dir = roary_dir,
@@ -28,7 +28,7 @@ rule core_gene_concatenation_ML_tree:
     output:
         iqtree_dir + project_prefix +".treefile"
     conda:
-        "../env/iqtree.yaml"
+        WORKFLOW + "env/iqtree.yaml"
     threads:
         THREADS
     params:

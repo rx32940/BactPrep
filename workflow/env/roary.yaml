@@ -1,4 +1,4 @@
 channels:
   - bioconda
 dependencies:
-  - roary
+  - roary=3.12.0

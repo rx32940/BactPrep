@@ -5,7 +5,7 @@ checkpoint extract_core_loci:
         os.path.join(fastGear_core_dir, "roary_coreGeneAln_locustag.txt")
     shell:
         """
-        python {workflow.basedir}/scripts/get.genes.roary.core.aln.py {input} {output}
+        python {WORKFLOW}scripts/get.genes.roary.core.aln.py {input} {output}
         """
 
 
@@ -32,7 +32,7 @@ rule convert_recombination_to_bed:
     output:
         os.path.join(fastGear_core_dir , "core_loci_fastGear_out","{core_locus}/output/recombinations.bed")
     script:
-        "../scripts/fastGear_to_bed.py"
+        WORKFLOW + "scripts/fastGear_to_bed.py"
         
 rule mask_recombination:
     input:
@@ -41,7 +41,7 @@ rule mask_recombination:
     output:
         os.path.join(fastGear_core_dir , "masked_coregene_aln","{core_locus}_core_mask.fasta")
     conda:
-        "../env/bedtools.yaml"
+        WORKFLOW + "env/bedtools.yaml"
     shell:
         """
         bedtools maskfasta -fi {input.fasta} -bed {input.bed} -fo {output}
@@ -73,7 +73,7 @@ rule plot_core_fastGear:
     shell:
         """
         cd {fastGear_core_dir}plot_coregenome/
-        python {workflow.basedir}/scripts/post_fastGear.py \
+        python {WORKFLOW}scripts/post_fastGear.py \
         -i {fastGear_core_dir}core_loci_fastGear_out \
         -g {input.loci} \
         -o {fastGear_core_dir}plot_coregenome/core_fastgear_plot \
@@ -87,8 +87,7 @@ rule concate_gene_aln:
         os.path.join(fastGear_core_dir, "fastGear_masked_coregene_aln.fasta")
     shell:
         """
-    
-            perl {workflow.basedir}/scripts/catfasta2phyml.pl -f -c -s --verbose {fastGear_core_dir}masked_coregene_aln/*fasta > {output}
+            perl {WORKFLOW}scripts/catfasta2phyml.pl -f -c -s --verbose {fastGear_core_dir}masked_coregene_aln/*fasta > {output}
         """
 
 rule call_snp_from_masked_alignment:
@@ -97,7 +96,7 @@ rule call_snp_from_masked_alignment:
     output:
         os.path.join(fastGear_core_dir , str(project_prefix + "_core_mask_snp.fasta"))
     conda:
-        "../env/bedtools.yaml"
+        WORKFLOW + "env/bedtools.yaml"
     shell:
         """
             snp-sites {input} -o {output}
@@ -110,7 +109,7 @@ rule core_genome_snps_ML_tree:
     output:
         os.path.join(fastGear_core_dir , "fastgear_iqtree" , str(project_prefix + "_core_mask_snp.treefile"))
     conda:
-        "../env/iqtree.yaml"
+        WORKFLOW + "env/iqtree.yaml"
     threads:
         THREADS
     params:

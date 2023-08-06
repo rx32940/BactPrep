@@ -11,7 +11,7 @@ rule annotate_roary_alignment:
         """
         if [[ -n {input.metadata_file} ]]; 
         then
-            python {workflow.basedir}/scripts/change_fasta_header.py {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {output}
+            python {WORKFLOW}scripts/change_fasta_header.py {input.metadata_file} {input.original_alignment} {params.meta_include} {params.key_column_index} {output}
         else
             touch {output}
         fi
@@ -30,7 +30,7 @@ rule annotate_coreGene_tree:
         """
         if [[ -n {input.metadata_file} ]]; 
         then
-            python {workflow.basedir}/scripts/rename_phylogeny_taxa.py {input.metadata_file} {input.tree} {params.meta_include} {params.key_column_index} {output}
+            python {WORKFLOW}scripts/rename_phylogeny_taxa.py {input.metadata_file} {input.tree} {params.meta_include} {params.key_column_index} {output}
         else
             touch {output}
         fi

@@ -6,7 +6,7 @@ checkpoint change_pan_gene_aln_headers:
     shell:
         """
             mkdir -p {fastGear_dir}roary_pangenome_seq
-            python {workflow.basedir}/scripts/change.roary.gene.alns.headers.py {roary_dir}pan_genome_sequences {fastGear_dir}roary_pangenome_seq {input}
+            python {WORKFLOW}scripts/change.roary.gene.alns.headers.py {roary_dir}pan_genome_sequences {fastGear_dir}roary_pangenome_seq {input}
         """
 
 rule fastGear:
@@ -48,7 +48,7 @@ rule plot_pan_fastGear:
     shell:
         """
         cd {fastGear_dir}plot_pangenome/
-        python {workflow.basedir}/scripts/post_fastGear.py \
+        python {WORKFLOW}scripts/post_fastGear.py \
         -i {fastGear_dir}loci_fastGear_out \
         -g {input.loci} \
         -o {fastGear_dir}plot_pangenome/pan_fastgear_plot \
