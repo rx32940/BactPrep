@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import os
 import argparse
 import yaml
@@ -22,6 +21,7 @@ epilog='Enjoy the program! :)')
 general_parser.add_argument('MODULE', action='store', type=str, 
 help='Specify the module you would like to run', 
 choices=['ALL','wgsRecomb', 'coreGen', 'coreRecomb','panRecomb', 'geneRecomb'])
+
 current_wd = Path(os.getcwd())
 
 # General Arguments
@@ -70,7 +70,6 @@ if args.MODULE == "geneRecomb" and (args.alignment == "" and args.alnlist == "")
     general_parser.error("gene alignment/alignment list (-n/-fl) must provided for geneRecomb module") 
 if args.alignment != "" and args.alnlist != "":
     general_parser.error("please do not specify gene file and list and same time")
-
 
 MODULE = args.MODULE
 NAME=args.name

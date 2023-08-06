@@ -1,5 +1,10 @@
 channels:
   - bioconda
 dependencies:
+<<<<<<< HEAD
   - bedtools=2.31.0
   - snp-sites=2.5.1
+=======
+  - bedtools
+  - snp-sites
+>>>>>>> 053fa968b38664579ca82e75d372a2e38ec50c64
