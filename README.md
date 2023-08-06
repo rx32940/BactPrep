@@ -37,11 +37,11 @@ This pipeline is written specifically for annotating the **bacteria whole genome
 4) If first time using the pipeline
     ```
     cd BactPrep 
-    
+
     conda create -n BactPrep python=3 -c conda-forge mamba -y
 
     conda activate BactPrep 
-    
+
     # if this step is not complete, set channel priirity in conda env to flexible with command: 
     # conda config --set channel_priority true
     mamba install --file workflow/env/install.yaml  
@@ -55,7 +55,14 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     
 
 5) You are now good to go! 
-    RUN: ```start_analysis.py ALL(coreGen/wgsRecomb/panRecomb)```
+    RUN: 
+    ```
+    start_analysis.py ALL(coreGen/wgsRecomb/panRecomb)
+    ```
+     **OR**
+    ```
+    python start_analysis.py ALL(coreGen/wgsRecomb/panRecomb)
+    ```
 
 6) after running all your analysis, deactivate the env
     ```

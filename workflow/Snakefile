@@ -1,6 +1,9 @@
 import os
 import re
 
+BACTPREPPATH=config["bactprep_path"].strip() if config["bactprep_path"][-1] == "/" else str(config["bactprep_path"] + "/").strip()
+WORKFLOW = BACTPREPPATH + "workflow/"
+
 reference = str(config["reference"])
 
 phage=config["phage_region"].strip()
@@ -19,8 +22,6 @@ fastGear_params=config['fastGear_params'].strip()
 roary_params=config['roary'].strip()
 gubbins_params=config['gubbins'].strip()
 # within_species=config["within_species"]
-
-subworkflowdir = "rules/"
 
 # pre-defined folder names
 pirate_dir = os.path.join(out_dir , "pirate/")
@@ -54,7 +55,7 @@ SAMPLES = [os.path.splitext(file)[0] for file in os.listdir(get_sample_dir(gff_d
 # get gff file dir base on if user had provided
 # gff_dir = get_gff_dir(gff_dir_self)
 
-
+subworkflowdir = WORKFLOW + "rules/"
 
 # include rules in the workflow
 include: subworkflowdir + "sample_names.smk"

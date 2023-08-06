@@ -4,7 +4,7 @@ rule Gubbins:
     output:
         gubbins_dir + project_prefix + ".filtered_polymorphic_sites.fasta"
     conda:
-        "../env/gubbins.yaml"
+        WORKFLOW + "env/gubbins.yaml"
     threads:
         THREADS
     params:
@@ -22,7 +22,7 @@ rule clean_snps:
     output:
         gubbins_dir + ".filtered_polymorphic_sites.noRef.fasta"
     conda:
-        "../env/gubbins.yaml"
+        WORKFLOW + "env/gubbins.yaml"
     shell:
         """
         cat {input} | seqkit grep -v -p Reference > {output}
@@ -34,7 +34,7 @@ rule Gubbins_SNPS_ML_tree:
     output:
         gubbins_dir + "iqtree/" + project_prefix + ".gubbins.treefile"
     conda:
-        "../env/iqtree.yaml"
+        WORKFLOW + "env/iqtree.yaml"
     threads:
         THREADS
     params:

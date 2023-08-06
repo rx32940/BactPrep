@@ -1,0 +1,57 @@
+# NOTE: this file will be automatically generated if you run the workflow by using options in start_analysis.py
+# this is just an explanation for parameters used in the workflow
+# if you would like to directly run pipeline with the config file. Please refer to the snakemake documentation
+# https://snakemake.readthedocs.io/en/stable/index.html#
+
+# folder containing BactPrep workflow (this is the folder you have git cloned from https://github.com/rx32940/BactPrep)
+bactprep_path: /home/rx/rachelxu/BactPrep1/BactPrep 
+# this is the path to use MCR runtime. If you have ran INSTALL.sh before, this has already been installed and setup.  
+mcr_path: /home/rx/rachelxu/BactPrep1/BactPrep/resources/mcr/v901 # path where mcr was installed
+LD_LIBRARY_PATH: /home/rx/rachelxu/BactPrep1/BactPrep/resources/mcr/v901/runtime/glnxa64:/home/rx/rachelxu/BactPrep1/BactPrep/resources/mcr/v901/bin/glnxa64:/home/rx/rachelxu/BactPrep1/BactPrep/resources/mcr/v901/sys/os/glnxa64
+# input directory of the workflow, this contains all the WGS assemblies you would like to include in the analysis
+asm_dir: /home/rachelxu/BactPrep3/assemblies
+# this are the output directory you would like the analysis result to be
+output_dir: /home/rachelxu/BactPrep3
+# this are the outputs you would like to obtain (separate by comma), different modules of the workflow will be triggered by specifying different output files here
+output: /home/rachelxu/BactPrep3/roary/roary_iqtree/BactPrep3.treefile,/home/rachelxu/BactPrep3/gubbins/iqtree/BactPrep3.gubbins.treefile,/home/rachelxu/BactPrep3/fastgear_core/plot_coregenome/core_fastgear_plot_recombination_count.pdf,/home/rachelxu/BactPrep3/fastgear_core/fastgear_iqtree/BactPrep3_core_mask_snp.treefile,/home/rachelxu/BactPrep3/fastgear_core/plot_coregenome/core_fastgear_plot_recombination_count.pdf,/home/rachelxu/BactPrep3/roary/roary_iqtree/BactPrep3_meta.coreConcate.newick,/home/rachelxu/BactPrep3/roary/BactPrep3_coreConcate_meta.fasta,/home/rachelxu/BactPrep3/gubbins/BactPrep3_meta.recombFreeSnpsAtcg.fasta,/home/rachelxu/BactPrep3/gubbins/iqtree/BactPrep3_meta.GubbinsSNPs.newick,/home/rachelxu/BactPrep3/fastgear_core/fastgear_iqtree/BactPrep3_meta.coreSNPs.newick,/home/rachelxu/BactPrep3/fastgear_core/BactPrep3_core_mask_snp_meta.fasta
+
+# what is the name of the current project
+project_name: BactPrep3
+# number of thread to use
+threads_num: 4
+
+# for coreGen module
+# 1) what is the definition of core gene (percent of WGS in the dataset sharing the orthologs)
+define_core: 99
+# 2) additional parameters for Roary (details in: https://sanger-pathogens.github.io/Roary/)
+roary: ''
+# 3) if Prokka annotation has already been ran, specify the directory
+gff_dir: null
+# 4) annotating bacteria genome (for Prokka)
+kingdom: Bacteria
+
+# for wgsRecomb module
+# 1) Gubbins requires a reference genome
+reference: /home/rachelxu/BactPrep1/GCF_000026665.1_ASM2666v1_genomic.fna
+# 2) additional Gubbins parameters (Details in: https://github.com/nickjcroucher/gubbins)
+gubbins: ' -f 30'
+# 3) if known phage region need to specify
+phage_region: ''
+
+# for coreRecomb module
+# need to specify the path and additional parameters of running fastGear, if you already ran INSTALL.sh before, this has already been installed and setup.  
+fastGear_exe_path: /home/rx/rachelxu/BactPrep1/BactPrep/resources/fastGEARpackageLinux64bit/
+fastGear_params: /home/rx/rachelxu/BactPrep1/BactPrep/resources/fastGEARpackageLinux64bit/fG_input_specs.txt
+
+# for geneRecomb module, specific genes you would like to detect recombination from
+fastgear_gene_file_list: ''
+
+# annotate output alignments and phylogenies
+# path to file
+sample_metadata: /home/rachelxu/BactPrep3/../PMEN1.dated.metadata.218.csv
+# column with matching sample names as input assemblies
+biosample_column: 1
+# column names in the metadata file you would like to add to the annotation
+metadata_include: Year,Country
+
+
