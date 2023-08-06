@@ -4,11 +4,6 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-<<<<<<< HEAD
   - gubbins=2.4.1
   - seqkit=2.5.0
-=======
-  - gubbins
-  - seqkit
->>>>>>> 053fa968b38664579ca82e75d372a2e38ec50c64
 

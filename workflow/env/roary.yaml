@@ -1,8 +1,4 @@
 channels:
   - bioconda
 dependencies:
-<<<<<<< HEAD
   - roary=3.12.0
-=======
-  - roary
->>>>>>> 053fa968b38664579ca82e75d372a2e38ec50c64
