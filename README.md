@@ -38,7 +38,7 @@ This pipeline is written specifically for annotating the **bacteria whole genome
     ```
     cd BactPrep 
 
-    conda create -n BactPrep python=3 -c conda-forge mamba -y
+    conda create -n BactPrep python=3 mamba -c conda-forge -y
 
     conda activate BactPrep 
 
